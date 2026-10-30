@@ -1,0 +1,11 @@
+import { Flame, Trophy, BookOpenCheck } from "lucide-react";
+import { Card } from "@/components/ui/Card";
+import { ProgressBar } from "@/components/ui/ProgressBar";
+import type { PersonProgress } from "@/types/progress";
+
+export function ProgressOverview({ progress }: { progress: Pick<PersonProgress, "overallPercent" | "activeStreakDays" | "completedCourses" | "activeCourses"> }) {
+  return <section className="grid gap-4 xl:grid-cols-[1.6fr_1fr]">
+    <Card className="overflow-hidden"><div className="section-grid p-5 sm:p-7"><div className="flex flex-col justify-between gap-8 md:flex-row"><div><div className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-600">Your trajectory</div><h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Build BA mastery with momentum.</h1><p className="mt-3 max-w-xl text-sm leading-6 text-ink-500">Your overall progress across every course you&apos;re enrolled in.</p></div><div className="grid h-28 w-28 shrink-0 place-items-center rounded-full border-[10px] border-primary-100 bg-white text-center shadow-sm"><div><div className="text-2xl font-black">{progress.overallPercent}%</div><div className="text-[10px] font-semibold uppercase tracking-wider text-ink-500">overall</div></div></div></div><div className="mt-8"><ProgressBar value={progress.overallPercent} /></div></div></Card>
+    <div className="grid gap-4 sm:grid-cols-3 xl:grid-cols-1"><Card className="p-5"><div className="flex items-center justify-between"><span className="text-sm text-ink-500">Learning streak</span><Flame size={18} /></div><div className="mt-3 text-3xl font-black">{progress.activeStreakDays}</div><div className="text-xs text-ink-500">days active</div></Card><Card className="p-5"><div className="flex items-center justify-between"><span className="text-sm text-ink-500">Courses finished</span><Trophy size={18} /></div><div className="mt-3 text-3xl font-black">{progress.completedCourses}</div><div className="text-xs text-ink-500">completed</div></Card><Card className="p-5"><div className="flex items-center justify-between"><span className="text-sm text-ink-500">Active courses</span><BookOpenCheck size={18} /></div><div className="mt-3 text-3xl font-black">{progress.activeCourses}</div><div className="text-xs text-ink-500">in progress</div></Card></div>
+  </section>;
+}
