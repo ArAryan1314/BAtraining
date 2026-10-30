@@ -1,0 +1,5 @@
+import { cn } from "@/lib/cn";
+
+export function PageHeader({ eyebrow, title, description, action, back, tone = "plain" }: { eyebrow?: string; title: string; description?: string; action?: React.ReactNode; back?: React.ReactNode; tone?: "plain" | "gradient" | "dark" }) {
+  return <header className={cn("rounded-xl border border-line p-5 sm:p-7", tone === "plain" && "bg-white", tone === "gradient" && "bg-linear-to-br from-primary-600 to-primary-800 text-white", tone === "dark" && "bg-ink-900 text-white")}><div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between"> <div>{back}{eyebrow && <div className={cn("mt-1 text-xs font-semibold uppercase tracking-[0.16em]", tone === "plain" ? "text-primary-600" : "text-white/60")}>{eyebrow}</div>}<h1 className="mt-2 text-3xl font-black tracking-tight sm:text-4xl">{title}</h1>{description && <p className={cn("mt-3 max-w-2xl text-sm leading-6", tone === "plain" ? "text-ink-500" : "text-white/70")}>{description}</p>}</div>{action}</div></header>;
+}

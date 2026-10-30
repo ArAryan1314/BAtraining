@@ -1,0 +1,55 @@
+{
+  "name": "ba-training-platform",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "check:page-styles": "node scripts/check-page-styles.mjs",
+    "check:barrels": "node scripts/check-barrel-exports.mjs",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "check:style-contract": "pnpm check:page-styles && pnpm check:barrels && pnpm typecheck",
+    "db:seed": "prisma db seed",
+    "postinstall": "prisma generate",
+    "db:setup": "prisma db push && prisma db seed",
+    "check": "pnpm check:page-styles && pnpm check:barrels && pnpm lint && pnpm typecheck && pnpm test",
+    "test": "tsx --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "7.10.1",
+    "@prisma/client": "7.10.1",
+    "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.64.0",
+    "next": "^16.4.3",
+    "next-auth": "^4.24.15",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwind-merge": "^3.7.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@next/env": "^16.4.3",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.3",
+    "prisma": "7.10.1",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3"
+  },
+  "packageManager": "pnpm@12.16.1",
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": ">=12"
+  }
+}

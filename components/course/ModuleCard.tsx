@@ -1,0 +1,6 @@
+import { CheckCircle2, ChevronRight, LockKeyhole } from "lucide-react";
+import { Badge, Card, ProgressBar } from "@/components/ui";
+
+export function ModuleCard({ number, title, description, progress, locked, completed }: { number: number; title: string; description: string; progress: number; locked?: boolean; completed?: boolean }) {
+  return <Card className="p-5"><div className="flex gap-4"><div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-primary-50 text-sm font-black text-primary-700">{String(number).padStart(2, "0")}</div><div className="min-w-0 flex-1"><div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"><div><h3 className="font-semibold">{title}</h3><p className="mt-1 text-sm leading-5 text-ink-500">{description}</p></div>{completed ? <Badge tone="success"><CheckCircle2 size={13} className="mr-1" />Complete</Badge> : locked ? <Badge tone="neutral"><LockKeyhole size={13} className="mr-1" />Locked</Badge> : <Badge tone="primary">Active</Badge>}</div><div className="mt-4"><div className="mb-2 flex justify-between text-xs font-semibold"><span>{progress}% complete</span><ChevronRight size={15} className="text-ink-400" /></div><ProgressBar value={progress} /></div></div></div></Card>;
+}
