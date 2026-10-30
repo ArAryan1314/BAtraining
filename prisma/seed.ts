@@ -95,10 +95,40 @@ async function main() {
     });
   }
 
+  const quiz =
+    (await prisma.quiz.findFirst({ where: { courseId: course.id, title: "Foundations check" } })) ??
+    (await prisma.quiz.create({
+      data: {
+        courseId: course.id,
+        title: "Foundations check",
+        passScore: 70,
+        questions: {
+          create: [
+            { prompt: "What is a business analyst's main job?", options: ["Writing production code", "Defining the right problem and its requirements", "Managing the budget"], answer: "Defining the right problem and its requirements" },
+            { prompt: "What makes a requirement good?", options: ["It is long and detailed", "It names the technology to use", "It is clear and testable"], answer: "It is clear and testable" },
+          ],
+        },
+      },
+    }));
+  if (!(await prisma.assignment.findFirst({ where: { courseId: course.id, title: "Stakeholder map" } }))) {
+    await prisma.assignment.create({
+      data: { courseId: course.id, title: "Stakeholder map", instructions: "Pick a project you know. List its stakeholders and note each one's influence and interest.", points: 100 },
+    });
+  }
+
   await prisma.enrollment.upsert({
     where: { studentId_courseId: { studentId: student.id, courseId: course.id } },
     update: {},
     create: { studentId: student.id, courseId: course.id },
+  });
+
+  const cohort =
+    (await prisma.cohort.findFirst({ where: { name: "Demo cohort", trainerId: trainer.id } })) ??
+    (await prisma.cohort.create({ data: { name: "Demo cohort", trainerId: trainer.id, courseId: course.id } }));
+  await prisma.cohortMember.upsert({
+    where: { cohortId_studentId: { cohortId: cohort.id, studentId: student.id } },
+    update: {},
+    create: { cohortId: cohort.id, studentId: student.id },
   });
 
   for (const name of ["Requirements Elicitation", "Stakeholder Management", "Process Modeling", "User Stories"]) {
@@ -110,7 +140,7 @@ async function main() {
     });
   }
 
-  console.log(`Seeded admin ${admin.email}, trainer ${trainer.email}, student ${student.email}, course ${course.slug}`);
+  console.log(`Seeded admin ${admin.email}, trainer ${trainer.email}, student ${student.email}, course ${course.slug}, quiz ${quiz.title}`);
 }
 
 main().catch((error) => { console.error(error); process.exit(1); }).finally(() => prisma.$disconnect());

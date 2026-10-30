@@ -122,6 +122,8 @@ model User {
   subscriptions         Subscription[]
   auditLogs              AuditLog[]
   contentVersions       CourseVersion[]
+  trainerCohorts        Cohort[]                @relation("CohortTrainer")
+  cohortMemberships     CohortMember[]
 }
 
 model StudentProfile {
@@ -165,6 +167,7 @@ model Course {
   quizzes          Quiz[]
   versions         CourseVersion[]
   projects         Project[]
+  cohorts          Cohort[]
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
 }
@@ -497,4 +500,26 @@ model AuditLog {
   actor      User     @relation(fields: [actorId], references: [id], onDelete: Restrict)
   @@index([actorId, createdAt])
   @@index([entityType, entityId])
+}
+
+model Cohort {
+  id        String         @id @default(cuid())
+  name      String
+  trainerId String
+  courseId  String
+  createdAt DateTime       @default(now())
+  trainer   User           @relation("CohortTrainer", fields: [trainerId], references: [id], onDelete: Cascade)
+  course    Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  members   CohortMember[]
+  @@index([trainerId])
+}
+
+model CohortMember {
+  cohortId  String
+  studentId String
+  joinedAt  DateTime @default(now())
+  cohort    Cohort   @relation(fields: [cohortId], references: [id], onDelete: Cascade)
+  student   User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  @@id([cohortId, studentId])
+  @@index([studentId])
 }

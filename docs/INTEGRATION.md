@@ -16,7 +16,7 @@ DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ba_training"
 pnpm db:setup
 ```
 
-The seed creates demo admin, trainer, student, program, course, enrollment and skills.
+The seed creates demo admin, trainer, student, program, course, quiz, assignment, cohort, enrollment and skills.
 
 Demo identities:
 
@@ -63,7 +63,7 @@ Quiz attempts use the same event mechanism. Add assignment/project events in the
 
 ## Content/CMS integration
 
-The `CourseVersion` + `ContentBlock` tables provide versioned content. A future admin editor should write drafts, then move a version to `PUBLISHED`. Student routes should read only the published version.
+The `CourseVersion` + `ContentBlock` tables provide versioned content. The lesson editor writes to a draft version, and publishing moves it to `PUBLISHED`. Student routes read only the latest published version.
 
 ## External providers
 

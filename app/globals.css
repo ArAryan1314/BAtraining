@@ -336,6 +336,3 @@ select {
   @apply shrink-0 whitespace-nowrap;
 }
 
-.app-sidebar-nav-item-soon {
-  @apply cursor-not-allowed text-ink-400;
-}

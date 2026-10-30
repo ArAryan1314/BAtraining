@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db/prisma";
 import { requirePermission, type SessionUser } from "@/lib/auth/guards";
 import { calculateStreak } from "@/lib/progress/streak";
+import { learnerWhere } from "@/services/cohorts";
 import { listMyCourses } from "@/services/courses";
 
 const STALLED_AFTER_DAYS = 7;
@@ -35,21 +36,22 @@ export async function getStudentDashboard(actor: SessionUser) {
 export async function getTrainerDashboard(actor: SessionUser) {
   requirePermission(actor, "reports.read");
   const stalledSince = new Date(Date.now() - STALLED_AFTER_DAYS * 86_400_000);
+  const learners = learnerWhere(actor);
   const stalledWhere = {
-    role: "STUDENT" as const,
+    ...learners,
     enrollments: { some: { status: "ACTIVE" as const } },
     progressEvents: { none: { occurredAt: { gte: stalledSince } } },
   };
 
   const [activeLearners, stalledCount, stalled, gradableAssignments, gradableProjects, courses] = await Promise.all([
-    prisma.user.count({ where: { role: "STUDENT", enrollments: { some: { status: "ACTIVE" } } } }),
+    prisma.user.count({ where: { ...learners, enrollments: { some: { status: "ACTIVE" } } } }),
     prisma.user.count({ where: stalledWhere }),
     prisma.user.findMany({ where: stalledWhere, select: { id: true, name: true }, orderBy: { name: "asc" }, take: ATTENTION_LIST_SIZE }),
-    prisma.assignmentSubmission.count({ where: { score: null } }),
-    prisma.projectSubmission.count({ where: { status: { in: ["SUBMITTED", "UNDER_REVIEW"] } } }),
+    prisma.assignmentSubmission.count({ where: { score: null, student: learners } }),
+    prisma.projectSubmission.count({ where: { status: { in: ["SUBMITTED", "UNDER_REVIEW"] }, student: learners } }),
     prisma.course.findMany({
-      where: { published: true, enrollments: { some: {} } },
-      select: { id: true, title: true, enrollments: { select: { progress: { select: { overallPercent: true } } } } },
+      where: { published: true, enrollments: { some: { student: learners } } },
+      select: { id: true, title: true, enrollments: { where: { student: learners }, select: { progress: { select: { overallPercent: true } } } } },
       orderBy: { title: "asc" },
     }),
   ]);

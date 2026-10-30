@@ -7,13 +7,13 @@ This document reconciles the product roadmap (V4→V13) with the engineering pha
 | V4 Global UI System | Phase 1 + Phase 4 | Implemented foundation + enforcement |
 | V5 Application Shell + Authentication + RBAC | Phase 3 | Shell, RBAC and credentials sign-in implemented |
 | V6 Student LMS | Phase 5 + Phase 7 | Dashboard, course outline, lesson view and completion implemented |
-| V7 Trainer Workspace | Phase 7 | Dashboard implemented; cohorts and grading pending |
-| V8 Admin Workspace | Phase 12 | Dashboard, users, publishing and enrolment implemented |
+| V7 Trainer Workspace | Phase 7 | Cohorts, grading, project reviews and reports implemented |
+| V8 Admin Workspace | Phase 12 | Users, publishing, enrolment, reports and settings implemented |
 | V9 Progress Engine | Phase 7 | Event model + calculator + service foundation |
-| V10 Course / Content Builder | Phase 6 | CMS model/service contracts scaffolded |
-| V11 Assessments + Projects | Phase 8 + Phase 9 | Quiz + assignment base, project engine scaffolded |
-| V12 Certificates + Notifications | Phase 11 | Models + service contracts scaffolded |
-| V13 Analytics + Payments | Phase 12 + Phase 14 | Models + service contracts scaffolded; provider integration pending |
+| V10 Course / Content Builder | Phase 6 | Course and lesson editor with draft and publish implemented |
+| V11 Assessments + Projects | Phase 8 + Phase 9 | Quizzes, assignments, grading and project reviews implemented |
+| V12 Certificates + Notifications | Phase 11 | Automatic certificates and in-app notifications implemented; email pending |
+| V13 Analytics + Payments | Phase 12 + Phase 14 | Reports and manual payment records implemented; gateway pending |
 
 ## Engineering phases
 
