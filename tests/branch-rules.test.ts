@@ -1,9 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-// @ts-expect-error - plain JavaScript module shared with the CI script
-import { branchProblems } from "../scripts/branch-rules.mjs";
-
-const problems = branchProblems as (head: string, base: string) => string[];
+import { branchProblems as problems } from "../scripts/branch-rules.mjs";
 
 test("feature and bugfix branches go into development", () => {
   assert.deepEqual(problems("feature/student-notes", "development"), []);
