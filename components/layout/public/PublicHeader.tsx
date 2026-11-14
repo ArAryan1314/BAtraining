@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { ButtonLink } from "@/components/ui/Button";
@@ -8,14 +8,23 @@ import { MegaMenu } from "@/components/layout/navigation/MegaMenu";
 import { MobileHamburger } from "@/components/layout/navigation/MobileHamburger";
 import { BrandMark } from "./BrandMark";
 
+/** The marker is in the page itself and never changes while it is shown, so there is nothing to subscribe to. */
+const subscribeToNothing = () => () => {};
+
 /**
- * Floating header. Transparent with light text over the dark page heroes, and a
- * frosted light bar once the page scrolls.
+ * Floating header. Transparent with light text over the dark page heroes, and a frosted light bar once the
+ * page scrolls. A page whose first section is light marks it `data-hero="light"`, and the header then uses
+ * the frosted bar from the start so its text stays readable.
  */
 export function PublicHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  // Reads the page's DOM. The snapshot function changes with the route, so React re-reads it after each navigation
+  // and re-renders before paint, which keeps a dark and a light page from flashing the wrong header.
+  const readLightHero = useCallback(() => Boolean(document.querySelector('[data-hero="light"]')), [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+  const lightHero = useSyncExternalStore(subscribeToNothing, readLightHero, () => false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -24,7 +33,7 @@ export function PublicHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const solid = scrolled || menuOpen;
+  const solid = scrolled || menuOpen || lightHero;
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4">

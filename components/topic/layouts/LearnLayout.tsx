@@ -18,7 +18,7 @@ export function LearnLayout({ topic }: { topic: TopicContent }) {
 
   return (
     <>
-      <header className="border-b border-line bg-gradient-to-b from-primary-50 to-white pb-14 pt-32 md:pt-40">
+      <header data-hero="light" className="border-b border-line bg-gradient-to-b from-primary-50 to-white pb-14 pt-32 md:pt-40">
         <div className="container grid max-w-6xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
           <div>
           <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-sm text-ink-500">

@@ -18,7 +18,7 @@ export function ResourceLayout({ topic }: { topic: TopicContent }) {
 
   return (
     <>
-      <header className="border-b border-line bg-ink-50 pb-10 pt-28 md:pt-32">
+      <header data-hero="light" className="border-b border-line bg-ink-50 pb-10 pt-28 md:pt-32">
         <div className="container grid max-w-5xl items-center gap-10 md:grid-cols-[1.5fr_1fr]">
           <div>
           <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary-600">{topic.eyebrow}</p>
