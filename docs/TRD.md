@@ -73,7 +73,7 @@ Design rules (also in the README):
 
 ## 4. Data model
 
-35 models and 14 enums in `prisma/schema.prisma`.
+36 models and 15 enums in `prisma/schema.prisma`.
 
 | Area | Models |
 |---|---|
@@ -85,11 +85,11 @@ Design rules (also in the README):
 | Projects | `Project`, `ProjectMilestone`, `ProjectSubmission`, `Feedback` |
 | Skills and portfolio | `Skill`, `StudentSkill`, `SkillEvidence`, `Portfolio`, `PortfolioItem` |
 | Credentials | `Certificate` (DRAFT, ISSUED, REVOKED), unique on (student, title) and on verification code |
-| Operations | `Cohort`, `CohortMember`, `Notification` (IN_APP, EMAIL), `Payment`, `Subscription`, `AuditLog` |
+| Operations | `Cohort`, `CohortMember`, `Notification` (IN_APP, EMAIL), `Payment`, `Subscription`, `AuditLog`, `Enquiry` (NEW, CONTACTED, CLOSED) |
 
 Key constraints: unique email; unique (student, course) enrolment; unique (student, lesson) progress; unique (course, version) content version; indexes on the progress event, feedback, notification, payment, audit and cohort lookups.
 
-**Migrations** live in `prisma/migrations`: `0_init` (baseline) and `1_certificate_unique`. Every schema change ships with a migration. CI applies all migrations to an empty database and fails if `schema.prisma` has a change with no migration.
+**Migrations** live in `prisma/migrations`: `0_init` (baseline), `1_certificate_unique` and `2_contact_enquiries`. Every schema change ships with a migration. CI applies all migrations to an empty database and fails if `schema.prisma` has a change with no migration.
 
 ## 5. Authentication and authorisation
 
@@ -136,7 +136,7 @@ Trainer scope: `learnerWhere()` limits a trainer to learners in cohorts they own
 |---|---|
 | Transport and headers | HSTS, CSP (inline scripts allowed until nonces are adopted), frame denial, nosniff, referrer and permissions policies |
 | Secrets | Only in Vercel environment variables. Nothing sensitive is committed. The health endpoint names missing settings but never prints values |
-| Input | Zod validation at every boundary; links limited to http(s) |
+| Input | Zod validation at every boundary; links limited to http(s). The public contact form adds a hidden bot trap and a limit of five enquiries an hour per address and per email |
 | Output | Quiz answers are never selected for learners |
 | Audit | Admin and trainer changes write an `AuditLog` entry |
 | Environment | `lib/env.ts` lists configuration problems; startup logs them and `/api/health` reports them |
@@ -165,7 +165,7 @@ Each external service is wrapped by a service so the vendor can change without t
 
 | Integration | Service | State |
 |---|---|---|
-| Email | `services/notifications` | ⬜ in-app only |
+| Email | `services/notifications` | ⬜ in-app only. New-enquiry alerts wait on this |
 | Payments | `services/payments` | ⬜ manual records only |
 | Storage | `services/storage` (interface) | ⬜ no implementation |
 | Analytics | `services/analytics` | 🟡 counts internal events only |
@@ -187,7 +187,7 @@ Per-page metadata with a unique title and description (tests enforce uniqueness)
 
 | Kind | Coverage today |
 |---|---|
-| Unit (51 tests) | Permissions, guards, progress maths, validation, environment, database URL resolution, rate limiter, headers, SEO content, branch rules, first-admin input, redirect safety, sign-in availability |
+| Unit (59 tests) | Permissions, guards, progress maths, validation, environment, database URL resolution, rate limiter, headers, SEO content, branch rules, first-admin input, redirect safety, sign-in availability |
 | Repository checks | Page styles, barrel exports, UI contract, lint, typecheck |
 | Integration | CI applies all migrations to an empty Postgres and runs the seed |
 | Not yet covered | Service functions against a real database; end-to-end browser tests for the three roles |

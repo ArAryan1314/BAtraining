@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ChartCard, StatCard, WhatsNewCard } from "@/components/dashboard";
-import { Card } from "@/components/ui";
+import { Badge, Card } from "@/components/ui";
 import { workspaces } from "@/config/navigation";
 import type { getAdminDashboard } from "@/services/dashboards";
 
@@ -50,7 +50,7 @@ export function AdminDashboard({ data }: { data: Awaited<ReturnType<typeof getAd
               {shortcuts.map(({ label, href, icon: Icon }) => (
                 <li key={href}>
                   <Link href={href} className="flex items-center justify-between gap-2 rounded-md border border-line px-3 py-2.5 text-sm font-medium ui-row">
-                    <span className="flex items-center gap-2"><Icon size={15} />{label}</span>
+                    <span className="flex items-center gap-2"><Icon size={15} />{label}{href === "/admin/enquiries" && data.newEnquiries > 0 && <Badge tone="warning">{data.newEnquiries} new</Badge>}</span>
                     <ArrowUpRight size={13} className="text-ink-400" />
                   </Link>
                 </li>

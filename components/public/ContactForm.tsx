@@ -1,59 +1,47 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { startTransition, useActionState, type SubmitEvent } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { submitEnquiryAction } from "@/app/(public)/contact/actions";
 import { Button } from "@/components/ui/Button";
+import { enquiryInterests } from "@/config/enquiry";
 
 const fieldClass =
   "w-full rounded-md border border-line bg-white px-4 py-3 text-[15px] text-ink-900 shadow-soft outline-none transition placeholder:text-ink-400 focus:border-primary-400 focus:ring-4 focus:ring-primary-100";
 const labelClass = "mb-1.5 block text-sm font-medium text-ink-700";
 
-const interests = ["Full career program", "A single learning track", "Corporate / team training", "Something else"];
-
-/**
- * There is no mail backend yet, so submitting opens the visitor's mail client
- * with the enquiry pre-filled. Swap `handleSubmit` for an API call when one exists.
- */
+/** Sends the enquiry to the server, where it is saved for the admissions team. Works without JavaScript too. */
 export function ContactForm({ email }: { email: string }) {
-  const [sent, setSent] = useState(false);
+  const [state, formAction, pending] = useActionState(submitEnquiryAction, null);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  // React clears an uncontrolled form once its action finishes, even when the action failed. Submitting through a
+  // transition keeps what the visitor typed, so an error never costs them their message. Without JavaScript the
+  // form still posts natively through `action`.
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const subject = `Program enquiry — ${data.get("interest")}`;
-    const body = [
-      `Name: ${data.get("name")}`,
-      `Email: ${data.get("email")}`,
-      `Current role: ${data.get("role") || "—"}`,
-      `Interested in: ${data.get("interest")}`,
-      "",
-      String(data.get("message") ?? ""),
-    ].join("\n");
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    startTransition(() => formAction(data));
   }
 
   return (
     <div className="relative rounded-md bg-white p-6 text-ink-900 shadow-[0_40px_100px_-30px_rgb(69_73_229/0.55)] ring-1 ring-white/20 sm:p-9">
-      {sent ? (
+      {state?.ok ? (
         <div className="grid min-h-[420px] place-items-center text-center">
-          <div>
+          <div role="status">
             <CheckCircle2 className="mx-auto text-success" size={44} strokeWidth={1.5} />
-            <h2 className="mt-5 text-2xl font-semibold">Your email is ready to send</h2>
-            <p className="mx-auto mt-3 max-w-sm text-ink-500">
-              We opened your mail app with the enquiry filled in. If nothing appeared, write to{" "}
-              <a href={`mailto:${email}`} className="font-medium text-primary-600 underline underline-offset-4">
+            <h2 className="mt-5 text-2xl font-semibold">Message received</h2>
+            <p className="mx-auto mt-3 max-w-sm text-ink-500">{state.message}</p>
+            <p className="mx-auto mt-3 max-w-sm text-sm text-ink-500">
+              Need us sooner? Write to{" "}
+              <a href={`mailto:${email}`} className="font-medium ui-link">
                 {email}
               </a>
               .
             </p>
-            <Button variant="outline" className="mt-8" onClick={() => setSent(false)}>
-              Edit enquiry
-            </Button>
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="grid gap-5">
+        <form action={formAction} onSubmit={handleSubmit} className="grid gap-5">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight">Send us a message</h2>
             <p className="mt-1 text-sm text-ink-500">All fields except role are required.</p>
@@ -81,7 +69,7 @@ export function ContactForm({ email }: { email: string }) {
           <fieldset>
             <legend className={labelClass}>I&apos;m interested in</legend>
             <div className="grid gap-2 sm:grid-cols-2">
-              {interests.map((interest, index) => (
+              {enquiryInterests.map((interest, index) => (
                 <label
                   key={interest}
                   className="flex cursor-pointer items-center gap-3 rounded-md border border-line px-4 py-3 text-sm font-medium text-ink-700 transition has-[:checked]:border-primary-400 has-[:checked]:bg-primary-50 has-[:checked]:text-primary-800"
@@ -96,18 +84,27 @@ export function ContactForm({ email }: { email: string }) {
             <label htmlFor="message" className={labelClass}>
               Message
             </label>
-            <textarea
-              id="message"
-              name="message"
-              required
-              rows={4}
-              className={`${fieldClass} resize-none`}
-              placeholder="Tell us about your background and goals…"
-            />
+            <textarea id="message" name="message" required minLength={10} rows={4} className={`${fieldClass} resize-none`} placeholder="Tell us about your background and goals…" />
           </div>
-          <Button type="submit" size="lg" className="w-full">
-            Send enquiry <ArrowRight size={16} className="transition-transform group-hover/button:translate-x-0.5" />
+          {/* A trap for bots: people never see or fill it. */}
+          <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+            <label htmlFor="website">Leave this empty</label>
+            <input id="website" name="website" tabIndex={-1} autoComplete="off" />
+          </div>
+          {state && !state.ok && (
+            <p role="alert" className="rounded-md bg-red-50 p-3 text-sm text-red-700">
+              {state.message}
+            </p>
+          )}
+          <Button type="submit" size="lg" className="w-full" disabled={pending}>
+            {pending ? "Sending…" : "Send enquiry"} {!pending && <ArrowRight size={16} className="transition-transform group-hover/button:translate-x-0.5" />}
           </Button>
+          <p className="text-center text-sm text-ink-500">
+            Prefer email?{" "}
+            <a href={`mailto:${email}`} className="font-medium ui-link">
+              {email}
+            </a>
+          </p>
         </form>
       )}
     </div>

@@ -7,6 +7,7 @@ import { addQuestion, createAssignment, createQuiz, deleteQuestion } from "@/ser
 import { revokeCertificate } from "@/services/certificates";
 import { addLesson, addLessonResource, addModule, createCourse, deleteLesson, deleteLessonResource, deleteModule, publishCourseContent, saveLessonContent, setCoursePublished, updateCourse } from "@/services/cms";
 import { enrollStudent } from "@/services/enrollments";
+import { setEnquiryStatus } from "@/services/enquiries";
 import { recordManualPayment } from "@/services/payments";
 import { createUser } from "@/services/users";
 
@@ -119,4 +120,10 @@ export async function revokeCertificateAction(_previous: ActionResult | null, da
 
 export async function recordPaymentAction(_previous: ActionResult | null, data: FormData): Promise<ActionResult> {
   return act(data, "/admin", recordManualPayment);
+}
+
+export async function setEnquiryStatusAction(_previous: ActionResult | null, data: FormData): Promise<ActionResult> {
+  return act(data, "/admin", async (actor, input) => {
+    await setEnquiryStatus(actor, input);
+  });
 }

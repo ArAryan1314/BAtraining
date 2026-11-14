@@ -12,6 +12,20 @@ export interface ChangelogEntry {
 /** Newest first. Add an entry here for every release; the page, feed and sitemap pick it up. */
 export const changelog: ChangelogEntry[] = [
   {
+    version: "1.3.0",
+    date: "2026-11-14",
+    title: "Enquiries that reach you, and a richer public site",
+    summary: "The contact form now saves every enquiry for the admissions team, and the public pages gain artwork and new sections.",
+    changes: [
+      { type: "added", text: "Contact enquiries are saved and shown in a new admin inbox, with new, contacted and closed statuses." },
+      { type: "added", text: "The admin dashboard shows how many enquiries are waiting." },
+      { type: "added", text: "Generated artwork on the topic, changelog and sign-in pages, a \"Who it's for\" section on the home page and a \"What happens next\" section on the contact page." },
+      { type: "added", text: "A command to create the first admin without demo data." },
+      { type: "improved", text: "The site header stays readable over the new light page headers." },
+      { type: "fixed", text: "The sign-in page explains when sign-in isn't set up yet instead of failing." },
+    ],
+  },
+  {
     version: "1.2.0",
     date: "2026-11-14",
     title: "Safer sign-in and search-ready pages",

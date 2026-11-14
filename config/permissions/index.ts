@@ -14,6 +14,7 @@ export const permissions = {
     "reports.read", "analytics.read",
     "payments.read", "payments.manage",
     "audit.read", "settings.write",
+    "enquiries.read", "enquiries.write",
   ],
   TRAINER: [
     "students.read", "students.write",

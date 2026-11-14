@@ -53,7 +53,7 @@ BA Upskill teaches people to become job-ready Business Analysts through a struct
 | FR-101 | Home page presenting the program, audiences, curriculum, portfolio and FAQs | ✅ | Includes an audience section and generated artwork |
 | FR-102 | Topic pages for learning tracks, career, resources and platform (38 pages) | ✅ | Four layouts, one per category; unique titles enforced by tests |
 | FR-103 | Search-engine readiness: titles, descriptions, canonical links, structured data, sitemap, robots | ✅ | Social preview images per page |
-| FR-104 | Contact / admissions form | 🟡 | Opens the visitor's email app. Enquiries are **not stored** |
+| FR-104 | Contact / admissions form | ✅ | Enquiries are stored and shown in the admin inbox, with bot and flood protection |
 | FR-105 | Public changelog with RSS feed | ✅ | |
 | FR-106 | Public course catalogue with prices and checkout | ⬜ | |
 | FR-107 | Self-service sign-up | ⬜ | Accounts are created by an admin |
@@ -110,6 +110,7 @@ BA Upskill teaches people to become job-ready Business Analysts through a struct
 | FR-508 | Platform reports and audit log | ✅ | |
 | FR-509 | Integration status page | ✅ | Shows which services are configured, never their values |
 | FR-510 | Search, filter and paginate large lists | ⬜ | Lists use fixed limits today |
+| FR-511 | Admin inbox for enquiries, with status (new, contacted, closed) | ✅ | `/admin/enquiries`; the dashboard shows how many are new |
 
 ### 5.6 Progress and credentials
 
@@ -175,7 +176,7 @@ The business owner should set a target for each. None are tracked yet, because a
 | Risk | Impact | Mitigation |
 |---|---|---|
 | Missing production settings stop sign-in | Learners cannot log in | Health endpoint names the missing item; sign-in page explains it; checklist in `GO-LIVE.md` |
-| Enquiries lost because the contact form only opens email | Lost admissions | Store enquiries (see TODO T-12) |
+| Enquiries not noticed because there is no email alert | Slow replies | The dashboard and inbox show new enquiries; add an email alert once email delivery exists (T-06) |
 | No password-reset email | Support load grows with learners | Email delivery (FR-701) |
 | No error monitoring | Problems found by users first | FR-705 |
 | One database for preview and production | Test data mixes with real data | Separate Preview database |
@@ -189,7 +190,7 @@ The business owner should set a target for each. None are tracked yet, because a
 4. The trainer can grade that assignment and see the learner on their dashboard.
 5. The certificate verifies at `/verify/<code>`.
 6. Password reset works by email (FR-205).
-7. Enquiries are stored (T-12) and an alert exists for errors (FR-705).
+7. An enquiry sent from the contact form appears in the admin inbox, and an alert exists for errors (FR-705).
 8. A backup restore has been tested once.
 
 ## 11. Open questions for the business owner

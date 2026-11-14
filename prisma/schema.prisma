@@ -7,6 +7,12 @@ datasource db {
   provider = "postgresql"
 }
 
+enum EnquiryStatus {
+  NEW
+  CONTACTED
+  CLOSED
+}
+
 enum Role {
   ADMIN
   TRAINER
@@ -523,4 +529,18 @@ model CohortMember {
   student   User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
   @@id([cohortId, studentId])
   @@index([studentId])
+}
+
+/// An enquiry sent through the public contact form. Created without an account, handled by an admin.
+model Enquiry {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  role      String?
+  interest  String
+  message   String
+  status    EnquiryStatus @default(NEW)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  @@index([status, createdAt])
 }

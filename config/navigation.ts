@@ -1,4 +1,4 @@
-import { BarChart3, Bell, BookOpen, ClipboardCheck, FileCog, FolderKanban, GraduationCap, LayoutDashboard, Settings, Users, type LucideIcon } from "lucide-react";
+import { BarChart3, Bell, BookOpen, ClipboardCheck, FileCog, FolderKanban, GraduationCap, Inbox, LayoutDashboard, Settings, Users, type LucideIcon } from "lucide-react";
 import type { UserRole } from "@/types/user";
 
 export interface NavItem {
@@ -45,6 +45,7 @@ export const workspaces: Record<UserRole, Workspace> = {
     navigation: [
       { label: "Overview", href: "/admin/dashboard", icon: LayoutDashboard },
       { label: "Users", href: "/admin/users", icon: Users },
+      { label: "Enquiries", href: "/admin/enquiries", icon: Inbox },
       { label: "Courses", href: "/admin/courses", icon: BookOpen },
       { label: "Assessments", href: "/admin/assessments", icon: ClipboardCheck },
       { label: "Content", href: "/admin/content", icon: FileCog },

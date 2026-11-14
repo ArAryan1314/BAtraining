@@ -73,7 +73,7 @@ export async function getTrainerDashboard(actor: SessionUser) {
 
 export async function getAdminDashboard(actor: SessionUser) {
   requirePermission(actor, "analytics.read");
-  const [students, trainers, publishedCourses, draftCourses, enrollments, lessonsCompleted, quizAttempts, certificates, completion] = await Promise.all([
+  const [students, trainers, publishedCourses, draftCourses, enrollments, lessonsCompleted, quizAttempts, certificates, completion, newEnquiries] = await Promise.all([
     prisma.user.count({ where: { role: "STUDENT" } }),
     prisma.user.count({ where: { role: "TRAINER" } }),
     prisma.course.count({ where: { published: true } }),
@@ -83,6 +83,7 @@ export async function getAdminDashboard(actor: SessionUser) {
     prisma.quizAttempt.count(),
     prisma.certificate.count({ where: { status: "ISSUED" } }),
     prisma.courseProgress.aggregate({ _avg: { overallPercent: true } }),
+    prisma.enquiry.count({ where: { status: "NEW" } }),
   ]);
   return {
     students,
@@ -93,6 +94,7 @@ export async function getAdminDashboard(actor: SessionUser) {
     lessonsCompleted,
     quizAttempts,
     certificates,
+    newEnquiries,
     averageCompletion: Math.round(completion._avg.overallPercent ?? 0),
   };
 }

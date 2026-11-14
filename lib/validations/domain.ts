@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { enquiryInterests, enquiryStatuses } from "@/config/enquiry";
 
 export const courseInputSchema = z.object({
   title: z.string().min(3).max(160),
@@ -107,3 +108,12 @@ export const paymentInputSchema = z.object({
   currency: z.string().trim().length(3).default("INR"),
   providerRef: optionalText(120),
 });
+
+export const enquiryInputSchema = z.object({
+  name: requiredText("Your name", 120),
+  email: z.string().trim().toLowerCase().pipe(z.email("Enter a valid email address.")),
+  role: optionalText(120),
+  interest: z.enum(enquiryInterests, { error: "Choose what you're interested in." }),
+  message: requiredText("Your message", 5_000).pipe(z.string().min(10, "Tell us a little more, at least a sentence.")),
+});
+export const enquiryStatusSchema = z.object({ enquiryId: id, status: z.enum(enquiryStatuses) });

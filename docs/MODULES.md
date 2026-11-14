@@ -8,7 +8,7 @@ Where everything lives and what it does. For the architecture and rules see the 
 |---|---|---|
 | Public | `/` | Home |
 | | `/<slug>` (38 pages) | Learn, career, resources and platform topics |
-| | `/contact` | Admissions enquiry (opens the visitor's email app) |
+| | `/contact` | Admissions enquiry form (saved for the admin inbox) |
 | | `/changelog`, `/changelog/feed.xml` | Release notes and RSS |
 | | `/verify/<code>` | Certificate check (not indexed) |
 | | `/sitemap.xml`, `/robots.txt`, `/opengraph-image` | Search and sharing |
@@ -17,9 +17,9 @@ Where everything lives and what it does. For the architecture and rules see the 
 | | `/api/health` | Readiness: configuration and database |
 | Student | `/student/dashboard`, `courses`, `courses/<slug>`, `courses/<slug>/lessons/<id>`, `assessments`, `assessments/quizzes/<id>`, `assessments/assignments/<id>`, `projects`, `certificates`, `notifications`, `account` | Learning workspace |
 | Trainer | `/trainer/dashboard`, `cohorts`, `assessments`, `projects`, `reports`, `account` | Teaching workspace |
-| Admin | `/admin/dashboard`, `users`, `courses`, `content`, `content/<courseId>`, `content/<courseId>/lessons/<id>`, `assessments`, `assessments/quizzes/<id>`, `reports`, `settings` | Operations |
+| Admin | `/admin/dashboard`, `users`, `enquiries`, `courses`, `content`, `content/<courseId>`, `content/<courseId>/lessons/<id>`, `assessments`, `assessments/quizzes/<id>`, `reports`, `settings` | Operations |
 
-Server Actions: `app/student/actions.ts`, `app/trainer/actions.ts`, `app/admin/actions.ts`, `app/account-actions.ts`.
+Server Actions: `app/(public)/contact/actions.ts` (public contact form), `app/student/actions.ts`, `app/trainer/actions.ts`, `app/admin/actions.ts`, `app/account-actions.ts`.
 
 ## Services
 
@@ -35,6 +35,7 @@ Every function takes the signed-in user first and checks a permission.
 | `progress` | `completeLesson`, `getCourseProgress`, `syncCourseProgress`, `recordProgressEvent` |
 | `assessments` | `listMyAssessments`, `getQuizToTake`, `submitQuizAttempt`, `getAssignmentToSubmit`, `submitAssignment`, `getGradingWorkspace`, `gradeAssignment`, `listAssessmentsForAdmin`, `createQuiz`, `getQuizForEditing`, `addQuestion`, `deleteQuestion`, `createAssignment` |
 | `projects` | `listStudentProjects`, `createProject`, `submitProject`, `listProjectReviewQueue`, `reviewProjectSubmission`, `updateProjectStatus` |
+| `enquiries` | `submitEnquiry` (public), `listEnquiries`, `countNewEnquiries`, `setEnquiryStatus` |
 | `cohorts` | `getCohortWorkspace`, `createCohort`, `addCohortMember`, `removeCohortMember`, `learnerWhere`, `requireLearnerInScope` |
 | `certificates` | `listStudentCertificates`, `verifyCertificate`, `issueCourseCertificate`, `listCertificatesForAdmin`, `revokeCertificate` |
 | `notifications` | `notify`, `listMyNotifications`, `markAllNotificationsRead` |

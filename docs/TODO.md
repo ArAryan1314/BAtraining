@@ -20,7 +20,6 @@ The single prioritised backlog. It replaces the earlier [PENDING-INTEGRATIONS.md
 | T-09 | Connect error monitoring (Sentry) | Both | FR-705, NFR-10 | Hook into `lib/actions/result.ts` and `app/error.tsx` |
 | T-10 | Enable database backups with point-in-time recovery and test a restore once | You | NFR-11 | |
 | T-11 | Add privacy policy, terms and refund policy pages | Both | NFR-12 | Content must come from you |
-| T-12 | Store contact enquiries: a table, an admin inbox and an email alert | Dev | FR-104 | The form only opens the visitor's email app today, so enquiries can be lost |
 
 ## P1: before growing
 
@@ -55,6 +54,8 @@ The single prioritised backlog. It replaces the earlier [PENDING-INTEGRATIONS.md
 | T-34 | Lighthouse and performance budgets in CI | Dev | NFR-07 |
 
 ## Done recently
+
+- Contact enquiries are stored, with an admin inbox, status tracking, a honeypot and a per-address limit (T-12). An email alert for new enquiries waits on T-06
 
 - Environment checks, sign-in throttling, security headers, role route guard and a database-aware health endpoint
 - Prisma migrations and Vercel-aware connection settings
