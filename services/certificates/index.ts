@@ -17,15 +17,23 @@ export async function verifyCertificate(verificationCode: string) {
   return prisma.certificate.findUnique({ where: { verificationCode }, select: { title: true, status: true } });
 }
 
-/** Internal: issued when a student finishes a course. A revoked certificate is never reissued automatically. */
+/**
+ * Internal: issued when a student finishes a course. A revoked certificate is never reissued automatically.
+ * The (studentId, title) unique constraint makes concurrent completions safe: the loser of the race reads the winner's row.
+ */
 export async function issueCourseCertificate(studentId: string, courseTitle: string) {
-  const existing = await prisma.certificate.findFirst({ where: { studentId, title: courseTitle } });
+  const existing = await prisma.certificate.findUnique({ where: { studentId_title: { studentId, title: courseTitle } } });
   if (existing) return existing;
-  const certificate = await prisma.certificate.create({
-    data: { studentId, title: courseTitle, verificationCode: randomBytes(8).toString("hex").toUpperCase(), status: "ISSUED", issuedAt: new Date() },
-  });
-  await notify(studentId, "Certificate issued", `Congratulations! You've earned your certificate for ${courseTitle}.`);
-  return certificate;
+  try {
+    const certificate = await prisma.certificate.create({
+      data: { studentId, title: courseTitle, verificationCode: randomBytes(8).toString("hex").toUpperCase(), status: "ISSUED", issuedAt: new Date() },
+    });
+    await notify(studentId, "Certificate issued", `Congratulations! You've earned your certificate for ${courseTitle}.`);
+    return certificate;
+  } catch (error) {
+    if ((error as { code?: string }).code !== "P2002") throw error;
+    return prisma.certificate.findUniqueOrThrow({ where: { studentId_title: { studentId, title: courseTitle } } });
+  }
 }
 
 export async function listCertificatesForAdmin(actor: SessionUser) {

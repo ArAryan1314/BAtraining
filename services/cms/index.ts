@@ -9,6 +9,9 @@ import { writeAuditLog } from "@/services/security";
 const idSchema = (key: string) => z.object({ [key]: z.string().min(1) });
 const SLUG_MAX_LENGTH = 80;
 
+/** Next position in a list. Uses the highest existing order rather than a count, so deletions can't cause duplicates. */
+const nextOrder = (aggregate: { _max: { sortOrder: number | null } }) => (aggregate._max.sortOrder ?? 0) + 1;
+
 export async function listPrograms(actor: SessionUser) {
   requirePermission(actor, "programs.read");
   return prisma.program.findMany({ include: { courses: true }, orderBy: { createdAt: "desc" } });
@@ -68,13 +71,17 @@ export async function getCourseEditor(actor: SessionUser, courseId: string) {
 export async function addModule(actor: SessionUser, input: unknown) {
   requirePermission(actor, "content.write");
   const { courseId, title } = moduleInputSchema.parse(input);
-  await prisma.module.create({ data: { courseId, title, sortOrder: (await prisma.module.count({ where: { courseId } })) + 1 } });
+  const order = nextOrder(await prisma.module.aggregate({ where: { courseId }, _max: { sortOrder: true } }));
+  const created = await prisma.module.create({ data: { courseId, title, sortOrder: order } });
+  await writeAuditLog({ actorId: actor.id, action: "module.create", entityType: "Module", entityId: created.id });
 }
 
 export async function addLesson(actor: SessionUser, input: unknown) {
   requirePermission(actor, "content.write");
   const { moduleId, title } = lessonInputSchema.parse(input);
-  await prisma.lesson.create({ data: { moduleId, title, sortOrder: (await prisma.lesson.count({ where: { moduleId } })) + 1 } });
+  const order = nextOrder(await prisma.lesson.aggregate({ where: { moduleId }, _max: { sortOrder: true } }));
+  const created = await prisma.lesson.create({ data: { moduleId, title, sortOrder: order } });
+  await writeAuditLog({ actorId: actor.id, action: "lesson.create", entityType: "Lesson", entityId: created.id });
 }
 
 /** Refuses when a student has already completed the lesson, because deleting it would erase their progress. */
@@ -148,6 +155,7 @@ export async function saveLessonContent(actor: SessionUser, input: unknown) {
     ].filter((block) => !!block);
     await tx.contentBlock.createMany({ data: blocks.map((block, index) => ({ ...block, versionId: draft.id, lessonId, sortOrder: index + 1 })) });
   });
+  await writeAuditLog({ actorId: actor.id, action: "content.save", entityType: "Lesson", entityId: lessonId, metadata: { courseId } });
   return "Saved as a draft. Publish the content when you're ready for students to see it.";
 }
 
@@ -167,11 +175,13 @@ export async function publishCourseContent(actor: SessionUser, input: unknown) {
 export async function addLessonResource(actor: SessionUser, input: unknown) {
   requirePermission(actor, "content.write");
   const { lessonId, title, url } = lessonResourceSchema.parse(input);
-  await prisma.lessonResource.create({ data: { lessonId, title, kind: "LINK", url: url as string } });
+  const resource = await prisma.lessonResource.create({ data: { lessonId, title, kind: "LINK", url: url as string } });
+  await writeAuditLog({ actorId: actor.id, action: "lessonResource.create", entityType: "LessonResource", entityId: resource.id });
 }
 
 export async function deleteLessonResource(actor: SessionUser, input: unknown) {
   requirePermission(actor, "content.write");
   const { resourceId } = idSchema("resourceId").parse(input);
   await prisma.lessonResource.delete({ where: { id: resourceId } });
+  await writeAuditLog({ actorId: actor.id, action: "lessonResource.delete", entityType: "LessonResource", entityId: resourceId });
 }

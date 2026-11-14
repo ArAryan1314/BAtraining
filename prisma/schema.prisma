@@ -450,6 +450,7 @@ model Certificate {
   issuedAt         DateTime?
   revokedAt        DateTime?
   student          User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  @@unique([studentId, title])
   @@index([studentId, issuedAt])
 }
 

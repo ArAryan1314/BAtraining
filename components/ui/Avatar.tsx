@@ -7,6 +7,7 @@ export function Avatar({ name, src, size = "md", className }: { name: string; sr
   return (
     <span className={cn("inline-grid shrink-0 place-items-center overflow-hidden rounded-full bg-primary-100 font-semibold text-primary-700",
       size === "sm" && "h-7 w-7 text-[10px]", size === "md" && "h-9 w-9 text-xs", size === "lg" && "h-11 w-11 text-sm", size === "xl" && "h-16 w-16 text-lg", className)}>
+      {/* eslint-disable-next-line @next/next/no-img-element -- avatars come from arbitrary user-supplied hosts, so next/image remotePatterns can't cover them */}
       {src ? <img src={src} alt={name} className="h-full w-full object-cover" /> : initials}
     </span>
   );

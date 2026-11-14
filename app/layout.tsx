@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { siteConfig } from "@/config/site";
 import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
@@ -13,13 +14,15 @@ const instrument = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "BA Upskill — Become a job-ready Business Analyst",
-    template: "%s · BA Upskill",
+    default: `${siteConfig.name} — ${siteConfig.tagline}`,
+    template: `%s · ${siteConfig.name}`,
   },
-  description:
-    "A mentor-led, project-based Business Analyst program. Learn requirements, process modeling, Agile delivery and data analysis by building a real portfolio.",
-  applicationName: "BA Upskill",
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  openGraph: { siteName: siteConfig.name, type: "website", locale: "en_IN" },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
