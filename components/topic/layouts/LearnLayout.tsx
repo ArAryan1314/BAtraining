@@ -1,14 +1,10 @@
-import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
-import { ButtonLink } from "@/components/ui/Button";
-import { Eyebrow } from "@/components/ui/marketing-primitives";
 import { CtaBand } from "@/components/sections/marketing/CtaBand";
 import { getRelatedTopics, type TopicContent } from "@/content/topics";
+import { TopicHero } from "../TopicHero";
 import { TopicArtifacts, TopicExample, TopicFaq, TopicRelated, TopicSteps } from "../TopicSections";
-import { TopicArt } from "@/components/illustrations";
 import { topicIconMap } from "../topic-icons";
 
-/** Learning track: a docs-style page with a pinned "at a glance" rail beside the curriculum. */
+/** Learning track: the shared banner, then a docs-style page with a pinned contents rail beside the curriculum. */
 export function LearnLayout({ topic }: { topic: TopicContent }) {
   const sections = [
     { id: "overview", label: "Overview", show: true },
@@ -18,37 +14,11 @@ export function LearnLayout({ topic }: { topic: TopicContent }) {
 
   return (
     <>
-      <header data-hero="light" className="border-b border-line bg-gradient-to-b from-primary-50 to-white pb-14 pt-32 md:pt-40">
-        <div className="container grid max-w-6xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-          <div>
-          <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-sm text-ink-500">
-            <Link href="/" className="ui-link text-ink-500">Home</Link>
-            <ChevronRight size={14} />
-            <span>Learn</span>
-          </nav>
-          <Eyebrow>{topic.eyebrow}</Eyebrow>
-          <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-ink-900 sm:text-5xl lg:text-6xl">{topic.title}</h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-ink-600">{topic.summary}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <ButtonLink href="/contact" size="lg">Apply now <ArrowRight size={16} /></ButtonLink>
-            <ButtonLink href="/curriculum" variant="secondary" size="lg">See the curriculum</ButtonLink>
-          </div>
-          </div>
-          <TopicArt scene="path" seed={topic.slug} icon={topicIconMap[topic.concepts[0].icon]} className="hidden lg:block" />
-        </div>
-      </header>
+      <TopicHero topic={topic} visual="art" />
 
       <div className="container grid max-w-6xl gap-12 py-16 lg:grid-cols-[16rem_1fr] lg:gap-16 lg:py-24">
-        <aside className="lg:sticky lg:top-28 lg:self-start">
-          <dl className="divide-y divide-line rounded-md border border-line bg-white">
-            {topic.meta.map((item) => (
-              <div key={item.label} className="p-4">
-                <dt className="text-xs font-medium uppercase tracking-[0.12em] text-ink-500">{item.label}</dt>
-                <dd className="mt-1 font-semibold text-ink-900">{item.value}</dd>
-              </div>
-            ))}
-          </dl>
-          <nav aria-label="On this page" className="mt-6 hidden lg:block">
+        <aside className="hidden lg:sticky lg:top-28 lg:block lg:self-start">
+          <nav aria-label="On this page">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-500">On this page</p>
             <ul className="mt-3 space-y-2 border-l border-line text-sm">
               {sections.map((section) => (

@@ -3,7 +3,9 @@ import { ArrowRight, Check, ChevronRight } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
 import { AccentTitle, DarkBackdrop, Eyebrow } from "@/components/ui/marketing-primitives";
 import { Motion } from "@/components/ui/motion/Motion";
+import { TopicArt } from "@/components/illustrations";
 import type { TopicContent } from "@/content/topics";
+import { topicIconMap } from "./topic-icons";
 
 const categoryLabel: Record<TopicContent["category"], string> = {
   learn: "Learn",
@@ -12,7 +14,8 @@ const categoryLabel: Record<TopicContent["category"], string> = {
   platform: "Platform",
 };
 
-export function TopicHero({ topic }: { topic: TopicContent }) {
+/** The banner for every topic page: the same dark, glowing look as the home page. The right side shows either the outcomes card or this page's own artwork. */
+export function TopicHero({ topic, visual = "outcomes" }: { topic: TopicContent; visual?: "outcomes" | "art" }) {
   return (
     <section className="relative overflow-hidden bg-ink-950 pb-16 pt-32 text-white md:pb-24 md:pt-40">
       <DarkBackdrop />
@@ -51,20 +54,24 @@ export function TopicHero({ topic }: { topic: TopicContent }) {
           </div>
 
           <Motion animation="slide-up" delay={300}>
-            <div className="relative rounded-md border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur-xl sm:p-7">
-              <div aria-hidden className="absolute inset-x-8 -top-px h-px bg-gradient-to-r from-transparent via-primary-300/60 to-transparent" />
-              <p className="text-xs font-medium uppercase tracking-[0.14em] text-accent-300">You will be able to</p>
-              <ul className="mt-5 space-y-3.5">
-                {topic.outcomes.slice(0, 5).map((outcome) => (
-                  <li key={outcome} className="flex gap-3 text-[15px] leading-6 text-ink-200">
-                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-primary-500/20 text-primary-200 ring-1 ring-primary-400/30">
-                      <Check size={12} strokeWidth={3} />
-                    </span>
-                    {outcome}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {visual === "art" ? (
+              <TopicArt seed={topic.slug} tone="dark" icon={topicIconMap[topic.concepts[0].icon]} />
+            ) : (
+              <div className="relative rounded-md border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur-xl sm:p-7">
+                <div aria-hidden className="absolute inset-x-8 -top-px h-px bg-gradient-to-r from-transparent via-primary-300/60 to-transparent" />
+                <p className="text-xs font-medium uppercase tracking-[0.14em] text-accent-300">You will be able to</p>
+                <ul className="mt-5 space-y-3.5">
+                  {topic.outcomes.slice(0, 5).map((outcome) => (
+                    <li key={outcome} className="flex gap-3 text-[15px] leading-6 text-ink-200">
+                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-primary-500/20 text-primary-200 ring-1 ring-primary-400/30">
+                        <Check size={12} strokeWidth={3} />
+                      </span>
+                      {outcome}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </Motion>
         </div>
 

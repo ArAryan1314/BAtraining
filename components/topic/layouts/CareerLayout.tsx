@@ -1,35 +1,16 @@
-import { ArrowRight } from "lucide-react";
-import { ButtonLink } from "@/components/ui/Button";
-import { Eyebrow, SectionHeader } from "@/components/ui/marketing-primitives";
+import { SectionHeader } from "@/components/ui/marketing-primitives";
 import { CtaBand } from "@/components/sections/marketing/CtaBand";
 import { getRelatedTopics, type TopicContent } from "@/content/topics";
-import { TopicArt } from "@/components/illustrations";
+import { TopicHero } from "../TopicHero";
 import { TopicExample, TopicFaq, TopicRelated, TopicSteps, TopicTerms } from "../TopicSections";
-import { topicIconMap } from "../topic-icons";
 
-/** Career page: an editorial, story-led layout. Large serif headline, a numbered outcome roadmap, and deliverables as a bento grid. */
+/** Career page: the shared banner, then an editorial layout with a numbered outcome roadmap and deliverables as a bento grid. */
 export function CareerLayout({ topic }: { topic: TopicContent }) {
   const [lead, ...rest] = topic.artifacts ?? [];
 
   return (
     <>
-      <header data-hero="light" className="bg-[#fbf8f3] pb-20 pt-36 md:pb-28 md:pt-44">
-        <div className="container max-w-5xl text-center">
-          <Eyebrow>{topic.eyebrow}</Eyebrow>
-          <h1 className="mt-6 font-display text-5xl font-normal leading-[1.02] tracking-tight text-ink-900 sm:text-7xl">{topic.title}</h1>
-          <p className="mx-auto mt-8 max-w-2xl text-xl leading-9 text-ink-600">{topic.summary}</p>
-          <div className="mt-10 flex justify-center"><ButtonLink href="/contact" size="lg">Talk to an advisor <ArrowRight size={16} /></ButtonLink></div>
-          <dl className="mx-auto mt-14 flex max-w-3xl flex-wrap justify-center gap-x-12 gap-y-6 border-t border-ink-200 pt-8">
-            {topic.meta.map((item) => (
-              <div key={item.label}>
-                <dt className="text-xs font-medium uppercase tracking-[0.14em] text-ink-500">{item.label}</dt>
-                <dd className="mt-1 text-lg font-semibold text-ink-900">{item.value}</dd>
-              </div>
-            ))}
-          </dl>
-          <TopicArt scene="growth" seed={topic.slug} icon={topicIconMap[topic.concepts[0].icon]} className="mx-auto mt-14 max-w-2xl" />
-        </div>
-      </header>
+      <TopicHero topic={topic} visual="art" />
 
       <section className="py-20 md:py-28">
         <div className="container max-w-4xl">

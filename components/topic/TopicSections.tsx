@@ -14,7 +14,7 @@ export function TopicOverview({ topic }: { topic: TopicContent }) {
       <div className="container grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeader eyebrow="Overview" title={topic.overview.heading} align="left" />
-          <TopicArt scene="dashboard" seed={topic.slug} icon={topicIconMap[topic.concepts[0].icon]} className="mt-10 hidden max-w-sm lg:block" />
+          <TopicArt seed={topic.slug} icon={topicIconMap[topic.concepts[0].icon]} className="mt-10 hidden max-w-sm lg:block" />
         </div>
         <div>
           <Stagger className="space-y-6">
