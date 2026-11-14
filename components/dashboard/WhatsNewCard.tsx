@@ -18,9 +18,9 @@ export function WhatsNewCard() {
       <p className="mt-3 font-medium text-ink-900">{title}</p>
       <time dateTime={date} className="text-xs text-ink-500">{formatDate(new Date(date))}</time>
       <ul className="mt-3 space-y-2 text-sm leading-6 text-ink-600">
-        {changes.slice(0, HIGHLIGHT_COUNT).map((change) => <li key={change.text} className="flex gap-2"><span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary-400" />{change.text}</li>)}
+        {changes.slice(0, HIGHLIGHT_COUNT).map((change) => <li key={change.text} className="flex gap-2"><span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-md bg-primary-400" />{change.text}</li>)}
       </ul>
-      <Link href="/changelog" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:text-primary-700">Full release notes <ArrowUpRight size={14} /></Link>
+      <Link href="/changelog" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold ui-link">Full release notes <ArrowUpRight size={14} /></Link>
     </Card>
   );
 }

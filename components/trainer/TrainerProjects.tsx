@@ -20,8 +20,8 @@ export function TrainerProjects({ submissions }: { submissions: Awaited<ReturnTy
         <Card key={submission.id} className="p-5">
           <h2 className="font-semibold">{submission.project.title}</h2>
           <p className="mt-1 text-sm text-ink-500">{submission.student.name} · {submission.title} · Submitted {formatDate(submission.submittedAt)}</p>
-          {submission.contentUrl && <a href={submission.contentUrl} target="_blank" rel="noreferrer" className="mt-3 inline-block text-sm font-semibold text-primary-700 hover:underline">Open submitted work</a>}
-          {submission.notes && <p className="mt-3 whitespace-pre-wrap rounded-lg bg-surface-muted p-4 text-sm leading-6 text-ink-700">{submission.notes}</p>}
+          {submission.contentUrl && <a href={submission.contentUrl} target="_blank" rel="noreferrer" className="mt-3 inline-block text-sm font-semibold ui-link">Open submitted work</a>}
+          {submission.notes && <p className="mt-3 whitespace-pre-wrap rounded-md bg-surface-muted p-4 text-sm leading-6 text-ink-700">{submission.notes}</p>}
           <ActionForm action={reviewProjectAction} submitLabel="Send review" hidden={{ submissionId: submission.id }} className="mt-4">
             <Select id={`decision-${submission.id}`} name="decision" label="Decision" options={decisions} required />
             <Textarea id={`notes-${submission.id}`} name="notes" label="Feedback" rows={3} required />

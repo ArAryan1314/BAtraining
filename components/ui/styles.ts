@@ -5,7 +5,7 @@
  */
 export const uiStyles = {
   section: "space-y-6",
-  panel: "rounded-3xl border border-line bg-white shadow-sm",
+  panel: "rounded-md border border-line bg-white shadow-sm",
   panelPadding: "p-6 sm:p-8",
   stack: "space-y-4",
   stackTight: "space-y-2",
@@ -17,7 +17,7 @@ export const uiStyles = {
   mutedText: "text-sm leading-6 text-ink-500",
   eyebrow: "text-xs font-semibold uppercase tracking-[0.16em] text-primary-600",
   title: "mt-2 text-2xl font-semibold tracking-tight",
-  subtle: "rounded-xl border border-line bg-surface-muted",
+  subtle: "rounded-md border border-line bg-surface-muted",
 } as const;
 
 export { cn } from "@/lib/cn";

@@ -14,7 +14,7 @@ export function SiteFooter() {
   return (
     <footer className="relative overflow-hidden bg-ink-950 text-ink-400">
       <div aria-hidden className="absolute inset-0 bg-grid-dark mask-fade-b opacity-60" />
-      <div aria-hidden className="absolute -top-48 left-1/2 h-96 w-[60rem] -translate-x-1/2 rounded-full bg-primary-700/20 blur-[120px]" />
+      <div aria-hidden className="absolute -top-48 left-1/2 h-96 w-[60rem] -translate-x-1/2 rounded-md bg-primary-700/20 blur-[120px]" />
 
       <div className="container relative">
         <div className="grid gap-10 pb-14 pt-20 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(5,1fr)]">
@@ -30,7 +30,7 @@ export function SiteFooter() {
               <ul className="mt-4 space-y-2.5">
                 {column.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="text-sm transition-colors hover:text-white">
+                    <Link href={link.href} className="inline-block py-1 text-sm ui-link-inverse">
                       {link.label}
                     </Link>
                   </li>
@@ -43,7 +43,7 @@ export function SiteFooter() {
         <div className="flex flex-col gap-3 border-t border-white/10 py-6 text-xs sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} BA Upskill. All rights reserved.</p>
           <p className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 animate-pulse-ring rounded-full bg-accent-400" />
+            <span className="h-1.5 w-1.5 animate-pulse-ring rounded-md bg-accent-400" />
             Enrolment open for the next cohort
           </p>
         </div>

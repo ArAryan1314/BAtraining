@@ -2,6 +2,8 @@
 
 ## Local PostgreSQL
 
+For a hosted (Vercel) database see [VERCEL-DATABASE.md](VERCEL-DATABASE.md).
+
 Create a PostgreSQL database called `ba_training`, then put the connection string in `.env.local`.
 
 Example:

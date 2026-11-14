@@ -15,7 +15,7 @@ export function CtaBand({
   return (
     <section className="px-3 pb-3 sm:px-4 sm:pb-4">
       <Motion animation="fade-in">
-        <div className="relative mx-auto max-w-[96rem] overflow-hidden rounded-[2rem] bg-ink-950 px-6 py-20 text-center text-white sm:rounded-[2.5rem] md:py-28">
+        <div className="relative mx-auto max-w-[96rem] overflow-hidden rounded-md bg-ink-950 px-6 py-20 text-center text-white sm:rounded-md md:py-28">
           <DarkBackdrop />
           <div className="relative mx-auto max-w-3xl">
             <h2 className="text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl md:text-6xl">

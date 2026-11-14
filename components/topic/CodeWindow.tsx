@@ -44,13 +44,13 @@ export function CodeWindow({
   const filename = language === "sql" ? "query.sql" : language === "gherkin" ? "story.feature" : "example.md";
 
   return (
-    <figure className="overflow-hidden rounded-3xl border border-white/10 bg-ink-950 shadow-[0_40px_80px_-32px_rgb(9_11_17/0.6)]">
+    <figure className="overflow-hidden rounded-md border border-white/10 bg-ink-950 shadow-[0_40px_80px_-32px_rgb(9_11_17/0.6)]">
       <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.03] px-5 py-3.5">
-        <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
-        <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
-        <span className="h-3 w-3 rounded-full bg-[#28c840]" />
+        <span className="h-3 w-3 rounded-md bg-[#ff5f57]" />
+        <span className="h-3 w-3 rounded-md bg-[#febc2e]" />
+        <span className="h-3 w-3 rounded-md bg-[#28c840]" />
         <span className="ml-3 font-mono text-xs text-ink-500">{filename}</span>
-        <span className="ml-auto rounded-full border border-white/10 px-2.5 py-0.5 text-[11px] font-medium text-ink-400">{title}</span>
+        <span className="ml-auto rounded-md border border-white/10 px-2.5 py-0.5 text-[11px] font-medium text-ink-400">{title}</span>
       </div>
       <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-6 text-ink-200 sm:p-6">
         <code>

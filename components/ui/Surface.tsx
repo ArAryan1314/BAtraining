@@ -6,7 +6,8 @@ interface SurfaceProps {
   as?: ElementType;
   variant?: "default" | "muted" | "dark" | "brand";
   border?: boolean;
-  radius?: "none" | "sm" | "md" | "lg" | "xl" | "full";
+  /** Applies the shared corner radius. */
+  withRadius?: boolean;
   className?: string;
 }
 
@@ -15,7 +16,7 @@ export function Surface({
   as: Component = "div", 
   variant = "default", 
   border = false,
-  radius = "none",
+  withRadius = false,
   className 
 }: SurfaceProps) {
   return (
@@ -32,13 +33,7 @@ export function Surface({
           "border border-white/10": border && variant === "dark",
           "border border-primary-500": border && variant === "brand",
         },
-        {
-          "rounded-sm": radius === "sm",
-          "rounded-md": radius === "md",
-          "rounded-lg": radius === "lg",
-          "rounded-xl": radius === "xl",
-          "rounded-full": radius === "full",
-        },
+        withRadius && "rounded-md",
         className
       )}
     >

@@ -22,8 +22,8 @@ export function LessonEditor({ lesson }: { lesson: NonNullable<Awaited<ReturnTyp
         <p className="mt-1 text-sm text-ink-500">Links appear to students straight away.</p>
         <ul className="mt-3 space-y-2">
           {lesson.resources.map((resource) => (
-            <li key={resource.id} className="flex items-center justify-between gap-3 rounded-lg border border-line p-3 text-sm">
-              <a href={resource.url} target="_blank" rel="noreferrer" className="font-medium text-primary-700 hover:underline">{resource.title}</a>
+            <li key={resource.id} className="flex items-center justify-between gap-3 rounded-md border border-line p-3 text-sm">
+              <a href={resource.url} target="_blank" rel="noreferrer" className="font-medium ui-link">{resource.title}</a>
               <ActionForm action={deleteLessonResourceAction} submitLabel="Remove" variant="ghost" size="sm" hidden={{ resourceId: resource.id }} />
             </li>
           ))}

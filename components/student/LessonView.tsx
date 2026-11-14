@@ -11,7 +11,7 @@ type Lesson = NonNullable<Awaited<ReturnType<typeof getLessonView>>>;
 function LessonBlock({ block }: { block: Lesson["blocks"][number] }) {
   if (block.type === "CALLOUT") {
     return (
-      <div className="rounded-xl border border-primary-100 bg-primary-50 p-4">
+      <div className="rounded-md border border-primary-100 bg-primary-50 p-4">
         <div className="text-sm font-semibold text-primary-700">{block.title}</div>
         <p className="mt-1 text-sm leading-6 text-ink-700">{block.text}</p>
       </div>
@@ -27,7 +27,7 @@ function LessonBlock({ block }: { block: Lesson["blocks"][number] }) {
   }
   if (block.url) {
     return (
-      <a href={block.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-primary-700 hover:underline">
+      <a href={block.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold ui-link">
         {block.title} <ExternalLink size={14} />
       </a>
     );
@@ -51,7 +51,7 @@ export function LessonView({ view }: { view: Lesson }) {
             <ul className="mt-2 space-y-1">
               {resources.map((resource) => (
                 <li key={resource.id}>
-                  <a href={resource.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-primary-700 hover:underline">
+                  <a href={resource.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold ui-link">
                     {resource.title} <ExternalLink size={14} />
                   </a>
                 </li>

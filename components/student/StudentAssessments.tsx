@@ -5,7 +5,7 @@ import { Badge, Card, EmptyState } from "@/components/ui";
 import { formatDate } from "@/lib/format";
 import type { listMyAssessments } from "@/services/assessments";
 
-const rowClass = "flex items-center justify-between gap-4 rounded-lg border border-line p-4 hover:bg-surface-muted";
+const rowClass = "flex items-center justify-between gap-4 rounded-md border border-line p-4 ui-row";
 
 export function StudentAssessments({ data: { quizzes, assignments } }: { data: Awaited<ReturnType<typeof listMyAssessments>> }) {
   if (!quizzes.length && !assignments.length) {

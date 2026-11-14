@@ -14,7 +14,7 @@ export function FeatureGrid({ items, columns = 3, title, description }: { items:
         {items.map(item => {
           const cardContent = (
             <Card variant={item.href ? "interactive" : "default"} className="p-5 h-full">
-              <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary-50 text-primary-600">{item.icon}</div>
+              <div className="grid h-11 w-11 place-items-center rounded-md bg-primary-50 text-primary-600">{item.icon}</div>
               <h3 className="mt-5 font-semibold">{item.title}</h3>
               <p className="mt-2 text-sm leading-6 text-ink-500">{item.description}</p>
             </Card>

@@ -36,7 +36,7 @@ export function ContactPage() {
                   <div>
                     <p className="font-semibold text-white">{channel.title}</p>
                     {channel.href ? (
-                      <a href={channel.href} className="text-ink-400 underline-offset-4 hover:text-white hover:underline">
+                      <a href={channel.href} className="text-ink-400 ui-link-inverse">
                         {channel.body}
                       </a>
                     ) : (

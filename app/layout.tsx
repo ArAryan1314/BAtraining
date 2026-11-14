@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { ScrollProgress } from "@/components/common/ScrollProgress";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -32,7 +33,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable} ${instrument.variable}`}>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        {children}
+        <ScrollProgress />
+      </body>
     </html>
   );
 }

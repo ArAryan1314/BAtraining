@@ -14,7 +14,7 @@ export function TrainerAssessments({ data: { pending, attempts } }: { data: Awai
         <Card key={submission.id} className="p-5">
           <h2 className="font-semibold">{submission.assignment.title}</h2>
           <p className="mt-1 text-sm text-ink-500">{submission.student.name} · {submission.assignment.course.title} · Submitted {formatDate(submission.submittedAt)}</p>
-          <p className="mt-4 whitespace-pre-wrap rounded-lg bg-surface-muted p-4 text-sm leading-6 text-ink-700">{submission.content}</p>
+          <p className="mt-4 whitespace-pre-wrap rounded-md bg-surface-muted p-4 text-sm leading-6 text-ink-700">{submission.content}</p>
           <ActionForm action={gradeAssignmentAction} submitLabel="Save grade" hidden={{ submissionId: submission.id }} className="mt-4">
             <Input id={`score-${submission.id}`} name="score" label={`Score (out of ${submission.assignment.points})`} type="number" min={0} max={submission.assignment.points} step="any" required className="max-w-40" />
             <Textarea id={`feedback-${submission.id}`} name="feedback" label="Feedback (optional)" rows={3} />

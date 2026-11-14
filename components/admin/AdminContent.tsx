@@ -15,7 +15,7 @@ export function AdminContent({ courses }: { courses: Awaited<ReturnType<typeof l
           <h2 className="font-semibold">Your courses</h2>
           <div className="mt-4 space-y-2">
             {courses.map((course) => (
-              <Link key={course.id} href={`/admin/content/${course.id}`} className="flex items-center justify-between gap-3 rounded-lg border border-line p-3 text-sm hover:bg-surface-muted">
+              <Link key={course.id} href={`/admin/content/${course.id}`} className="flex items-center justify-between gap-3 rounded-md border border-line p-3 text-sm ui-row">
                 <span className="font-medium">{course.title}</span>
                 <span className="flex items-center gap-2 text-xs text-ink-500">{course._count.modules} modules <Badge tone={course.published ? "success" : "neutral"}>{course.published ? "Published" : "Draft"}</Badge></span>
               </Link>

@@ -20,7 +20,7 @@ export function LearnLayout({ topic }: { topic: TopicContent }) {
       <header className="border-b border-line bg-gradient-to-b from-primary-50 to-white pb-14 pt-32 md:pt-40">
         <div className="container max-w-6xl">
           <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-sm text-ink-500">
-            <Link href="/" className="hover:text-ink-900">Home</Link>
+            <Link href="/" className="ui-link text-ink-500">Home</Link>
             <ChevronRight size={14} />
             <span>Learn</span>
           </nav>
@@ -36,7 +36,7 @@ export function LearnLayout({ topic }: { topic: TopicContent }) {
 
       <div className="container grid max-w-6xl gap-12 py-16 lg:grid-cols-[16rem_1fr] lg:gap-16 lg:py-24">
         <aside className="lg:sticky lg:top-28 lg:self-start">
-          <dl className="divide-y divide-line rounded-2xl border border-line bg-white">
+          <dl className="divide-y divide-line rounded-md border border-line bg-white">
             {topic.meta.map((item) => (
               <div key={item.label} className="p-4">
                 <dt className="text-xs font-medium uppercase tracking-[0.12em] text-ink-500">{item.label}</dt>
@@ -48,7 +48,7 @@ export function LearnLayout({ topic }: { topic: TopicContent }) {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-500">On this page</p>
             <ul className="mt-3 space-y-2 border-l border-line text-sm">
               {sections.map((section) => (
-                <li key={section.id}><a href={`#${section.id}`} className="-ml-px block border-l border-transparent pl-4 text-ink-600 hover:border-primary-500 hover:text-primary-700">{section.label}</a></li>
+                <li key={section.id}><a href={`#${section.id}`} className="-ml-px block border-l border-transparent pl-4 text-ink-600 ui-row">{section.label}</a></li>
               ))}
             </ul>
           </nav>
@@ -81,10 +81,10 @@ export function LearnLayout({ topic }: { topic: TopicContent }) {
             </ol>
           </section>
 
-          <section id="outcomes" className="scroll-mt-28 rounded-3xl bg-primary-50 p-8 md:p-10">
+          <section id="outcomes" className="scroll-mt-28 rounded-md bg-primary-50 p-8 md:p-10">
             <h2 className="text-2xl font-semibold tracking-tight text-ink-900">By the end you will be able to</h2>
             <ul className="mt-6 grid gap-4 md:grid-cols-2">
-              {topic.outcomes.map((outcome) => <li key={outcome} className="flex gap-3 leading-7 text-ink-700"><span aria-hidden className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-500" />{outcome}</li>)}
+              {topic.outcomes.map((outcome) => <li key={outcome} className="flex gap-3 leading-7 text-ink-700"><span aria-hidden className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-md bg-primary-500" />{outcome}</li>)}
             </ul>
           </section>
         </div>

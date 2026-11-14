@@ -30,7 +30,7 @@ export function TrainerCohorts({ data: { cohorts, courses, students } }: { data:
           <p className="mt-1 text-sm text-ink-500">{cohort.courseTitle} · {cohort.members.length} learners</p>
           <div className="mt-4 space-y-3">
             {cohort.members.map((member) => (
-              <div key={member.id} className="flex flex-col gap-3 rounded-lg border border-line p-3 sm:flex-row sm:items-center">
+              <div key={member.id} className="flex flex-col gap-3 rounded-md border border-line p-3 sm:flex-row sm:items-center">
                 <div className="min-w-0 flex-1">
                   <div className="text-sm font-medium">{member.name}</div>
                   <div className="mb-2 text-xs text-ink-500">{member.email} · {member.percent}%</div>

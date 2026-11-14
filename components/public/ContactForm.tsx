@@ -5,7 +5,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 const fieldClass =
-  "w-full rounded-xl border border-line bg-white px-4 py-3 text-[15px] text-ink-900 shadow-soft outline-none transition placeholder:text-ink-400 focus:border-primary-400 focus:ring-4 focus:ring-primary-100";
+  "w-full rounded-md border border-line bg-white px-4 py-3 text-[15px] text-ink-900 shadow-soft outline-none transition placeholder:text-ink-400 focus:border-primary-400 focus:ring-4 focus:ring-primary-100";
 const labelClass = "mb-1.5 block text-sm font-medium text-ink-700";
 
 const interests = ["Full career program", "A single learning track", "Corporate / team training", "Something else"];
@@ -34,7 +34,7 @@ export function ContactForm({ email }: { email: string }) {
   }
 
   return (
-    <div className="relative rounded-[2rem] bg-white p-6 text-ink-900 shadow-[0_40px_100px_-30px_rgb(69_73_229/0.55)] ring-1 ring-white/20 sm:p-9">
+    <div className="relative rounded-md bg-white p-6 text-ink-900 shadow-[0_40px_100px_-30px_rgb(69_73_229/0.55)] ring-1 ring-white/20 sm:p-9">
       {sent ? (
         <div className="grid min-h-[420px] place-items-center text-center">
           <div>
@@ -84,7 +84,7 @@ export function ContactForm({ email }: { email: string }) {
               {interests.map((interest, index) => (
                 <label
                   key={interest}
-                  className="flex cursor-pointer items-center gap-3 rounded-xl border border-line px-4 py-3 text-sm font-medium text-ink-700 transition has-[:checked]:border-primary-400 has-[:checked]:bg-primary-50 has-[:checked]:text-primary-800"
+                  className="flex cursor-pointer items-center gap-3 rounded-md border border-line px-4 py-3 text-sm font-medium text-ink-700 transition has-[:checked]:border-primary-400 has-[:checked]:bg-primary-50 has-[:checked]:text-primary-800"
                 >
                   <input type="radio" name="interest" value={interest} defaultChecked={index === 0} className="accent-primary-600" />
                   {interest}

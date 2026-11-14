@@ -27,8 +27,8 @@ export function CourseEditor({ course }: { course: NonNullable<Awaited<ReturnTyp
           </div>
           <ul className="mt-3 space-y-2">
             {module.lessons.map((lesson) => (
-              <li key={lesson.id} className="flex items-center justify-between gap-3 rounded-lg border border-line p-3 text-sm">
-                <Link href={`/admin/content/${course.id}/lessons/${lesson.id}`} className="font-medium text-primary-700 hover:underline">{lesson.title}</Link>
+              <li key={lesson.id} className="flex items-center justify-between gap-3 rounded-md border border-line p-3 text-sm">
+                <Link href={`/admin/content/${course.id}/lessons/${lesson.id}`} className="font-medium ui-link">{lesson.title}</Link>
                 <ActionForm action={deleteLessonAction} submitLabel="Delete" variant="ghost" size="sm" hidden={{ lessonId: lesson.id }} confirmMessage={`Delete ${lesson.title}?`} />
               </li>
             ))}

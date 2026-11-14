@@ -10,9 +10,9 @@ const Card = React.forwardRef<HTMLElement, CardProps>(
     <section
       ref={ref}
       className={cn(
-        "rounded-xl border border-line bg-white",
+        "rounded-md border border-line bg-white",
         variant === "elevated" && "shadow-xl shadow-ink-900/5 border-transparent",
-        variant === "interactive" && "transition-all hover:border-primary-400 hover:shadow-md cursor-pointer",
+        variant === "interactive" && "ui-card-link cursor-pointer",
         variant === "grid" && "shadow-sm",
         className
       )}

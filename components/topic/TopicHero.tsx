@@ -18,7 +18,7 @@ export function TopicHero({ topic }: { topic: TopicContent }) {
       <DarkBackdrop />
       <div className="container relative">
         <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-1.5 text-sm text-ink-400">
-          <Link href="/" className="transition-colors hover:text-white">
+          <Link href="/" className="ui-link-inverse">
             Home
           </Link>
           <ChevronRight size={14} className="text-ink-600" />
@@ -51,13 +51,13 @@ export function TopicHero({ topic }: { topic: TopicContent }) {
           </div>
 
           <Motion animation="slide-up" delay={300}>
-            <div className="relative rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur-xl sm:p-7">
+            <div className="relative rounded-md border border-white/10 bg-white/[0.04] p-6 shadow-2xl backdrop-blur-xl sm:p-7">
               <div aria-hidden className="absolute inset-x-8 -top-px h-px bg-gradient-to-r from-transparent via-primary-300/60 to-transparent" />
               <p className="text-xs font-medium uppercase tracking-[0.14em] text-accent-300">You will be able to</p>
               <ul className="mt-5 space-y-3.5">
                 {topic.outcomes.slice(0, 5).map((outcome) => (
                   <li key={outcome} className="flex gap-3 text-[15px] leading-6 text-ink-200">
-                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary-500/20 text-primary-200 ring-1 ring-primary-400/30">
+                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-primary-500/20 text-primary-200 ring-1 ring-primary-400/30">
                       <Check size={12} strokeWidth={3} />
                     </span>
                     {outcome}
@@ -70,7 +70,7 @@ export function TopicHero({ topic }: { topic: TopicContent }) {
 
         {topic.meta.length > 0 && (
           <Motion animation="fade-in" delay={400}>
-            <dl className="mt-14 grid grid-cols-2 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] md:grid-cols-4">
+            <dl className="mt-14 grid grid-cols-2 overflow-hidden rounded-md border border-white/10 bg-white/[0.03] md:grid-cols-4">
               {topic.meta.slice(0, 4).map((item) => (
                 <div key={item.label} className="border-white/10 p-5 not-last:border-r max-md:[&:nth-child(2)]:border-r-0 max-md:[&:nth-child(-n+2)]:border-b">
                   <dt className="text-xs font-medium uppercase tracking-[0.12em] text-ink-500">{item.label}</dt>

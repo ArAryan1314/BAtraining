@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 
 const DESCRIPTION_MAX = 155;
+/** Site-wide social card (app/opengraph-image.tsx). Pages with their own opengraph-image file override it. */
+const DEFAULT_SOCIAL_IMAGE = { url: "/opengraph-image", width: 1200, height: 630, alt: siteConfig.name };
 
 export const absoluteUrl = (path = "/") => `${siteConfig.url}${path.startsWith("/") ? path : `/${path}`}`;
 
@@ -26,8 +28,8 @@ export function buildMetadata({ title, description, path, type = "website" }: Pa
     title,
     description: summary,
     alternates: { canonical: path },
-    openGraph: { type, title, description: summary, url: absoluteUrl(path), siteName: siteConfig.name, locale: "en_IN" },
-    twitter: { card: "summary_large_image", title, description: summary },
+    openGraph: { type, title, description: summary, url: absoluteUrl(path), siteName: siteConfig.name, locale: "en_IN", images: [DEFAULT_SOCIAL_IMAGE] },
+    twitter: { card: "summary_large_image", title, description: summary, images: [DEFAULT_SOCIAL_IMAGE.url] },
   };
 }
 
