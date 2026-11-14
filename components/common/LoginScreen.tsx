@@ -11,7 +11,7 @@ import { postSignInPath } from "@/lib/auth/redirect";
 
 const highlights = ["Pick up your course exactly where you left off", "Submit assignments and get mentor feedback", "Download and share verified certificates"];
 
-export function LoginScreen() {
+export function LoginScreen({ unavailable = false }: { unavailable?: boolean }) {
   const callbackUrl = useSearchParams().get("callbackUrl");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,6 +19,7 @@ export function LoginScreen() {
 
   async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (unavailable) return;
     const data = new FormData(event.currentTarget);
     setLoading(true);
     setError("");
@@ -61,10 +62,15 @@ export function LoginScreen() {
           <div className="rounded-md border border-line bg-white p-6 shadow-soft sm:p-8">
             <h1 className="text-2xl font-black tracking-tight">Sign in to your workspace</h1>
             <p className="mt-2 text-sm text-ink-500">Use the email and password for your account.</p>
+            {unavailable && (
+              <div role="status" className="mt-6 rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800">
+                Sign-in is temporarily unavailable while the site is being set up. If you run this site, open <span className="font-mono">/api/health</span> to see what is missing.
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-              <Input id="email" name="email" label="Email" type="email" autoComplete="email" placeholder="you@example.com" required autoFocus />
+              <Input id="email" name="email" label="Email" type="email" autoComplete="email" placeholder="you@example.com" required autoFocus disabled={unavailable} />
               <div className="relative">
-                <Input id="password" name="password" label="Password" type={showPassword ? "text" : "password"} autoComplete="current-password" className="pr-11" required />
+                <Input id="password" name="password" label="Password" type={showPassword ? "text" : "password"} autoComplete="current-password" className="pr-11" required disabled={unavailable} />
                 <button
                   type="button"
                   onClick={() => setShowPassword((visible) => !visible)}
@@ -76,7 +82,7 @@ export function LoginScreen() {
                 </button>
               </div>
               {error && <div role="alert" className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</div>}
-              <Button type="submit" size="lg" className="w-full" disabled={loading}>
+              <Button type="submit" size="lg" className="w-full" disabled={loading || unavailable}>
                 {loading ? "Signing in..." : "Sign in"}
               </Button>
             </form>
