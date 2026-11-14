@@ -2,11 +2,10 @@ import Link from "next/link";
 import { CtaBand } from "@/components/sections/marketing/CtaBand";
 import { Chip } from "@/components/ui/marketing-primitives";
 import { getRelatedTopics, type TopicContent } from "@/content/topics";
-import { TopicArt } from "@/components/illustrations";
+import { TopicHero } from "../TopicHero";
 import { TopicExample, TopicFaq, TopicRelated, TopicSteps, TopicTerms } from "../TopicSections";
-import { topicIconMap } from "../topic-icons";
 
-/** Resource page: a compact reference sheet. Short header, a jump bar, then dense definition-style content. */
+/** Resource page: the shared banner, a jump bar, then dense definition-style content. */
 export function ResourceLayout({ topic }: { topic: TopicContent }) {
   const jumps = [
     { id: "summary", label: "Summary" },
@@ -16,40 +15,31 @@ export function ResourceLayout({ topic }: { topic: TopicContent }) {
     { id: "faq", label: "FAQ" },
   ].filter((jump) => jump !== null);
 
+  const hasTools = Boolean(topic.tools?.length);
+
   return (
     <>
-      <header data-hero="light" className="border-b border-line bg-ink-50 pb-10 pt-28 md:pt-32">
-        <div className="container grid max-w-5xl items-center gap-10 md:grid-cols-[1.5fr_1fr]">
-          <div>
-          <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary-600">{topic.eyebrow}</p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-5xl">{topic.title}</h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-ink-600">{topic.summary}</p>
-          </div>
-          <TopicArt scene="documents" seed={topic.slug} icon={topicIconMap[topic.concepts[0].icon]} className="hidden md:block" />
-        </div>
-        <nav aria-label="Jump to section" className="container mt-8 flex max-w-5xl flex-wrap gap-2">
+      <TopicHero topic={topic} visual="art" />
+
+      <nav aria-label="Jump to section" className="border-b border-line bg-ink-50">
+        <div className="container flex max-w-5xl flex-wrap gap-2 py-4">
           {jumps.map((jump) => <a key={jump.id} href={`#${jump.id}`} className="rounded-md border border-line bg-white px-4 py-1.5 text-sm font-medium text-ink-700 ui-row">{jump.label}</a>)}
-        </nav>
-      </header>
+        </div>
+      </nav>
 
       <main>
         <section id="summary" className="scroll-mt-24 py-14 md:py-20">
-          <div className="container grid max-w-5xl gap-10 md:grid-cols-[1.6fr_1fr]">
+          <div className={hasTools ? "container grid max-w-5xl gap-10 md:grid-cols-[1.6fr_1fr]" : "container max-w-3xl"}>
             <div className="space-y-5 text-lg leading-8 text-ink-600">
               <h2 className="text-2xl font-semibold tracking-tight text-ink-900">{topic.overview.heading}</h2>
               {topic.overview.paragraphs.map((paragraph) => <p key={paragraph.slice(0, 32)}>{paragraph}</p>)}
             </div>
-            <aside className="space-y-6 self-start rounded-md border border-line bg-white p-6">
-              <dl className="space-y-4">
-                {topic.meta.map((item) => (
-                  <div key={item.label}>
-                    <dt className="text-xs font-medium uppercase tracking-[0.12em] text-ink-500">{item.label}</dt>
-                    <dd className="font-semibold text-ink-900">{item.value}</dd>
-                  </div>
-                ))}
-              </dl>
-              {topic.tools && topic.tools.length > 0 && <div className="flex flex-wrap gap-2 border-t border-line pt-5">{topic.tools.map((tool) => <Chip key={tool}>{tool}</Chip>)}</div>}
-            </aside>
+            {hasTools && (
+              <aside className="self-start rounded-md border border-line bg-white p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-500">Tools you will use</p>
+                <div className="mt-4 flex flex-wrap gap-2">{topic.tools?.map((tool) => <Chip key={tool}>{tool}</Chip>)}</div>
+              </aside>
+            )}
           </div>
         </section>
 

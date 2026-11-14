@@ -180,7 +180,7 @@ Per-page metadata with a unique title and description (tests enforce uniqueness)
 
 - One corner radius (`rounded-md`) and one set of hover, active, focus and focus-within states, defined once in `app/globals.css` and `components/ui/Button.tsx`.
 - `pnpm check:ui` fails on any other radius or any one-off hover colour.
-- Artwork is generated SVG (`components/illustrations`), seeded per page, with no image files.
+- Artwork is generated SVG (`components/illustrations`), with no image files. A page's slug decides its scene, colour set and geometry, so each of the 38 topic pages has its own piece. A test fails if two pages share artwork. Every topic page opens with the same dark, glowing banner as the home page (`components/topic/TopicHero.tsx`).
 - Accessibility: visible focus, labelled controls, 24 px minimum targets, reduced-motion support.
 
 ## 12. Testing
