@@ -46,7 +46,8 @@ export function artSpec(seed: string): { scene: ArtScene; palette: number } {
 const between = (random: () => number, min: number, max: number) => min + random() * (max - min);
 
 interface SceneProps {
-  random: () => number;
+  /** Each scene builds its own generator from this, so rendering it again always draws the same shapes. */
+  seed: string;
   dark: boolean;
   p: Palette;
 }
@@ -65,7 +66,8 @@ function Frame({ dark }: { dark: boolean }) {
 }
 
 /** A learning track: nodes along a path, the first few completed, with progress bars beside it. */
-function PathScene({ random, dark, p }: SceneProps) {
+function PathScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
   const count = 5;
   const done = 2 + Math.floor(random() * 3);
   const flip = random() > 0.5;
@@ -100,7 +102,8 @@ function PathScene({ random, dark, p }: SceneProps) {
 }
 
 /** A career: a rising run of bars with a trend line and a milestone marker. */
-function GrowthScene({ random, dark, p }: SceneProps) {
+function GrowthScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
   const count = 6 + Math.floor(random() * 3);
   const spacing = 380 / count;
   const heights = Array.from({ length: count }, (_, i) => 50 + i * (150 / count) + between(random, -10, 14));
@@ -129,7 +132,8 @@ function GrowthScene({ random, dark, p }: SceneProps) {
 }
 
 /** A reference sheet: a fan of document cards with ruled lines and a highlighted row. */
-function DocumentsScene({ random, dark, p }: SceneProps) {
+function DocumentsScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
   const spread = between(random, 60, 85);
   const cards = [
     { x: 56, y: 84, rotate: -between(random, 3, 9) },
@@ -163,7 +167,8 @@ function DocumentsScene({ random, dark, p }: SceneProps) {
 }
 
 /** A product dashboard: KPI tiles with tiny charts above a wide area chart. */
-function DashboardScene({ random, dark, p }: SceneProps) {
+function DashboardScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
   const tiles = [0, 1, 2].map((i) => ({ x: 36 + i * 142, spark: Array.from({ length: 6 }, () => between(random, 6, 26)) }));
   const area = Array.from({ length: 9 }, (_, i) => ({ x: 36 + i * 50.5, y: 300 - between(random, 30, 110) }));
   const top = area.map((point, i) => `${i ? "L" : "M"}${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
@@ -188,7 +193,10 @@ function DashboardScene({ random, dark, p }: SceneProps) {
   );
 }
 
-const scenes = { path: PathScene, growth: GrowthScene, documents: DocumentsScene, dashboard: DashboardScene } as const;
+/** The scene components, exported so tests can render them directly. */
+export const artScenes = { path: PathScene, growth: GrowthScene, documents: DocumentsScene, dashboard: DashboardScene } as const;
+const scenes = artScenes;
+export const artPalettes = PALETTES;
 
 /**
  * Decorative artwork for a page. Drawn in code from the design tokens, so it follows the theme, loads instantly,
@@ -205,7 +213,7 @@ export function TopicArt({ scene, seed, icon: Icon, tone = "light", flush = fals
     <figure aria-hidden className={cn("relative aspect-[4/3] w-full overflow-hidden", !flush && "rounded-md ring-1", dark ? "bg-ink-900/40" : "bg-gradient-to-br from-primary-50 via-white to-accent-200/30", !flush && (dark ? "ring-white/10" : "ring-line shadow-soft"), className)}>
       <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} className="h-full w-full" role="presentation" focusable="false">
         <Frame dark={dark} />
-        <Scene random={seeded(`${chosen}:${seed}`)} dark={dark} p={palette} />
+        <Scene seed={`${chosen}:${seed}`} dark={dark} p={palette} />
       </svg>
       {Icon && (
         <span className={cn("absolute bottom-5 right-5 grid h-14 w-14 place-items-center rounded-md text-white shadow-lift ring-4 ring-white/70", palette.badge)}>
