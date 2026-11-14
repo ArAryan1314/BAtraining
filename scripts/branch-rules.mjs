@@ -20,6 +20,8 @@ const RELEASE_NAME = /^release\/\d+\.\d+\.\d+$/;
 
 /** Returns a list of problems with opening a pull request from `head` into `base`. Empty means it's allowed. */
 export function branchProblems(head, base) {
+  // Dependabot names its own branches. Its updates go into development like any other change.
+  if (head.startsWith("dependabot/")) return base === "development" ? [] : ["Dependency updates are opened against development."];
   if (LONG_LIVED.includes(head)) {
     // development -> main is not allowed directly: it goes through a release branch.
     return [`Open pull requests from a working branch, not from ${head}. Cut a feature/, bugfix/ or release/ branch.`];

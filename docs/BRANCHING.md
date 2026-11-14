@@ -29,7 +29,7 @@ All are short-lived. Name them in lowercase with hyphens.
 | Hotfix | `main` | `main`, then into `development` | `hotfix/<name>` | An urgent defect already in production |
 | Chore / docs | `development` | `development` | `chore/<name>`, `docs/<name>` | Tooling, dependencies, documentation |
 
-`scripts/branch-rules.mjs` enforces these names and targets. CI runs it on every pull request, so a `feature/` branch opened against `main` fails.
+`scripts/branch-rules.mjs` enforces these names and targets. CI runs it on every pull request, so a `feature/` branch opened against `main` fails. Dependabot's own `dependabot/*` branches are allowed into `development`.
 
 ## Day to day
 
@@ -80,6 +80,22 @@ git checkout -b hotfix/session-crash
 
 Open a PR into `main`, merge, tag a patch version (`v1.3.1`), then merge the same fix into `development` through a second PR.
 
+## Pipeline
+
+GitHub Actions (`.github/workflows`) and Vercel split the work:
+
+| Where | When | What |
+|---|---|---|
+| `ci.yml` → **branch-rules** | every PR | Checks branch name and target |
+| `ci.yml` → **check** | every PR and push to `main`/`development` | `pnpm check` and a production build |
+| `ci.yml` → **database** | same | Applies all migrations to an empty Postgres, fails if `schema.prisma` has a change with no migration, runs the seed |
+| `ci.yml` → **audit** | same | `pnpm audit` on production dependencies. Advisory only |
+| `release.yml` | a `vX.Y.Z` tag is pushed | Checks the tag is on `main` and matches `package.json`, then creates the GitHub release with generated notes |
+| Vercel | push to `main` / any other branch | Production deploy (runs `migrate deploy`) / Preview deploy |
+| Dependabot | weekly | Opens dependency PRs into `development` |
+
+Require **branch-rules**, **check** and **database** as status checks in branch protection.
+
 ## Database changes
 
 A schema change ships in the same pull request as its migration (`pnpm db:migrate`). Migrations only reach the production database from a `main` build. Preview builds skip them. Use a separate database for Preview, as described in [VERCEL-DATABASE.md](VERCEL-DATABASE.md).
@@ -89,7 +105,7 @@ A schema change ships in the same pull request as its migration (`pnpm db:migrat
 These are repository settings, and they can't be committed. Under **Settings → Branches → Add rule**, for both `main` and `development`:
 
 - Require a pull request before merging, with at least 1 approval
-- Require status checks to pass: **branch-rules** and **check**
+- Require status checks to pass: **branch-rules**, **check** and **database**
 - Require branches to be up to date before merging
 - Block force pushes and branch deletion
 
