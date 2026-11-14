@@ -1,3 +1,4 @@
+import { AudienceSection } from "@/components/home/AudienceSection";
 import { HomeHero } from "@/components/home/HomeHero";
 import { ToolMarquee } from "@/components/home/ToolMarquee";
 import { Workbench } from "@/components/home/Workbench";
@@ -15,6 +16,7 @@ export function PublicHomePage() {
       <ToolMarquee />
       <Workbench />
       <BentoFeatures />
+      <AudienceSection />
       <CurriculumTimeline />
       <PortfolioShowcase />
       <ProgramFacts />
