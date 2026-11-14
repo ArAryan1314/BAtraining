@@ -1,10 +1,9 @@
-import { BarChart3, BookOpen, ClipboardCheck, FileCog, FolderKanban, GraduationCap, LayoutDashboard, Settings, Users, type LucideIcon } from "lucide-react";
+import { BarChart3, Bell, BookOpen, ClipboardCheck, FileCog, FolderKanban, GraduationCap, LayoutDashboard, Settings, Users, type LucideIcon } from "lucide-react";
 import type { UserRole } from "@/types/user";
 
-/** An item without an `href` has no route yet and is shown as "Soon". */
 export interface NavItem {
   label: string;
-  href?: string;
+  href: string;
   icon: LucideIcon;
 }
 
@@ -21,9 +20,11 @@ export const workspaces: Record<UserRole, Workspace> = {
     navigation: [
       { label: "Overview", href: "/student/dashboard", icon: LayoutDashboard },
       { label: "My Learning", href: "/student/courses", icon: BookOpen },
-      { label: "Assessments", icon: ClipboardCheck },
-      { label: "Projects", icon: FolderKanban },
-      { label: "Certificates", icon: GraduationCap },
+      { label: "Assessments", href: "/student/assessments", icon: ClipboardCheck },
+      { label: "Projects", href: "/student/projects", icon: FolderKanban },
+      { label: "Certificates", href: "/student/certificates", icon: GraduationCap },
+      { label: "Notifications", href: "/student/notifications", icon: Bell },
+      { label: "Account", href: "/student/account", icon: Settings },
     ],
   },
   TRAINER: {
@@ -31,10 +32,11 @@ export const workspaces: Record<UserRole, Workspace> = {
     home: "/trainer/dashboard",
     navigation: [
       { label: "Overview", href: "/trainer/dashboard", icon: LayoutDashboard },
-      { label: "Cohorts", icon: Users },
-      { label: "Assessments", icon: ClipboardCheck },
-      { label: "Projects", icon: FolderKanban },
-      { label: "Reports", icon: BarChart3 },
+      { label: "Cohorts", href: "/trainer/cohorts", icon: Users },
+      { label: "Assessments", href: "/trainer/assessments", icon: ClipboardCheck },
+      { label: "Projects", href: "/trainer/projects", icon: FolderKanban },
+      { label: "Reports", href: "/trainer/reports", icon: BarChart3 },
+      { label: "Account", href: "/trainer/account", icon: Settings },
     ],
   },
   ADMIN: {
@@ -44,10 +46,10 @@ export const workspaces: Record<UserRole, Workspace> = {
       { label: "Overview", href: "/admin/dashboard", icon: LayoutDashboard },
       { label: "Users", href: "/admin/users", icon: Users },
       { label: "Courses", href: "/admin/courses", icon: BookOpen },
-      { label: "Assessments", icon: ClipboardCheck },
-      { label: "Content", icon: FileCog },
-      { label: "Reports", icon: BarChart3 },
-      { label: "Settings", icon: Settings },
+      { label: "Assessments", href: "/admin/assessments", icon: ClipboardCheck },
+      { label: "Content", href: "/admin/content", icon: FileCog },
+      { label: "Reports", href: "/admin/reports", icon: BarChart3 },
+      { label: "Settings", href: "/admin/settings", icon: Settings },
     ],
   },
 };

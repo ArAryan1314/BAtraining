@@ -3,7 +3,8 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { ButtonLink } from "@/components/ui/Button";
 import { Card } from "@/components/ui";
 import type { getLessonView } from "@/services/courses";
-import { CompleteLessonForm } from "./CompleteLessonForm";
+import { completeLessonAction } from "@/app/student/actions";
+import { ActionForm } from "@/components/common/ActionForm";
 
 type Lesson = NonNullable<Awaited<ReturnType<typeof getLessonView>>>;
 
@@ -62,7 +63,7 @@ export function LessonView({ view }: { view: Lesson }) {
           {lesson.completed ? (
             <p className="inline-flex items-center gap-2 text-sm font-semibold text-success"><CheckCircle2 size={17} /> Completed</p>
           ) : (
-            <CompleteLessonForm courseId={course.id} lessonId={lesson.id} />
+            <ActionForm action={completeLessonAction} submitLabel="Mark as complete" hidden={{ courseId: course.id, lessonId: lesson.id }} />
           )}
         </div>
       </Card>

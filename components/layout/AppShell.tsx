@@ -4,22 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { LogOut } from "lucide-react";
-import { Avatar, Badge, IconButton } from "@/components/ui";
+import { Avatar, IconButton } from "@/components/ui";
 import { workspaces, type NavItem } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/cn";
 import type { UserRole } from "@/types/user";
 
 function WorkspaceNavItem({ item: { label, href, icon: Icon }, active }: { item: NavItem; active: boolean }) {
-  if (!href) {
-    return (
-      <span aria-disabled="true" className="app-sidebar-nav-item app-sidebar-nav-item-soon">
-        <Icon size={17} />
-        {label}
-        <span className="ml-auto"><Badge>Soon</Badge></span>
-      </span>
-    );
-  }
   return (
     <Link href={href} aria-current={active ? "page" : undefined} className={cn("app-sidebar-nav-item", active ? "app-sidebar-nav-item-active" : "app-sidebar-nav-item-inactive")}>
       <Icon size={17} />
@@ -31,7 +22,7 @@ function WorkspaceNavItem({ item: { label, href, icon: Icon }, active }: { item:
 export function AppShell({ children, role, userName }: { children: React.ReactNode; role: UserRole; userName: string }) {
   const pathname = usePathname();
   const { label: roleLabel, navigation } = workspaces[role];
-  const navItems = navigation.map((item) => <WorkspaceNavItem key={item.label} item={item} active={Boolean(item.href) && (pathname === item.href || pathname.startsWith(`${item.href}/`))} />);
+  const navItems = navigation.map((item) => <WorkspaceNavItem key={item.label} item={item} active={pathname === item.href || pathname.startsWith(`${item.href}/`)} />);
 
   return (
     <div className="app-shell">

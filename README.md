@@ -248,14 +248,18 @@ pnpm build
 
 `pnpm check` runs the route-styling and barrel checks, ESLint, TypeScript and the unit tests. It fails if a route file contains `className` or Tailwind utility styling.
 
-## Suggested implementation order after this baseline
+## What's built
 
-Already built: sign-in and role workspaces, database-backed dashboards, enrolment, the student course and lesson flow, and permission checks in every service.
+- **Students:** courses and lessons, quizzes graded on the server, assignments, projects, automatic certificates, notifications and account settings.
+- **Trainers:** cohorts, assignment grading, project reviews and learner reports, limited to learners in their own cohorts.
+- **Admins:** user accounts, course publishing and enrolment, the course and lesson editor with draft and publish, quiz and assignment authoring, reports, manual payment records, certificate revocation and the audit log.
 
-1. Build the course and lesson editor on the CMS services.
-2. Add quiz-taking and assignment screens, then trainer grading.
-3. Add cohorts so trainers only see their own learners.
-4. Connect skill evidence and portfolio generation.
-5. Issue certificates when a course is completed.
-6. Add notification delivery.
-7. Integrate payments/webhooks and production infrastructure.
+A course is finished when every lesson is complete, every assignment is submitted and every quiz is passed. Grades don't affect completion.
+
+## Still to build
+
+1. Email delivery. Notifications are in-app only until `EMAIL_PROVIDER_API_KEY` is wired in.
+2. A payment gateway with signed webhooks. Payments are recorded manually for now.
+3. File uploads. Project submissions use links until storage is connected.
+4. Skills and portfolio screens. Their data model and services exist.
+5. Reordering modules and lessons, and project milestones.

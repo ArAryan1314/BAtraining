@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db/prisma";
 import { DomainError } from "@/lib/actions/result";
 import { requirePermission, type SessionUser } from "@/lib/auth/guards";
 import { lessonCompletionSchema } from "@/lib/validations/domain";
-import { getCourseProgress } from "@/services/progress/get-course-progress";
+import { syncCourseProgress } from "@/services/progress/sync-course-progress";
 import { recordProgressEvent } from "@/services/progress/record-event";
 
 /** Marks a lesson complete for the signed-in student. Repeating it changes nothing. */
@@ -28,14 +28,5 @@ export async function completeLesson(actor: SessionUser, input: unknown) {
     await recordProgressEvent({ studentId, type: "LESSON_COMPLETED", entityId: lessonId, metadata: { courseId } }, tx);
   });
 
-  const overallPercent = await getCourseProgress(studentId, courseId);
-  await prisma.courseProgress.upsert({
-    where: { enrollmentId: enrollment.id },
-    create: { studentId, enrollmentId: enrollment.id, overallPercent },
-    update: { overallPercent },
-  });
-  if (overallPercent === 100 && enrollment.status !== "COMPLETED") {
-    await prisma.enrollment.update({ where: { id: enrollment.id }, data: { status: "COMPLETED" } });
-  }
-  return { overallPercent };
+  return { overallPercent: await syncCourseProgress(studentId, courseId) };
 }

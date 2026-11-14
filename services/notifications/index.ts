@@ -1,10 +1,19 @@
 import { prisma } from "@/lib/db/prisma";
-import type { SessionUser } from "@/lib/auth/guards";
+import { requirePermission, type SessionUser } from "@/lib/auth/guards";
 
-export async function listUnreadNotifications(actor: SessionUser) {
-  return prisma.notification.findMany({ where: { userId: actor.id, readAt: null }, orderBy: { createdAt: "desc" } });
+const NOTIFICATION_LIST_LIMIT = 50;
+
+/** Internal: callers have already authorized the action that triggers the notification. */
+export async function notify(userId: string, title: string, body: string) {
+  return prisma.notification.create({ data: { userId, title, body } });
 }
 
-export async function markNotificationRead(actor: SessionUser, id: string) {
-  return prisma.notification.updateMany({ where: { id, userId: actor.id }, data: { readAt: new Date() } });
+export async function listMyNotifications(actor: SessionUser) {
+  requirePermission(actor, "notifications.read");
+  return prisma.notification.findMany({ where: { userId: actor.id }, orderBy: { createdAt: "desc" }, take: NOTIFICATION_LIST_LIMIT });
+}
+
+export async function markAllNotificationsRead(actor: SessionUser) {
+  requirePermission(actor, "notifications.read");
+  return prisma.notification.updateMany({ where: { userId: actor.id, readAt: null }, data: { readAt: new Date() } });
 }

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { TopicPage } from "@/components/topic/TopicPage";
-import { getTopic, topicSlugs } from "@/content/topics";
+import { getTopic, topicSlugs, type TopicContent } from "@/content/topics";
+import { articleJsonLd, breadcrumbJsonLd, buildMetadata, courseJsonLd, faqJsonLd } from "@/lib/seo";
 
 export const dynamicParams = false;
 
@@ -13,12 +15,29 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const topic = getTopic(slug);
   if (!topic) return {};
-  return { title: topic.title, description: topic.summary };
+  return buildMetadata({ title: topic.title, description: topic.summary, path: `/${topic.slug}`, type: topic.category === "learn" ? "website" : "article" });
+}
+
+function structuredData(topic: TopicContent) {
+  const path = `/${topic.slug}`;
+  const main = topic.category === "learn"
+    ? courseJsonLd({ name: topic.title, description: topic.summary, path })
+    : articleJsonLd({ headline: topic.title, description: topic.summary, path });
+  return [
+    main,
+    breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: topic.title, path }]),
+    ...(topic.faqs.length ? [faqJsonLd(topic.faqs)] : []),
+  ];
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const topic = getTopic(slug);
   if (!topic) notFound();
-  return <TopicPage topic={topic} />;
+  return (
+    <>
+      <JsonLd data={structuredData(topic)} />
+      <TopicPage topic={topic} />
+    </>
+  );
 }

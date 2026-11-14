@@ -3,7 +3,7 @@ import { test } from "node:test";
 import { calculateProgress } from "@/lib/progress/calculate";
 import { calculateStreak } from "@/lib/progress/streak";
 
-const empty = { lessonsCompleted: 0, lessonsTotal: 0, assignmentsCompleted: 0, assignmentsTotal: 0, milestonesCompleted: 0, milestonesTotal: 0, quizAverage: null };
+const empty = { lessonsCompleted: 0, lessonsTotal: 0, assignmentsCompleted: 0, assignmentsTotal: 0, milestonesCompleted: 0, milestonesTotal: 0, quizzesPassed: 0, quizzesTotal: 0 };
 
 test("a course with only lessons reaches 100 when they are all done", () => {
   assert.equal(calculateProgress({ ...empty, lessonsCompleted: 4, lessonsTotal: 4 }), 100);
@@ -15,8 +15,9 @@ test("an empty course is 0, not NaN", () => {
 });
 
 test("quizzes count only when the course has them", () => {
-  assert.equal(calculateProgress({ ...empty, lessonsCompleted: 4, lessonsTotal: 4, quizAverage: 50 }), 83);
-  assert.equal(calculateProgress({ ...empty, lessonsCompleted: 4, lessonsTotal: 4, quizAverage: 0 }), 67);
+  assert.equal(calculateProgress({ ...empty, lessonsCompleted: 4, lessonsTotal: 4, quizzesPassed: 1, quizzesTotal: 2 }), 83);
+  assert.equal(calculateProgress({ ...empty, lessonsCompleted: 4, lessonsTotal: 4, quizzesPassed: 0, quizzesTotal: 1 }), 67);
+  assert.equal(calculateProgress({ ...empty, lessonsCompleted: 4, lessonsTotal: 4, quizzesPassed: 1, quizzesTotal: 1 }), 100);
 });
 
 const now = new Date("2026-06-10T12:00:00Z");

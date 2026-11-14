@@ -11,7 +11,7 @@ export async function runAction(body: () => Promise<string | void>): Promise<Act
     return { ok: true, message: (await body()) ?? undefined };
   } catch (error) {
     if (error instanceof DomainError) return { ok: false, message: error.message };
-    if (error instanceof ZodError) return { ok: false, message: "Please check the form and try again." };
+    if (error instanceof ZodError) return { ok: false, message: error.issues[0]?.message ?? "Please check the form and try again." };
     if (error instanceof Error && (error.message === "UNAUTHENTICATED" || error.message === "FORBIDDEN")) {
       return { ok: false, message: "You don't have permission to do that." };
     }
