@@ -13,3 +13,6 @@ generated
 *.tsbuildinfo
 .claude/settings.local.json
 .graphify
+
+# Playwright MCP session output
+.playwright-mcp/

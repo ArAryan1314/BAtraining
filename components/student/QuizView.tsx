@@ -16,7 +16,7 @@ export function QuizView({ quiz }: { quiz: NonNullable<Awaited<ReturnType<typeof
               <legend className="font-medium">{index + 1}. {question.prompt}</legend>
               <div className="mt-3 space-y-2">
                 {question.options.map((option) => (
-                  <label key={option} className="flex cursor-pointer items-center gap-3 rounded-lg border border-line px-4 py-3 text-sm has-[:checked]:border-primary-400 has-[:checked]:bg-primary-50">
+                  <label key={option} className="flex cursor-pointer items-center gap-3 rounded-md border border-line px-4 py-3 text-sm has-[:checked]:border-primary-400 has-[:checked]:bg-primary-50">
                     <input type="radio" name={`answer:${question.id}`} value={option} required className="accent-primary-600" />
                     {option}
                   </label>

@@ -52,8 +52,8 @@ export function MegaMenu({ tone, onOpenChange }: { tone: "dark" | "light"; onOpe
                 aria-controls={`mega-${group.id}`}
                 onClick={() => setOpenId(isOpen ? null : group.id)}
                 className={cn(
-                  "flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary-500",
-                  tone === "dark" ? "text-ink-600 hover:bg-ink-100 hover:text-ink-900" : "text-white/75 hover:bg-white/10 hover:text-white",
+                  "flex items-center gap-1 rounded-md px-3.5 py-2 text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary-500",
+                  tone === "dark" ? "text-ink-600 ui-row" : "text-white/75 ui-row-inverse",
                   isOpen && (tone === "dark" ? "bg-ink-100 text-ink-900" : "bg-white/10 text-white")
                 )}
               >
@@ -67,8 +67,8 @@ export function MegaMenu({ tone, onOpenChange }: { tone: "dark" | "light"; onOpe
           <Link
             href="/about"
             className={cn(
-              "rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
-              tone === "dark" ? "text-ink-600 hover:bg-ink-100 hover:text-ink-900" : "text-white/75 hover:bg-white/10 hover:text-white"
+              "rounded-md px-3.5 py-2 text-sm font-medium transition-colors",
+              tone === "dark" ? "text-ink-600 ui-row" : "text-white/75 ui-row-inverse"
             )}
           >
             About
@@ -88,7 +88,7 @@ export function MegaMenu({ tone, onOpenChange }: { tone: "dark" | "light"; onOpe
               isOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0 pointer-events-none"
             )}
           >
-            <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-ink-200/70 bg-white shadow-[0_32px_64px_-24px_rgb(18_21_29/0.3)]">
+            <div className="mx-auto max-w-7xl overflow-hidden rounded-md border border-ink-200/70 bg-white shadow-[0_32px_64px_-24px_rgb(18_21_29/0.3)]">
               <div className="grid grid-cols-[1fr_300px]">
                 <ul className={cn("grid gap-1 p-4", wide ? "grid-cols-3" : "grid-cols-2")}>
                   {group.links.map((link) => (
@@ -97,9 +97,9 @@ export function MegaMenu({ tone, onOpenChange }: { tone: "dark" | "light"; onOpe
                         href={link.href}
                         onClick={() => setOpenId(null)}
                         tabIndex={isOpen ? 0 : -1}
-                        className="group/link flex items-start gap-3 rounded-2xl p-3 transition-colors hover:bg-ink-50 focus-visible:bg-ink-50 focus-visible:outline-none"
+                        className="group/link flex items-start gap-3 rounded-md p-3 ui-row"
                       >
-                        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-line bg-white text-ink-500 shadow-soft transition-all duration-300 group-hover/link:border-primary-200 group-hover/link:bg-primary-50 group-hover/link:text-primary-600">
+                        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-line bg-white text-ink-500 shadow-soft transition-all duration-300 group-hover/link:border-primary-200 group-hover/link:bg-primary-50 group-hover/link:text-primary-600">
                           <link.icon size={18} strokeWidth={1.75} />
                         </span>
                         <span className="min-w-0">
@@ -114,9 +114,9 @@ export function MegaMenu({ tone, onOpenChange }: { tone: "dark" | "light"; onOpe
                   href={group.featured.href}
                   onClick={() => setOpenId(null)}
                   tabIndex={isOpen ? 0 : -1}
-                  className="group/feat relative m-2 flex flex-col justify-end overflow-hidden rounded-2xl bg-ink-950 p-6 text-white"
+                  className="group/feat relative m-2 flex flex-col justify-end overflow-hidden rounded-md bg-ink-950 p-6 text-white"
                 >
-                  <div aria-hidden className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary-500/40 blur-3xl transition-transform duration-700 group-hover/feat:scale-125" />
+                  <div aria-hidden className="absolute -right-16 -top-16 h-56 w-56 rounded-md bg-primary-500/40 blur-3xl transition-transform duration-700 group-hover/feat:scale-125" />
                   <div aria-hidden className="absolute inset-0 bg-grid-dark opacity-60 mask-radial" />
                   <span className="relative text-xs font-medium uppercase tracking-[0.14em] text-accent-300">{group.featured.eyebrow}</span>
                   <span className="relative mt-3 text-xl font-semibold leading-tight tracking-tight">{group.featured.title}</span>

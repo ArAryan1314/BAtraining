@@ -27,7 +27,7 @@ export function ToolMarquee() {
             <span
               key={`${tool}-${index}`}
               aria-hidden={index >= tools.length}
-              className="rounded-full border border-line bg-ink-50/70 px-5 py-2.5 text-[15px] font-medium text-ink-600"
+              className="rounded-md border border-line bg-ink-50/70 px-5 py-2.5 text-[15px] font-medium text-ink-600"
             >
               {tool}
             </span>

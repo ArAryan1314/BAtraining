@@ -30,7 +30,7 @@ export function PublicHeader() {
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4">
       <div
         className={cn(
-          "mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 rounded-full border pl-4 pr-2 transition-all duration-300 sm:pl-5",
+          "mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 rounded-md border pl-4 pr-2 transition-all duration-300 sm:pl-5",
           solid
             ? "border-ink-200/70 bg-white/80 shadow-[0_8px_32px_-12px_rgb(18_21_29/0.18)] backdrop-blur-xl backdrop-saturate-150"
             : "border-white/10 bg-ink-950/30 backdrop-blur-md"
@@ -45,7 +45,7 @@ export function PublicHeader() {
             href="/auth/login"
             variant="ghost"
             size="sm"
-            className={cn("hidden md:inline-flex", !solid && "text-white/80 hover:bg-white/10 hover:text-white")}
+            className={cn("hidden md:inline-flex", !solid && "text-white/80 ui-row-inverse")}
           >
             Sign in
           </ButtonLink>

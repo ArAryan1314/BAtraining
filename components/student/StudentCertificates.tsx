@@ -16,7 +16,7 @@ export function StudentCertificates({ certificates }: { certificates: Awaited<Re
             <span key="title" className="font-medium text-ink-900">{certificate.title}</span>,
             formatDate(certificate.issuedAt),
             <Badge key="status" tone={certificate.status === "ISSUED" ? "success" : "danger"}>{certificate.status === "ISSUED" ? "Valid" : "Revoked"}</Badge>,
-            <Link key="verify" href={`/verify/${certificate.verificationCode}`} className="font-medium text-primary-700 hover:underline">{certificate.verificationCode}</Link>,
+            <Link key="verify" href={`/verify/${certificate.verificationCode}`} className="font-medium ui-link">{certificate.verificationCode}</Link>,
           ])}
         />
       ) : (

@@ -9,13 +9,13 @@ export function Eyebrow({ children, tone = "light", className }: { children: Rea
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium tracking-wide",
+        "inline-flex items-center gap-2 rounded-md border px-3 py-1 text-xs font-medium tracking-wide",
         tone === "light" && "border-primary-200/70 bg-primary-50/80 text-primary-700",
         tone === "dark" && "border-white/10 bg-white/5 text-primary-200 backdrop-blur",
         className
       )}
     >
-      <span className={cn("h-1.5 w-1.5 rounded-full", tone === "light" ? "bg-primary-500" : "bg-accent-400")} />
+      <span className={cn("h-1.5 w-1.5 rounded-md", tone === "light" ? "bg-primary-500" : "bg-accent-400")} />
       {children}
     </span>
   );
@@ -104,8 +104,8 @@ export function IconBadge({
     <div
       className={cn(
         "grid shrink-0 place-items-center",
-        size === "md" && "h-12 w-12 rounded-2xl",
-        size === "sm" && "h-9 w-9 rounded-xl",
+        size === "md" && "h-12 w-12 rounded-md",
+        size === "sm" && "h-9 w-9 rounded-md",
         variant === "default" && "border border-line bg-white text-ink-900 shadow-soft",
         variant === "brand" && "bg-gradient-to-br from-primary-500 to-primary-700 text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.25),0_8px_20px_-8px_rgb(69_73_229/0.7)]",
         variant === "outline" && "border border-primary-200 bg-primary-50 text-primary-600",
@@ -130,7 +130,7 @@ export function Chip({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium",
+        "inline-flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-medium",
         variant === "default" && "border border-line bg-white text-ink-700",
         variant === "brand" && "bg-primary-50 text-primary-700 ring-1 ring-primary-100",
         variant === "success" && "bg-success/10 text-success",
@@ -159,8 +159,8 @@ export function ProgressMeter({ label, percent, className }: { label: string; pe
         <span className="text-white">{label}</span>
         <span className="tabular-nums text-primary-300">{percent}%</span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
-        <div className="h-full rounded-full bg-gradient-to-r from-primary-500 to-accent-400" style={{ width: `${percent}%` }} />
+      <div className="h-2 w-full overflow-hidden rounded-md bg-white/10">
+        <div className="h-full rounded-md bg-gradient-to-r from-primary-500 to-accent-400" style={{ width: `${percent}%` }} />
       </div>
     </div>
   );
@@ -171,8 +171,8 @@ export function DarkBackdrop({ className }: { className?: string }) {
   return (
     <div aria-hidden className={cn("pointer-events-none absolute inset-0", className)}>
       <div className="absolute inset-0 bg-grid-dark mask-radial" />
-      <div className="absolute -top-40 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-primary-600/30 blur-[120px]" />
-      <div className="absolute -bottom-40 right-0 h-[400px] w-[500px] rounded-full bg-accent-500/10 blur-[120px]" />
+      <div className="absolute -top-40 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-md bg-primary-600/30 blur-[120px]" />
+      <div className="absolute -bottom-40 right-0 h-[400px] w-[500px] rounded-md bg-accent-500/10 blur-[120px]" />
       <div className="absolute inset-0 bg-noise opacity-[0.15] mix-blend-overlay" />
     </div>
   );

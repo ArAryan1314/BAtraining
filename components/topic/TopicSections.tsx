@@ -23,7 +23,7 @@ export function TopicOverview({ topic }: { topic: TopicContent }) {
             ))}
           </Stagger>
           {topic.tools && topic.tools.length > 0 && (
-            <Motion className="mt-10 rounded-2xl border border-line bg-ink-50/60 p-6">
+            <Motion className="mt-10 rounded-md border border-line bg-ink-50/60 p-6">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-500">Tools you will use</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {topic.tools.map((tool) => (
@@ -48,9 +48,9 @@ export function TopicConcepts({ topic }: { topic: TopicContent }) {
           {topic.concepts.map((concept, index) => (
             <article
               key={concept.title}
-              className="group relative h-full overflow-hidden rounded-3xl border border-line bg-white p-7 shadow-soft transition-all duration-500 hover:-translate-y-1 hover:border-primary-200 hover:shadow-lift"
+              className="group relative h-full overflow-hidden rounded-md border border-line bg-white p-7 shadow-soft ui-card-link"
             >
-              <div aria-hidden className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-primary-400/0 blur-2xl transition-colors duration-500 group-hover:bg-primary-400/20" />
+              <div aria-hidden className="absolute -right-12 -top-12 h-40 w-40 rounded-md bg-primary-400/0 blur-2xl transition-colors duration-500 group-hover:bg-primary-400/20" />
               <div className="flex items-start justify-between">
                 <IconBadge icon={topicIconMap[concept.icon]} variant="brand" />
                 <span className="font-mono text-xs text-ink-300">{String(index + 1).padStart(2, "0")}</span>
@@ -82,7 +82,7 @@ export function TopicSteps({ steps }: { steps: NonNullable<TopicContent["steps"]
           <div aria-hidden className="absolute bottom-6 left-[23px] top-6 w-px bg-gradient-to-b from-primary-400 via-primary-200 to-transparent" />
           {steps.map((step, index) => (
             <Motion as="li" key={step.title} delay={index * 80} className="relative flex gap-6 pb-10 last:pb-0">
-              <span className="relative z-10 grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-primary-200 bg-white font-mono text-sm font-semibold text-primary-600 shadow-soft">
+              <span className="relative z-10 grid h-12 w-12 shrink-0 place-items-center rounded-md border border-primary-200 bg-white font-mono text-sm font-semibold text-primary-600 shadow-soft">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div className="pt-2.5">
@@ -114,7 +114,7 @@ export function TopicArtifacts({ artifacts }: { artifacts: NonNullable<TopicCont
   return (
     <section className="relative overflow-hidden bg-ink-950 py-20 text-white md:py-28">
       <div aria-hidden className="absolute inset-0 bg-grid-dark mask-radial" />
-      <div aria-hidden className="absolute -left-40 top-1/3 h-96 w-96 rounded-full bg-primary-600/25 blur-[120px]" />
+      <div aria-hidden className="absolute -left-40 top-1/3 h-96 w-96 rounded-md bg-primary-600/25 blur-[120px]" />
       <div className="container relative">
         <SectionHeader
           eyebrow="Deliverables"
@@ -127,10 +127,10 @@ export function TopicArtifacts({ artifacts }: { artifacts: NonNullable<TopicCont
           {artifacts.map((artifact) => (
             <article
               key={artifact.name}
-              className="group h-full rounded-3xl border border-white/10 bg-white/[0.03] p-7 transition-colors duration-300 hover:border-primary-400/40 hover:bg-white/[0.06]"
+              className="group h-full rounded-md border border-white/10 bg-white/[0.03] p-7 ui-row-inverse"
             >
               <div className="flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-primary-400/30 to-accent-400/10 text-accent-200 ring-1 ring-white/10">
+                <span className="grid h-10 w-10 place-items-center rounded-md bg-gradient-to-br from-primary-400/30 to-accent-400/10 text-accent-200 ring-1 ring-white/10">
                   <FileText size={18} strokeWidth={1.75} />
                 </span>
                 <h3 className="text-lg font-semibold tracking-tight">{artifact.name}</h3>
@@ -152,9 +152,9 @@ export function TopicTerms({ terms }: { terms: NonNullable<TopicContent["terms"]
     <section className="py-20 md:py-28">
       <div className="container">
         <SectionHeader eyebrow="A–Z" title="The working vocabulary of a BA" highlight="vocabulary" />
-        <nav aria-label="Glossary letters" className="sticky top-20 z-10 mx-auto mt-10 flex max-w-max flex-wrap justify-center gap-1 rounded-full border border-line bg-white/90 p-1.5 shadow-soft backdrop-blur">
+        <nav aria-label="Glossary letters" className="sticky top-20 z-10 mx-auto mt-10 flex max-w-max flex-wrap justify-center gap-1 rounded-md border border-line bg-white/90 p-1.5 shadow-soft backdrop-blur">
           {letters.map((letter) => (
-            <a key={letter} href={`#letter-${letter}`} className="grid h-8 w-8 place-items-center rounded-full text-sm font-semibold text-ink-600 transition-colors hover:bg-primary-600 hover:text-white">
+            <a key={letter} href={`#letter-${letter}`} className="grid h-8 w-8 place-items-center rounded-md text-sm font-semibold text-ink-600 ui-row">
               {letter}
             </a>
           ))}
@@ -166,10 +166,10 @@ export function TopicTerms({ terms }: { terms: NonNullable<TopicContent["terms"]
               <div
                 key={item.term}
                 id={firstOfLetter ? `letter-${item.term[0].toUpperCase()}` : undefined}
-                className="scroll-mt-36 rounded-2xl border border-line bg-white p-6 transition-colors hover:border-primary-200"
+                className="scroll-mt-36 rounded-md border border-line bg-white p-6 ui-card-link"
               >
                 <dt className="flex items-center gap-3 text-lg font-semibold text-ink-900">
-                  <span className="grid h-7 w-7 place-items-center rounded-lg bg-primary-50 font-mono text-xs text-primary-600">{item.term[0].toUpperCase()}</span>
+                  <span className="grid h-7 w-7 place-items-center rounded-md bg-primary-50 font-mono text-xs text-primary-600">{item.term[0].toUpperCase()}</span>
                   {item.term}
                 </dt>
                 <dd className="mt-2.5 text-[15px] leading-7 text-ink-500">{item.definition}</dd>
@@ -194,7 +194,7 @@ export function TopicFaq({ faqs, large = false }: { faqs: TopicContent["faqs"]; 
             description="Still unsure? Our advisors reply within one working day."
             align="left"
             action={
-              <Link href="/contact" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 hover:text-primary-700">
+              <Link href="/contact" className="inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold ui-link">
                 Ask a question <ArrowUpRight size={15} />
               </Link>
             }
@@ -202,10 +202,10 @@ export function TopicFaq({ faqs, large = false }: { faqs: TopicContent["faqs"]; 
         </div>
         <div className="space-y-3">
           {faqs.map((faq) => (
-            <details key={faq.question} className="group rounded-2xl border border-line bg-white shadow-soft transition-shadow open:shadow-lift">
+            <details key={faq.question} className="group rounded-md border border-line bg-white shadow-soft transition-shadow open:shadow-lift">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 p-6 text-left text-[17px] font-semibold text-ink-900 [&::-webkit-details-marker]:hidden">
                 {faq.question}
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line text-ink-500 transition-all duration-300 group-open:rotate-45 group-open:border-primary-200 group-open:bg-primary-50 group-open:text-primary-600">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-line text-ink-500 transition-all duration-300 group-open:rotate-45 group-open:border-primary-200 group-open:bg-primary-50 group-open:text-primary-600">
                   <Plus size={16} />
                 </span>
               </summary>
@@ -229,7 +229,7 @@ export function TopicRelated({ related }: { related: TopicContent[] }) {
             <Link
               key={topic.slug}
               href={`/${topic.slug}`}
-              className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-line bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary-200 hover:shadow-lift"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-md border border-line bg-white p-6 ui-card-link"
             >
               <div>
                 <span className="text-xs font-medium uppercase tracking-[0.12em] text-primary-600">{topic.eyebrow}</span>

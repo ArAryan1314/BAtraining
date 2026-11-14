@@ -27,8 +27,8 @@ function MobileGroup({ label, links, onNavigate }: { label: string; links: NavLi
         <ul className="grid min-h-0 grid-cols-1 gap-1 overflow-hidden sm:grid-cols-2">
           {links.map((link) => (
             <li key={link.href}>
-              <Link href={link.href} onClick={onNavigate} className="flex items-center gap-3 rounded-xl px-2 py-2.5 hover:bg-ink-50">
-                <span className="grid h-8 w-8 place-items-center rounded-lg border border-line bg-white text-primary-600">
+              <Link href={link.href} onClick={onNavigate} className="flex items-center gap-3 rounded-md px-2 py-2.5 ui-row">
+                <span className="grid h-8 w-8 place-items-center rounded-md border border-line bg-white text-primary-600">
                   <link.icon size={16} strokeWidth={1.75} />
                 </span>
                 <span className="text-sm font-medium text-ink-700">{link.label}</span>
@@ -68,8 +68,8 @@ export function MobileHamburger({ tone = "dark" }: { tone?: "dark" | "light" }) 
         aria-label="Open menu"
         aria-expanded={isOpen}
         className={cn(
-          "grid h-10 w-10 place-items-center rounded-full transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary-500",
-          tone === "dark" ? "text-ink-900 hover:bg-ink-100" : "text-white hover:bg-white/10"
+          "grid h-10 w-10 place-items-center rounded-md transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary-500",
+          tone === "dark" ? "text-ink-900 ui-row" : "text-white ui-row-inverse"
         )}
       >
         <Menu size={20} />
@@ -97,7 +97,7 @@ export function MobileHamburger({ tone = "dark" }: { tone?: "dark" | "light" }) 
                   type="button"
                   onClick={close}
                   aria-label="Close menu"
-                  className="grid h-10 w-10 place-items-center rounded-full bg-ink-100 text-ink-900 hover:bg-ink-200"
+                  className="grid h-10 w-10 place-items-center rounded-md bg-ink-100 text-ink-900 ui-row"
                 >
                   <X size={18} />
                 </button>

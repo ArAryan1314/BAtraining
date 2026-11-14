@@ -14,8 +14,8 @@ export function TimelineSection({ items, title, description }: { items: { id: st
         {items.map(item => {
           const rowContent = (
             <div className="relative flex gap-4 hover:opacity-80 transition-opacity">
-              <div className={"z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full ring-4 ring-surface-muted " + (item.completed ? "bg-success text-white" : "bg-white border border-primary-200 text-primary-600")}>
-                {item.completed ? <CheckCircle2 size={16} /> : <span className="h-2 w-2 rounded-full bg-primary-500" />}
+              <div className={"z-10 grid h-8 w-8 shrink-0 place-items-center rounded-md ring-4 ring-surface-muted " + (item.completed ? "bg-success text-white" : "bg-white border border-primary-200 text-primary-600")}>
+                {item.completed ? <CheckCircle2 size={16} /> : <span className="h-2 w-2 rounded-md bg-primary-500" />}
               </div>
               <div className="pt-0.5">
                 <div className="font-semibold">{item.title}</div>

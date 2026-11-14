@@ -10,7 +10,7 @@ function BentoCard({ className, children }: { className?: string; children: Reac
   return (
     <div
       className={cn(
-        "group relative h-full overflow-hidden rounded-[1.75rem] border border-line bg-white p-7 shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-lift",
+        "group relative h-full overflow-hidden rounded-md border border-line bg-white p-7 shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-lift",
         className
       )}
     >
@@ -40,11 +40,11 @@ export function BentoFeatures() {
                 Practising senior BAs review your BRDs, stories and models the way a lead BA would on a live project — then you revise.
               </p>
               <div className="mt-8 space-y-2.5">
-                <div className="flex items-start gap-3 rounded-2xl border border-line bg-white p-4 shadow-soft">
+                <div className="flex items-start gap-3 rounded-md border border-line bg-white p-4 shadow-soft">
                   <span className="mt-0.5 rounded-md bg-amber-50 px-1.5 py-0.5 font-mono text-[11px] text-amber-700">BRD §3.1</span>
                   <p className="text-sm text-ink-600">&ldquo;Fast checkout&rdquo; isn&apos;t testable. What&apos;s the measurable target, and who signs it off?</p>
                 </div>
-                <div className="ml-8 flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4">
+                <div className="ml-8 flex items-start gap-3 rounded-md border border-emerald-200 bg-emerald-50/60 p-4">
                   <span className="mt-0.5 rounded-md bg-emerald-100 px-1.5 py-0.5 font-mono text-[11px] text-emerald-700">Revised</span>
                   <p className="text-sm text-emerald-900">Checkout completes in ≤ 60 seconds for 90% of guest sessions. Owner: Head of E-commerce.</p>
                 </div>
@@ -54,7 +54,7 @@ export function BentoFeatures() {
 
           <Motion className="h-full md:col-span-2" delay={80}>
             <BentoCard className="bg-ink-950 text-white">
-              <div aria-hidden className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-primary-500/30 blur-3xl" />
+              <div aria-hidden className="absolute -right-10 -top-10 h-48 w-48 rounded-md bg-primary-500/30 blur-3xl" />
               <IconBadge icon={BarChart3} variant="dark" />
               <h3 className="relative mt-6 text-2xl font-semibold tracking-tight">Readiness you can see</h3>
               <p className="relative mt-2 text-ink-400">Progress is tracked as evidence, not video minutes.</p>
@@ -70,8 +70,8 @@ export function BentoFeatures() {
                       <span className="text-ink-300">{label}</span>
                       <span className="tabular-nums text-ink-500">{value}%</span>
                     </div>
-                    <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-white/10">
-                      <div className="h-full rounded-full bg-gradient-to-r from-primary-400 to-accent-400" style={{ width: `${value}%` }} />
+                    <div className="mt-1.5 h-1.5 overflow-hidden rounded-md bg-white/10">
+                      <div className="h-full rounded-md bg-gradient-to-r from-primary-400 to-accent-400" style={{ width: `${value}%` }} />
                     </div>
                   </div>
                 ))}
@@ -131,19 +131,19 @@ export function CurriculumTimeline() {
             description="A deliberate progression from first principles to an end-to-end capstone."
             align="left"
           />
-          <Link href="/curriculum" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary-600 hover:text-primary-700">
+          <Link href="/curriculum" className="inline-flex min-h-6 shrink-0 items-center gap-1.5 text-sm font-semibold ui-link">
             Full curriculum <ArrowUpRight size={16} />
           </Link>
         </div>
 
-        <Stagger className="mt-14 grid gap-px overflow-hidden rounded-[1.75rem] border border-line bg-line md:grid-cols-2 lg:grid-cols-3" itemClassName="h-full">
+        <Stagger className="mt-14 grid gap-px overflow-hidden rounded-md border border-line bg-line md:grid-cols-2 lg:grid-cols-3" itemClassName="h-full">
           {curriculum.map((module, index) => (
-            <Link key={module.title} href={module.href} className="group relative flex h-full flex-col bg-white p-8 transition-colors duration-300 hover:bg-ink-50/80">
+            <Link key={module.title} href={module.href} className="group relative flex h-full flex-col bg-white p-8 ui-row">
               <div className="flex items-center justify-between">
                 <span className="font-display text-5xl italic leading-none text-primary-200 transition-colors duration-300 group-hover:text-primary-500">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="rounded-full border border-line px-3 py-1 text-xs font-medium text-ink-500">{module.weeks}</span>
+                <span className="rounded-md border border-line px-3 py-1 text-xs font-medium text-ink-500">{module.weeks}</span>
               </div>
               <h3 className="mt-8 text-xl font-semibold tracking-tight text-ink-900">{module.title}</h3>
               <p className="mt-2 text-[15px] leading-7 text-ink-500">{module.body}</p>
@@ -172,7 +172,7 @@ export function PortfolioShowcase() {
   return (
     <section className="relative overflow-hidden bg-ink-950 py-24 text-white md:py-32">
       <div aria-hidden className="absolute inset-0 bg-grid-dark mask-radial" />
-      <div aria-hidden className="absolute -right-40 top-20 h-[500px] w-[500px] rounded-full bg-primary-600/25 blur-[140px]" />
+      <div aria-hidden className="absolute -right-40 top-20 h-[500px] w-[500px] rounded-md bg-primary-600/25 blur-[140px]" />
       <div className="container relative grid items-center gap-16 lg:grid-cols-[1fr_1.15fr]">
         <div>
           <SectionHeader
@@ -187,7 +187,7 @@ export function PortfolioShowcase() {
             {deliverables.map((item) => (
               <div
                 key={item.title}
-                className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-primary-400/40 hover:bg-white/[0.06]"
+                className="group flex items-center gap-4 rounded-md border border-white/10 bg-white/[0.03] p-4 ui-row-inverse"
               >
                 <IconBadge icon={item.icon} variant="dark" size="sm" />
                 <div className="min-w-0 flex-1">
@@ -202,14 +202,14 @@ export function PortfolioShowcase() {
 
         <Motion animation="slide-up" delay={150}>
           <div className="relative">
-            <div className="absolute -left-6 -top-6 hidden h-full w-full rotate-[-4deg] rounded-[1.75rem] border border-white/10 bg-white/[0.03] lg:block" />
-            <div className="relative overflow-hidden rounded-[1.75rem] bg-white p-8 text-ink-900 shadow-[0_60px_120px_-40px_rgb(0_0_0/0.9)] sm:p-10">
+            <div className="absolute -left-6 -top-6 hidden h-full w-full rotate-[-4deg] rounded-md border border-white/10 bg-white/[0.03] lg:block" />
+            <div className="relative overflow-hidden rounded-md bg-white p-8 text-ink-900 shadow-[0_60px_120px_-40px_rgb(0_0_0/0.9)] sm:p-10">
               <div className="flex items-center justify-between border-b border-line pb-5">
                 <div>
                   <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-400">BRD · v1.3 · Approved</p>
                   <p className="mt-1 text-lg font-semibold">Guest Checkout Optimisation</p>
                 </div>
-                <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-200">Mentor signed-off</span>
+                <span className="rounded-md bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-200">Mentor signed-off</span>
               </div>
               <div className="mt-6 space-y-6 text-sm">
                 <div>
@@ -219,17 +219,17 @@ export function PortfolioShowcase() {
                 <div>
                   <p className="font-semibold">2. Scope</p>
                   <div className="mt-2 grid grid-cols-2 gap-2">
-                    <div className="rounded-xl bg-emerald-50/70 p-3 text-[13px] text-emerald-900">
+                    <div className="rounded-md bg-emerald-50/70 p-3 text-[13px] text-emerald-900">
                       <span className="font-semibold">In</span> · Delivery step, address lookup, saved addresses
                     </div>
-                    <div className="rounded-xl bg-ink-50 p-3 text-[13px] text-ink-600">
+                    <div className="rounded-md bg-ink-50 p-3 text-[13px] text-ink-600">
                       <span className="font-semibold">Out</span> · Loyalty, returns, marketplace sellers
                     </div>
                   </div>
                 </div>
                 <div>
                   <p className="font-semibold">3. Functional requirements</p>
-                  <div className="mt-2 overflow-hidden rounded-xl border border-line">
+                  <div className="mt-2 overflow-hidden rounded-md border border-line">
                     {[
                       ["REQ-031", "System shall list addresses matching a valid postcode", "Must"],
                       ["REQ-032", "System shall offer to save the address on confirmation", "Should"],
@@ -265,7 +265,7 @@ export function ProgramFacts() {
   return (
     <section className="py-24 md:py-32">
       <div className="container">
-        <div className="grid gap-px overflow-hidden rounded-[1.75rem] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-px overflow-hidden rounded-md border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
           {facts.map((fact, index) => (
             <Motion key={fact.unit} delay={index * 80} className="bg-white p-8 md:p-10">
               <p className="flex items-baseline gap-2">
@@ -276,7 +276,7 @@ export function ProgramFacts() {
             </Motion>
           ))}
         </div>
-        <Motion className="mt-6 flex flex-col items-start justify-between gap-4 rounded-[1.75rem] border border-line bg-gradient-to-r from-primary-50 via-white to-white p-6 sm:flex-row sm:items-center md:p-8">
+        <Motion className="mt-6 flex flex-col items-start justify-between gap-4 rounded-md border border-line bg-gradient-to-r from-primary-50 via-white to-white p-6 sm:flex-row sm:items-center md:p-8">
           <div className="flex items-center gap-4">
             <IconBadge icon={Award} variant="brand" />
             <div>
@@ -284,7 +284,7 @@ export function ProgramFacts() {
               <p className="text-sm text-ink-500">Employers can confirm your credential and the evidence behind it in seconds.</p>
             </div>
           </div>
-          <Link href="/certification" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 hover:text-primary-700">
+          <Link href="/certification" className="inline-flex min-h-6 items-center gap-1.5 text-sm font-semibold ui-link">
             How certification works <ArrowUpRight size={16} />
           </Link>
         </Motion>

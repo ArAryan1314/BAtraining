@@ -26,7 +26,7 @@ export function CourseOutline({ course }: { course: NonNullable<Awaited<ReturnTy
           <ul className="mt-4 space-y-1">
             {module.lessons.map((lesson) => (
               <li key={lesson.id}>
-                <Link href={lessonHref(lesson.id)} className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-ink-700 hover:bg-surface-muted">
+                <Link href={lessonHref(lesson.id)} className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-ink-700 ui-row">
                   {lesson.completed ? <CheckCircle2 size={17} className="shrink-0 text-success" aria-label="Completed" /> : <Circle size={17} className="shrink-0 text-ink-400" aria-label="Not completed" />}
                   {lesson.title}
                 </Link>

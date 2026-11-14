@@ -23,7 +23,7 @@ export function ResourceLayout({ topic }: { topic: TopicContent }) {
           <p className="mt-4 max-w-3xl text-lg leading-8 text-ink-600">{topic.summary}</p>
         </div>
         <nav aria-label="Jump to section" className="container mt-8 flex max-w-5xl flex-wrap gap-2">
-          {jumps.map((jump) => <a key={jump.id} href={`#${jump.id}`} className="rounded-full border border-line bg-white px-4 py-1.5 text-sm font-medium text-ink-700 hover:border-primary-300 hover:text-primary-700">{jump.label}</a>)}
+          {jumps.map((jump) => <a key={jump.id} href={`#${jump.id}`} className="rounded-md border border-line bg-white px-4 py-1.5 text-sm font-medium text-ink-700 ui-row">{jump.label}</a>)}
         </nav>
       </header>
 
@@ -34,7 +34,7 @@ export function ResourceLayout({ topic }: { topic: TopicContent }) {
               <h2 className="text-2xl font-semibold tracking-tight text-ink-900">{topic.overview.heading}</h2>
               {topic.overview.paragraphs.map((paragraph) => <p key={paragraph.slice(0, 32)}>{paragraph}</p>)}
             </div>
-            <aside className="space-y-6 self-start rounded-2xl border border-line bg-white p-6">
+            <aside className="space-y-6 self-start rounded-md border border-line bg-white p-6">
               <dl className="space-y-4">
                 {topic.meta.map((item) => (
                   <div key={item.label}>
@@ -53,7 +53,7 @@ export function ResourceLayout({ topic }: { topic: TopicContent }) {
         <section id="reference" className="scroll-mt-24 border-t border-line py-14 md:py-20">
           <div className="container max-w-5xl">
             <h2 className="text-2xl font-semibold tracking-tight text-ink-900">Reference</h2>
-            <dl className="mt-8 divide-y divide-line rounded-2xl border border-line bg-white">
+            <dl className="mt-8 divide-y divide-line rounded-md border border-line bg-white">
               {topic.concepts.map((concept) => (
                 <div key={concept.title} className="grid gap-2 p-5 md:grid-cols-[14rem_1fr] md:gap-8">
                   <dt className="font-semibold text-ink-900">{concept.title}</dt>
@@ -66,7 +66,7 @@ export function ResourceLayout({ topic }: { topic: TopicContent }) {
                 <h3 className="mt-14 text-xl font-semibold tracking-tight text-ink-900">Templates and artifacts</h3>
                 <ul className="mt-5 grid gap-3 md:grid-cols-2">
                   {topic.artifacts.map((artifact) => (
-                    <li key={artifact.name} className="rounded-xl border border-dashed border-ink-300 p-5">
+                    <li key={artifact.name} className="rounded-md border border-dashed border-ink-300 p-5">
                       <p className="font-semibold text-ink-900">{artifact.name}</p>
                       <p className="mt-1 text-sm leading-6 text-ink-500">{artifact.description}</p>
                     </li>

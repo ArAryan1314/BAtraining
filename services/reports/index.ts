@@ -1,4 +1,5 @@
 import { integrations } from "@/config/integrations";
+import { resolveDatabaseUrl } from "@/lib/db/connection";
 import { prisma } from "@/lib/db/prisma";
 import { requirePermission, type SessionUser } from "@/lib/auth/guards";
 import { learnerWhere } from "@/services/cohorts";
@@ -61,5 +62,5 @@ export async function getPlatformReport(actor: SessionUser) {
 /** Reports which integrations are configured. Only ever returns yes or no, never the values. */
 export function getIntegrationStatus(actor: SessionUser) {
   requirePermission(actor, "settings.write");
-  return integrations.map(({ id, name, purpose, required, env }) => ({ id, name, purpose, required, configured: env.every((key) => Boolean(process.env[key])) }));
+  return integrations.map(({ id, name, purpose, required, env }) => ({ id, name, purpose, required, configured: id === "database" ? Boolean(resolveDatabaseUrl(process.env)) : env.every((key) => Boolean(process.env[key])) }));
 }

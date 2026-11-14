@@ -32,7 +32,7 @@ export function StudentProjects({ projects }: { projects: Awaited<ReturnType<typ
           {project.submissions.length > 0 && (
             <ul className="mt-4 space-y-2">
               {project.submissions.map((submission) => (
-                <li key={submission.id} className="rounded-lg border border-line p-3 text-sm">
+                <li key={submission.id} className="rounded-md border border-line p-3 text-sm">
                   <div className="flex items-center justify-between gap-3">
                     <span className="font-medium">{submission.title} · {formatDate(submission.submittedAt)}</span>
                     <Badge tone={submissionTone[submission.status]}>{submissionLabels[submission.status]}</Badge>

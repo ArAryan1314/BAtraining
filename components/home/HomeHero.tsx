@@ -34,20 +34,20 @@ function ReadinessRing({ value }: { value: number }) {
 function WorkspacePreview() {
   return (
     <div className="relative mx-auto max-w-6xl">
-      <div aria-hidden className="absolute -inset-x-20 -top-20 bottom-0 rounded-full bg-primary-600/25 blur-[100px]" />
-      <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-ink-900/70 p-1.5 shadow-[0_60px_120px_-40px_rgb(0_0_0/0.8)] backdrop-blur-2xl">
+      <div aria-hidden className="absolute -inset-x-20 -top-20 bottom-0 rounded-md bg-primary-600/25 blur-[100px]" />
+      <div className="relative overflow-hidden rounded-md border border-white/10 bg-ink-900/70 p-1.5 shadow-[0_60px_120px_-40px_rgb(0_0_0/0.8)] backdrop-blur-2xl">
         <div className="flex items-center gap-2 px-4 py-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-          <span className="mx-auto hidden rounded-full border border-white/10 bg-white/5 px-4 py-1 font-mono text-[11px] text-ink-400 sm:block">
+          <span className="h-2.5 w-2.5 rounded-md bg-white/15" />
+          <span className="h-2.5 w-2.5 rounded-md bg-white/15" />
+          <span className="h-2.5 w-2.5 rounded-md bg-white/15" />
+          <span className="mx-auto hidden rounded-md border border-white/10 bg-white/5 px-4 py-1 font-mono text-[11px] text-ink-400 sm:block">
             app.baupskill.com/workspace/checkout-optimisation
           </span>
         </div>
 
-        <div className="grid gap-1.5 rounded-[1.4rem] bg-ink-950/80 p-1.5 md:grid-cols-[220px_1fr_260px]">
+        <div className="grid gap-1.5 rounded-md bg-ink-950/80 p-1.5 md:grid-cols-[220px_1fr_260px]">
           {/* Sidebar */}
-          <aside className="hidden rounded-2xl bg-white/[0.03] p-4 md:block">
+          <aside className="hidden rounded-md bg-white/[0.03] p-4 md:block">
             <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-ink-500">Your path</p>
             <ul className="mt-4 space-y-1">
               {modules.map((m) => (
@@ -55,18 +55,18 @@ function WorkspacePreview() {
                   key={m.label}
                   className={
                     m.state === "active"
-                      ? "flex items-center gap-2.5 rounded-lg bg-primary-500/15 px-2.5 py-2 text-[13px] font-medium text-white ring-1 ring-primary-400/30"
+                      ? "flex items-center gap-2.5 rounded-md bg-primary-500/15 px-2.5 py-2 text-[13px] font-medium text-white ring-1 ring-primary-400/30"
                       : "flex items-center gap-2.5 px-2.5 py-2 text-[13px] text-ink-400"
                   }
                 >
                   {m.state === "done" ? (
-                    <span className="grid h-4 w-4 place-items-center rounded-full bg-emerald-400/20 text-emerald-300">
+                    <span className="grid h-4 w-4 place-items-center rounded-md bg-emerald-400/20 text-emerald-300">
                       <Check size={10} strokeWidth={3} />
                     </span>
                   ) : m.state === "active" ? (
                     <CircleDot size={16} className="text-accent-300" />
                   ) : (
-                    <span className="h-4 w-4 rounded-full border border-white/15" />
+                    <span className="h-4 w-4 rounded-md border border-white/15" />
                   )}
                   {m.label}
                 </li>
@@ -75,12 +75,12 @@ function WorkspacePreview() {
           </aside>
 
           {/* Main: user story */}
-          <div className="rounded-2xl bg-white/[0.03] p-5 text-left sm:p-6">
+          <div className="rounded-md bg-white/[0.03] p-5 text-left sm:p-6">
             <div className="flex flex-wrap items-center gap-2">
               <span className="rounded-md bg-primary-500/15 px-2 py-0.5 font-mono text-[11px] text-primary-200">CHK-142</span>
               <span className="rounded-md bg-white/5 px-2 py-0.5 text-[11px] text-ink-400">User story</span>
-              <span className="ml-auto flex items-center gap-1.5 rounded-full bg-amber-400/10 px-2.5 py-0.5 text-[11px] font-medium text-amber-300">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-300" /> In mentor review
+              <span className="ml-auto flex items-center gap-1.5 rounded-md bg-amber-400/10 px-2.5 py-0.5 text-[11px] font-medium text-amber-300">
+                <span className="h-1.5 w-1.5 rounded-md bg-amber-300" /> In mentor review
               </span>
             </div>
             <h3 className="mt-4 text-lg font-semibold leading-snug text-white sm:text-xl">Guest checkout with saved address lookup</h3>
@@ -88,7 +88,7 @@ function WorkspacePreview() {
               <span className="text-ink-200">As a</span> returning guest shopper, <span className="text-ink-200">I want</span> to find my address by postcode{" "}
               <span className="text-ink-200">so that</span> I can complete checkout in under a minute.
             </p>
-            <div className="mt-5 rounded-xl border border-white/10 bg-ink-950/60 p-4 font-mono text-[12px] leading-6">
+            <div className="mt-5 rounded-md border border-white/10 bg-ink-950/60 p-4 font-mono text-[12px] leading-6">
               <p>
                 <span className="text-primary-300">Given</span> <span className="text-ink-300">a guest on the delivery step</span>
               </p>
@@ -105,7 +105,7 @@ function WorkspacePreview() {
                 { icon: FileText, label: "BRD §4.2" },
                 { icon: GitBranch, label: "RTM: REQ-031" },
               ].map((link) => (
-                <span key={link.label} className="flex items-center gap-1.5 rounded-lg border border-white/10 px-2.5 py-1.5 text-[12px] text-ink-300">
+                <span key={link.label} className="flex items-center gap-1.5 rounded-md border border-white/10 px-2.5 py-1.5 text-[12px] text-ink-300">
                   <link.icon size={13} className="text-accent-300" /> {link.label}
                 </span>
               ))}
@@ -114,7 +114,7 @@ function WorkspacePreview() {
 
           {/* Right: readiness + review */}
           <div className="hidden flex-col gap-1.5 md:flex">
-            <div className="flex items-center gap-4 rounded-2xl bg-white/[0.03] p-4 text-left">
+            <div className="flex items-center gap-4 rounded-md bg-white/[0.03] p-4 text-left">
               <div className="relative">
                 <ReadinessRing value={68} />
                 <span className="absolute inset-0 grid place-items-center text-sm font-semibold text-white">68%</span>
@@ -124,17 +124,17 @@ function WorkspacePreview() {
                 <p className="text-[12px] text-ink-500">11 of 16 evidence items</p>
               </div>
             </div>
-            <div className="flex-1 rounded-2xl bg-white/[0.03] p-4 text-left">
+            <div className="flex-1 rounded-md bg-white/[0.03] p-4 text-left">
               <p className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.14em] text-ink-500">
                 <MessageSquare size={12} /> Mentor feedback
               </p>
-              <div className="mt-3 rounded-xl border border-white/10 bg-white/[0.03] p-3">
+              <div className="mt-3 rounded-md border border-white/10 bg-white/[0.03] p-3">
                 <p className="text-[12px] leading-5 text-ink-300">
                   Strong story. Add a negative path: what happens when the postcode returns no matches?
                 </p>
                 <p className="mt-2 text-[11px] text-ink-500">Senior BA reviewer · 2h ago</p>
               </div>
-              <div className="mt-2 rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-3">
+              <div className="mt-2 rounded-md border border-emerald-400/20 bg-emerald-400/5 p-3">
                 <p className="text-[12px] leading-5 text-emerald-200">AC-3 added for the no-match case.</p>
                 <p className="mt-2 text-[11px] text-ink-500">You · just now</p>
               </div>
@@ -154,9 +154,9 @@ export function HomeHero() {
         <Motion animation="fade-in">
           <Link
             href="/program"
-            className="group mx-auto inline-flex items-center gap-2 rounded-full shimmer-border py-1 pl-1 pr-4 text-sm text-ink-300"
+            className="group mx-auto inline-flex items-center gap-2 rounded-md shimmer-border py-1 pl-1 pr-4 text-sm text-ink-300"
           >
-            <span className="rounded-full bg-primary-500/20 px-2.5 py-0.5 text-xs font-semibold text-primary-200">New cohort</span>
+            <span className="rounded-md bg-primary-500/20 px-2.5 py-0.5 text-xs font-semibold text-primary-200">New cohort</span>
             <span className="hidden sm:inline">Enrolment is open for the 13-week program</span>
             <span className="sm:hidden">Enrolment now open</span>
             <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />

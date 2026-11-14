@@ -36,8 +36,8 @@ export function AdminDashboard({ data }: { data: Awaited<ReturnType<typeof getAd
                   <span className="font-medium">{label}</span>
                   <span className="tabular-nums text-ink-500">{value}</span>
                 </div>
-                <div className="h-2 rounded-full bg-ink-100">
-                  <div className="h-2 rounded-full bg-primary-500" style={{ width: `${(value / peak) * 100}%` }} />
+                <div className="h-2 rounded-md bg-ink-100">
+                  <div className="h-2 rounded-md bg-primary-500" style={{ width: `${(value / peak) * 100}%` }} />
                 </div>
               </li>
             ))}
@@ -49,7 +49,7 @@ export function AdminDashboard({ data }: { data: Awaited<ReturnType<typeof getAd
             <ul className="mt-3 grid grid-cols-2 gap-2">
               {shortcuts.map(({ label, href, icon: Icon }) => (
                 <li key={href}>
-                  <Link href={href} className="flex items-center justify-between gap-2 rounded-lg border border-line px-3 py-2.5 text-sm font-medium hover:border-primary-300 hover:text-primary-700">
+                  <Link href={href} className="flex items-center justify-between gap-2 rounded-md border border-line px-3 py-2.5 text-sm font-medium ui-row">
                     <span className="flex items-center gap-2"><Icon size={15} />{label}</span>
                     <ArrowUpRight size={13} className="text-ink-400" />
                   </Link>

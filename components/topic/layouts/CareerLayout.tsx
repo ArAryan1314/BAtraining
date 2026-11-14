@@ -72,12 +72,12 @@ export function CareerLayout({ topic }: { topic: TopicContent }) {
           <div className="container max-w-6xl">
             <SectionHeader eyebrow="Proof of work" title="What you will have to show" highlight="show" tone="dark" align="left" />
             <div className="mt-12 grid gap-4 md:grid-cols-3 md:grid-rows-2">
-              <article className="rounded-3xl bg-gradient-to-br from-primary-600 to-accent-500 p-8 md:col-span-2 md:row-span-2">
+              <article className="rounded-md bg-gradient-to-br from-primary-600 to-accent-500 p-8 md:col-span-2 md:row-span-2">
                 <h3 className="font-display text-4xl">{lead.name}</h3>
                 <p className="mt-4 max-w-md text-lg leading-8 text-white/85">{lead.description}</p>
               </article>
               {rest.slice(0, 2).map((artifact) => (
-                <article key={artifact.name} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+                <article key={artifact.name} className="rounded-md border border-white/10 bg-white/[0.04] p-6">
                   <h3 className="text-lg font-semibold">{artifact.name}</h3>
                   <p className="mt-3 text-[15px] leading-7 text-ink-400">{artifact.description}</p>
                 </article>
