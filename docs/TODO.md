@@ -13,7 +13,7 @@ The single prioritised backlog. It replaces the earlier [PENDING-INTEGRATIONS.md
 | T-02 | Apply migrations to the production database. If tables already exist from `db push`, run `pnpm db:baseline` first | You | | A production build runs `migrate deploy` itself |
 | T-03 | Create the first admin with `pnpm db:admin` | You | FR-204 | Never seed demo accounts on production |
 | T-04 | Give Preview deployments their own database | You | | Otherwise previews touch production data |
-| T-05 | Turn on branch protection for `main` and `development`; make `development` the default branch | You | | Required checks: branch-rules, check, database |
+| T-05 | Turn on branch protection for `main` and `development`; make `development` the default branch | You | | Required checks: branch-rules, check, database. The default branch stops feature PRs defaulting to `main`. Ship with a `development` into `main` PR, merged with a merge commit |
 | T-06 | Choose an email provider and implement email delivery in `services/notifications` | Both | FR-701 | Resend or Postmark fit the existing settings |
 | T-07 | Password reset and user invitations | Dev | FR-205, FR-206 | Needs T-06. Single-use expiring tokens |
 | T-08 | Watch the first CI runs on `development` and fix any failure, especially the `database` job | Dev | | Added but never run on GitHub |

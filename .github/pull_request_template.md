@@ -4,7 +4,8 @@
 ## Type
 - [ ] feature  (branch `feature/...`, targets `development`)
 - [ ] bugfix   (branch `bugfix/...`, targets `development`)
-- [ ] release  (branch `release/x.y.z`, targets `main`)
+- [ ] promotion (branch `development`, targets `main`; merge with a merge commit, then tag)
+- [ ] release  (branch `release/x.y.z`, targets `main`; only when stabilising a release)
 - [ ] hotfix   (branch `hotfix/...`, targets `main`, then merge back into `development`)
 
 ## Checklist

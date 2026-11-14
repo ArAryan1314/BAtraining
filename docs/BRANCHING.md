@@ -14,7 +14,7 @@ feature/…          ●   ●    ●  bugfix/…
 
 | Branch | Purpose | Deploys to | Who can push |
 |---|---|---|---|
-| `main` | What is live. Every commit on it is a release. | Vercel **Production** | Nobody directly. Only merged `release/*` and `hotfix/*` PRs |
+| `main` | What is live. Every commit on it is a release. | Vercel **Production** | Nobody directly. Only merged `development`, `release/*` and `hotfix/*` PRs |
 | `development` | Where finished work is combined and tested. Always in a releasable state. | Vercel **Preview** | Nobody directly. Only merged PRs |
 
 ## Working branches
@@ -29,7 +29,7 @@ All are short-lived. Name them in lowercase with hyphens.
 | Hotfix | `main` | `main`, then into `development` | `hotfix/<name>` | An urgent defect already in production |
 | Chore / docs | `development` | `development` | `chore/<name>`, `docs/<name>` | Tooling, dependencies, documentation |
 
-`scripts/branch-rules.mjs` enforces these names and targets. CI runs it on every pull request, so a `feature/` branch opened against `main` fails. Dependabot's own `dependabot/*` branches are allowed into `development`.
+`scripts/branch-rules.mjs` enforces these names and targets. CI runs it on every pull request, so a `feature/` branch opened against `main` fails. The one pull request allowed to start from a long-lived branch is `development` into `main`, the normal way to ship. Dependabot's own `dependabot/*` branches are allowed into `development`.
 
 ## Day to day
 
@@ -52,6 +52,24 @@ Write commit messages as `type: summary` using `feat`, `fix`, `docs`, `chore`, `
 
 Releases are versioned `MAJOR.MINOR.PATCH`: breaking change, new feature, bug fix.
 
+### The normal way: promote `development`
+
+1. On `development` (through a normal PR), bump `version` in `package.json` and add the entry to `content/changelog.ts`.
+2. Open a pull request **`development` into `main`**. CI must pass.
+3. Merge it with **Create a merge commit**, not squash. A squash gives `main` a commit `development` doesn't have, and the two branches drift apart.
+4. Vercel deploys production. If the release has a migration, the production build applies it (`scripts/vercel-build.mjs`).
+5. Tag the merge commit and push the tag:
+   ```powershell
+   git checkout main && git pull
+   git tag -a v1.3.0 -m "Release 1.3.0"
+   git push origin v1.3.0
+   ```
+6. If `main` ended up with commits `development` lacks (a hotfix, for instance), merge them back through a short `chore/back-merge-1.3.0` branch.
+
+### When a release needs stabilising: a release branch
+
+Use a `release/x.y.z` branch when you want to freeze a release while `development` keeps moving.
+
 1. Cut the release branch from an up-to-date `development`:
    ```powershell
    git checkout development && git pull
@@ -67,6 +85,10 @@ Releases are versioned `MAJOR.MINOR.PATCH`: breaking change, new feature, bug fi
    git push origin v1.3.0
    ```
 6. Merge `main` back into `development` so the version bump and any release fixes aren't lost. Open the PR from `main`'s tip using a short `chore/back-merge-1.3.0` branch.
+
+## Settings to apply on GitHub
+
+Set `development` as the **default branch** (Settings → General → Default branch). Otherwise GitHub pre-fills `main` as the base of every new pull request, and feature branches fail the `branch-rules` check.
 
 ## Hotfixes
 
