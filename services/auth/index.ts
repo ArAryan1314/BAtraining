@@ -2,11 +2,14 @@ import { cache } from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import type { SessionUser } from "@/lib/auth/guards";
+import { signInUnavailable } from "@/lib/auth/availability";
 import { authOptions } from "@/lib/auth/options";
 import { workspaces } from "@/config/navigation";
 import type { UserRole } from "@/types/user";
 
 export const getSessionUser = cache(async (): Promise<SessionUser | null> => {
+  // Without the session secret NextAuth throws on every call. Treat the visitor as signed out so pages can explain instead of crashing.
+  if (signInUnavailable(process.env)) return null;
   const session = await getServerSession(authOptions);
   if (!session) return null;
   const { id, name, email, role } = session.user;

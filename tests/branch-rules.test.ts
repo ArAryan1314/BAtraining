@@ -21,6 +21,11 @@ test("release branches need a version number", () => {
   assert.ok(problems("release/1.3", "main").length > 0);
 });
 
+test("dependabot branches are allowed into development only", () => {
+  assert.deepEqual(problems("dependabot/npm_and_yarn/next-16.5.0", "development"), []);
+  assert.ok(problems("dependabot/npm_and_yarn/next-16.5.0", "main").length > 0);
+});
+
 test("long-lived branches and badly named branches are rejected", () => {
   assert.ok(problems("development", "main").length > 0);
   assert.ok(problems("main", "development").length > 0);
