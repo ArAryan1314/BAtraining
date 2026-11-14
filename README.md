@@ -4,6 +4,10 @@ This repository consolidates the complete BA Training product roadmap into one N
 
 The project is intentionally structured as a **platform**, not a collection of independently styled pages.
 
+## Branching
+
+`main` is production and `development` is integration. Work happens on `feature/*` and `bugfix/*` branches into `development`; `release/*` and `hotfix/*` go into `main`. See [docs/BRANCHING.md](docs/BRANCHING.md).
+
 ## Non-negotiable architecture rules
 
 1. Route/page files under `app/**` contain **no Tailwind utility classes** and normally contain no `className` at all. They compose reusable components.
