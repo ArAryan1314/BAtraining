@@ -1,5 +1,7 @@
 # Pending work and integration checklist
 
+> **Superseded by [TODO.md](TODO.md)**, the single prioritised backlog. This file is kept for its vendor detail.
+
 Ordered by what blocks a real launch first. What to buy, and the matching env variables, is in [PROCUREMENT.md](PROCUREMENT.md). Each item names where it plugs in.
 
 ## Blocks launch
