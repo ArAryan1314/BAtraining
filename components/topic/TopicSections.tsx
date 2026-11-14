@@ -4,6 +4,7 @@ import { cn } from "@/lib/cn";
 import { Chip, IconBadge, SectionHeader } from "@/components/ui/marketing-primitives";
 import { Motion, Stagger } from "@/components/ui/motion/Motion";
 import type { TopicContent } from "@/content/topics";
+import { TopicArt } from "@/components/illustrations";
 import { CodeWindow } from "./CodeWindow";
 import { topicIconMap } from "./topic-icons";
 
@@ -13,6 +14,7 @@ export function TopicOverview({ topic }: { topic: TopicContent }) {
       <div className="container grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeader eyebrow="Overview" title={topic.overview.heading} align="left" />
+          <TopicArt scene="dashboard" seed={topic.slug} icon={topicIconMap[topic.concepts[0].icon]} className="mt-10 hidden max-w-sm lg:block" />
         </div>
         <div>
           <Stagger className="space-y-6">
