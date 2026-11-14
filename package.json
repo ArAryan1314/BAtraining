@@ -17,6 +17,7 @@
     "db:studio": "prisma studio",
     "check:style-contract": "pnpm check:page-styles && pnpm check:barrels && pnpm typecheck",
     "db:seed": "prisma db seed",
+    "db:admin": "tsx prisma/create-admin.ts",
     "postinstall": "prisma generate",
     "db:deploy": "prisma migrate deploy",
     "db:baseline": "prisma migrate resolve --applied 0_init",
@@ -40,7 +41,7 @@
   "devDependencies": {
     "@next/env": "^16.4.6",
     "@tailwindcss/postcss": "^4.3.5",
-    "@types/node": "^24.19.2",
+    "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "eslint": "^9.39.5",
