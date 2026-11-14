@@ -95,7 +95,7 @@ export const cohortMemberSchema = z.object({ cohortId: id, studentId: id });
 const password = z.string().min(10, "Use at least 10 characters for the password.").max(200);
 export const userInputSchema = z.object({
   name: requiredText("Name", 120),
-  email: z.email("Enter a valid email address.").transform((value) => value.trim().toLowerCase()),
+  email: z.string().trim().toLowerCase().pipe(z.email("Enter a valid email address.")),
   role: z.enum(["ADMIN", "TRAINER", "STUDENT"]),
   password,
 });

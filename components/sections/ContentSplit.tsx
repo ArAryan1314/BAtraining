@@ -9,6 +9,7 @@ export function ContentSplit({ eyebrow, title, description, visual, imageSrc, im
           <p className="mt-4">{description}</p>
         </div>
         <div>
+          {/* eslint-disable-next-line @next/next/no-img-element -- editorial images are static assets of unknown size */}
           {visual ? visual : imageSrc ? <img src={imageSrc} alt={imageAlt || ""} className="rounded-xl shadow-xl w-full object-cover" /> : null}
         </div>
       </div>

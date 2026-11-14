@@ -177,17 +177,20 @@ export async function getQuizForEditing(actor: SessionUser, quizId: string) {
 
 export async function addQuestion(actor: SessionUser, input: unknown) {
   requirePermission(actor, "quizzes.write");
-  await prisma.question.create({ data: questionInputSchema.parse(input) });
+  const question = await prisma.question.create({ data: questionInputSchema.parse(input) });
+  await writeAuditLog({ actorId: actor.id, action: "question.create", entityType: "Question", entityId: question.id });
 }
 
 export async function deleteQuestion(actor: SessionUser, input: unknown) {
   requirePermission(actor, "quizzes.write");
   const { questionId } = z.object({ questionId: z.string().min(1) }).parse(input);
   await prisma.question.delete({ where: { id: questionId } });
+  await writeAuditLog({ actorId: actor.id, action: "question.delete", entityType: "Question", entityId: questionId });
 }
 
 export async function createAssignment(actor: SessionUser, input: unknown) {
   requirePermission(actor, "content.write");
   const assignment = await prisma.assignment.create({ data: assignmentInputSchema.parse(input) });
   await writeAuditLog({ actorId: actor.id, action: "assignment.create", entityType: "Assignment", entityId: assignment.id });
+  return assignment;
 }

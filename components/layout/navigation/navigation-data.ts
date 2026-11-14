@@ -100,6 +100,7 @@ export const companyLinks: NavLink[] = [
   { href: "/faq", label: "FAQ", description: "Common questions", icon: HelpCircle },
   { href: "/contact", label: "Contact", description: "Talk to an advisor", icon: Mail },
   { href: "/how-it-works", label: "How it works", description: "The learning model", icon: MessagesSquare },
+  { href: "/changelog", label: "Changelog", description: "Release notes and updates", icon: Sparkles },
 ];
 
 export const navGroups: NavGroup[] = [
