@@ -6,7 +6,7 @@ Ordered by what blocks a real launch first. What to buy, and the matching env va
 
 | # | Item | Where it plugs in | Notes |
 |---|---|---|---|
-| 1 | **Apply the schema change** | `pnpm db:push` | Adds `@@unique([studentId, title])` on `Certificate`. Remove any duplicate certificates first or the push fails. There is no `prisma/migrations` folder yet; switch to `prisma migrate` before production data exists. |
+| 1 | **Apply the migrations to the Vercel database** | `pnpm db:deploy` | `0_init` is the baseline and `1_certificate_unique` adds a unique (studentId, title) on `Certificate`. If the tables were created with `db push`, run `pnpm db:baseline` first. See [VERCEL-DATABASE.md](VERCEL-DATABASE.md). |
 | 2 | **Email delivery** | new `services/email`, called from `notify()` | `NotificationChannel` already has an email value. Needed for password reset, enrolment and certificate emails. Resend or Postmark fit the `EMAIL_PROVIDER_API_KEY` slot. |
 | 3 | **Password reset / invite flow** | `services/users`, new `/auth/reset` pages | Today admins create accounts with a temporary password. Needs a single-use, expiring token table and #2. |
 | 4 | **Payment gateway + signed webhook** | `services/payments`, new `app/api/webhooks/payments/route.ts` | Only manual records exist. Verify the signature with `PAYMENT_WEBHOOK_SECRET`, make handling idempotent on `providerRef`, and gate enrolment on `PAID`. Razorpay fits the INR default. |
@@ -36,7 +36,7 @@ Ordered by what blocks a real launch first. What to buy, and the matching env va
 
 ## Done in this pass
 
-- `lib/env.ts` + `instrumentation.ts`: the server refuses to start with a missing, short or placeholder `AUTH_SECRET`, or a non-https `NEXTAUTH_URL` in production.
+- `lib/env.ts` + `instrumentation.ts`: the server refuses to start with a missing, short or placeholder `AUTH_SECRET` or no Postgres URL. `NEXTAUTH_URL` is optional on Vercel and must be https when set.
 - `proxy.ts`: role-based route guard in front of every workspace (layouts and services still enforce it too).
 - Sign-in throttling (5 failures per 15 minutes, per email and per IP) and constant-time handling of unknown emails.
 - CSP and HSTS headers.
@@ -45,6 +45,9 @@ Ordered by what blocks a real launch first. What to buy, and the matching env va
 - Module/lesson ordering no longer duplicates after a deletion.
 - Audit log now covers module, lesson, resource, question and content-save changes.
 - Fixed: emails with surrounding spaces were rejected by the user form.
-- Tests: 2 → 23 (env, rate limiter, permissions matrix, validations, headers).
+- Tests: 2 → 38 (env, DB connection, rate limiter, permissions, validations, headers, SEO content, sign-in redirects).
+- One shared radius and one shared set of hover/active/focus states, enforced by `pnpm check:ui`.
+- Scroll progress bar and back-to-top button with a progress ring; redesigned sign-in page.
+- Prisma migrations, pooled/direct URL resolution for Vercel, and a production-only `migrate deploy` build step.
 - CI workflow (`.github/workflows/ci.yml`) running `pnpm check` and `pnpm build`.
 - Both lint warnings resolved.

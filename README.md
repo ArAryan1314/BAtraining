@@ -165,11 +165,7 @@ pnpm db:setup
 
 Demo accounts are `admin@baacademy.local`, `trainer@baacademy.local` and `student@baacademy.local`. Their password is `SEED_USER_PASSWORD` from `.env.local`.
 
-For migrations:
-
-```powershell
-pnpm db:migrate
-```
+To change the schema locally: `pnpm db:migrate`. To apply committed migrations to a hosted database: `pnpm db:deploy` (see `docs/VERCEL-DATABASE.md`).
 
 ### 5. Validate architecture
 
