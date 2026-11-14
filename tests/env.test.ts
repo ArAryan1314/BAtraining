@@ -23,3 +23,14 @@ test("production rejects the placeholder secret and a non-https URL", () => {
 test("blank optional values are treated as unset", () => {
   assert.equal(parseEnv({ ...valid, EMAIL_PROVIDER_API_KEY: "  " }).EMAIL_PROVIDER_API_KEY, undefined);
 });
+
+test("on Vercel, NEXTAUTH_URL may be left unset, but must be https when given", () => {
+  const onVercel = { ...valid, NODE_ENV: "production", VERCEL: "1" };
+  assert.ok(parseEnv(onVercel));
+  assert.ok(parseEnv({ ...onVercel, NEXTAUTH_URL: "https://batraining.vercel.app" }));
+  assert.throws(() => parseEnv({ ...onVercel, NEXTAUTH_URL: "http://batraining.vercel.app" }), /https/);
+});
+
+test("DATABASE_URL may come from Vercel's POSTGRES_URL", () => {
+  assert.ok(parseEnv({ ...valid, DATABASE_URL: undefined, POSTGRES_URL: "postgresql://u:p@host/db" }));
+});

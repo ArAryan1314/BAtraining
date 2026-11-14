@@ -31,7 +31,9 @@ export function parseEnv(source: Record<string, string | undefined>): Env {
   }
   if (env.NODE_ENV === "production") {
     if (env.AUTH_SECRET === PLACEHOLDER_SECRET) throw new Error("AUTH_SECRET is still the placeholder value from .env.example.");
-    if (!env.NEXTAUTH_URL?.startsWith("https://")) throw new Error("NEXTAUTH_URL must be an https:// URL in production.");
+    // On Vercel, NextAuth derives the site URL itself, so NEXTAUTH_URL is optional there. When it is set it must be https.
+    const runsOnVercel = Boolean(source.VERCEL);
+    if (env.NEXTAUTH_URL ? !env.NEXTAUTH_URL.startsWith("https://") : !runsOnVercel) throw new Error("NEXTAUTH_URL must be an https:// URL in production.");
   }
   return env;
 }
