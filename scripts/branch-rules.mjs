@@ -22,9 +22,12 @@ const RELEASE_NAME = /^release\/\d+\.\d+\.\d+$/;
 export function branchProblems(head, base) {
   // Dependabot names its own branches. Its updates go into development like any other change.
   if (head.startsWith("dependabot/")) return base === "development" ? [] : ["Dependency updates are opened against development."];
-  if (LONG_LIVED.includes(head)) {
-    // development -> main is not allowed directly: it goes through a release branch.
-    return [`Open pull requests from a working branch, not from ${head}. Cut a feature/, bugfix/ or release/ branch.`];
+  // development is promoted to main as a whole. That is the only pull request allowed to start from a long-lived branch.
+  if (head === "development") {
+    return base === "main" ? [] : ["development is only merged into main. For other work, open a pull request from a feature/, bugfix/, chore/ or docs/ branch."];
+  }
+  if (head === "main") {
+    return ["main is never the source of a pull request. To bring its changes into development, use a chore/back-merge-<version> branch."];
   }
   const match = NAME.exec(head);
   if (!match) return [`Branch "${head}" must look like feature/<name>, bugfix/<name>, chore/<name>, docs/<name>, release/<x.y.z> or hotfix/<name> (lowercase, no spaces).`];
