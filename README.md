@@ -4,6 +4,10 @@ This repository consolidates the complete BA Training product roadmap into one N
 
 The project is intentionally structured as a **platform**, not a collection of independently styled pages.
 
+## Documentation
+
+Start at [docs/README.md](docs/README.md): the business requirements ([BRD](docs/BRD.md)), technical requirements ([TRD](docs/TRD.md)), the [to-do list](docs/TODO.md) and the [go-live guide](docs/GO-LIVE.md).
+
 ## Branching
 
 `main` is production and `development` is integration. Work happens on `feature/*` and `bugfix/*` branches into `development`; `release/*` and `hotfix/*` go into `main`. See [docs/BRANCHING.md](docs/BRANCHING.md).

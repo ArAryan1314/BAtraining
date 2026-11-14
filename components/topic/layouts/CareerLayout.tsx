@@ -13,7 +13,7 @@ export function CareerLayout({ topic }: { topic: TopicContent }) {
 
   return (
     <>
-      <header className="bg-[#fbf8f3] pb-20 pt-36 md:pb-28 md:pt-44">
+      <header data-hero="light" className="bg-[#fbf8f3] pb-20 pt-36 md:pb-28 md:pt-44">
         <div className="container max-w-5xl text-center">
           <Eyebrow>{topic.eyebrow}</Eyebrow>
           <h1 className="mt-6 font-display text-5xl font-normal leading-[1.02] tracking-tight text-ink-900 sm:text-7xl">{topic.title}</h1>

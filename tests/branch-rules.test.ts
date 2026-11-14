@@ -26,9 +26,18 @@ test("dependabot branches are allowed into development only", () => {
   assert.ok(problems("dependabot/npm_and_yarn/next-16.5.0", "main").length > 0);
 });
 
-test("long-lived branches and badly named branches are rejected", () => {
-  assert.ok(problems("development", "main").length > 0);
+test("development can be promoted to main, and nowhere else", () => {
+  assert.deepEqual(problems("development", "main"), []);
+  assert.ok(problems("development", "feature/x").length > 0);
+  assert.ok(problems("development", "development").length > 0);
+});
+
+test("main is never the source of a pull request", () => {
   assert.ok(problems("main", "development").length > 0);
+  assert.ok(problems("main", "main").length > 0);
+});
+
+test("badly named branches are rejected", () => {
   assert.ok(problems("fix/something", "development").length > 0);
   assert.ok(problems("feature/Has Spaces", "development").length > 0);
   assert.ok(problems("random-branch", "development").length > 0);
