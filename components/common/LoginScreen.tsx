@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useState, type SubmitEvent } from "react";
 import { getSession, signIn } from "next-auth/react";
 import { ArrowLeft, Check, Eye, EyeOff } from "lucide-react";
+import { TopicArt } from "@/components/illustrations";
 import { Button, Input } from "@/components/ui";
 import { siteConfig } from "@/config/site";
 import { postSignInPath } from "@/lib/auth/redirect";
@@ -43,6 +44,7 @@ export function LoginScreen({ unavailable = false }: { unavailable?: boolean }) 
         <div aria-hidden className="absolute -left-24 top-1/3 h-96 w-96 rounded-md bg-primary-600/30 blur-[120px]" />
         <Link href="/" className="relative text-lg font-semibold tracking-tight ui-link-inverse">{siteConfig.name}</Link>
         <div className="relative max-w-md">
+          <TopicArt scene="path" seed="sign-in" tone="dark" className="mb-10" />
           <h2 className="font-display text-5xl font-normal leading-[1.05]">Welcome back to your workspace.</h2>
           <ul className="mt-8 space-y-4">
             {highlights.map((item) => (

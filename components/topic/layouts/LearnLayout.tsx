@@ -5,6 +5,7 @@ import { Eyebrow } from "@/components/ui/marketing-primitives";
 import { CtaBand } from "@/components/sections/marketing/CtaBand";
 import { getRelatedTopics, type TopicContent } from "@/content/topics";
 import { TopicArtifacts, TopicExample, TopicFaq, TopicRelated, TopicSteps } from "../TopicSections";
+import { TopicArt } from "@/components/illustrations";
 import { topicIconMap } from "../topic-icons";
 
 /** Learning track: a docs-style page with a pinned "at a glance" rail beside the curriculum. */
@@ -18,7 +19,8 @@ export function LearnLayout({ topic }: { topic: TopicContent }) {
   return (
     <>
       <header className="border-b border-line bg-gradient-to-b from-primary-50 to-white pb-14 pt-32 md:pt-40">
-        <div className="container max-w-6xl">
+        <div className="container grid max-w-6xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+          <div>
           <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-sm text-ink-500">
             <Link href="/" className="ui-link text-ink-500">Home</Link>
             <ChevronRight size={14} />
@@ -31,6 +33,8 @@ export function LearnLayout({ topic }: { topic: TopicContent }) {
             <ButtonLink href="/contact" size="lg">Apply now <ArrowRight size={16} /></ButtonLink>
             <ButtonLink href="/curriculum" variant="secondary" size="lg">See the curriculum</ButtonLink>
           </div>
+          </div>
+          <TopicArt scene="path" seed={topic.slug} icon={topicIconMap[topic.concepts[0].icon]} className="hidden lg:block" />
         </div>
       </header>
 

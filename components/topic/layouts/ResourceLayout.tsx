@@ -2,7 +2,9 @@ import Link from "next/link";
 import { CtaBand } from "@/components/sections/marketing/CtaBand";
 import { Chip } from "@/components/ui/marketing-primitives";
 import { getRelatedTopics, type TopicContent } from "@/content/topics";
+import { TopicArt } from "@/components/illustrations";
 import { TopicExample, TopicFaq, TopicRelated, TopicSteps, TopicTerms } from "../TopicSections";
+import { topicIconMap } from "../topic-icons";
 
 /** Resource page: a compact reference sheet. Short header, a jump bar, then dense definition-style content. */
 export function ResourceLayout({ topic }: { topic: TopicContent }) {
@@ -17,10 +19,13 @@ export function ResourceLayout({ topic }: { topic: TopicContent }) {
   return (
     <>
       <header className="border-b border-line bg-ink-50 pb-10 pt-28 md:pt-32">
-        <div className="container max-w-5xl">
+        <div className="container grid max-w-5xl items-center gap-10 md:grid-cols-[1.5fr_1fr]">
+          <div>
           <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary-600">{topic.eyebrow}</p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-ink-900 sm:text-5xl">{topic.title}</h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-ink-600">{topic.summary}</p>
+          </div>
+          <TopicArt scene="documents" seed={topic.slug} icon={topicIconMap[topic.concepts[0].icon]} className="hidden md:block" />
         </div>
         <nav aria-label="Jump to section" className="container mt-8 flex max-w-5xl flex-wrap gap-2">
           {jumps.map((jump) => <a key={jump.id} href={`#${jump.id}`} className="rounded-md border border-line bg-white px-4 py-1.5 text-sm font-medium text-ink-700 ui-row">{jump.label}</a>)}

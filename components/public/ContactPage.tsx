@@ -5,6 +5,7 @@ import { Motion } from "@/components/ui/motion/Motion";
 import { TopicFaq } from "@/components/topic/TopicSections";
 import { getTopic } from "@/content/topics";
 import { ContactForm } from "./ContactForm";
+import { ContactNextSteps } from "./ContactNextSteps";
 
 const channels = [
   { icon: Mail, title: "Email admissions", body: siteConfig.contactEmail, href: `mailto:${siteConfig.contactEmail}` },
@@ -53,6 +54,7 @@ export function ContactPage() {
           </Motion>
         </div>
       </section>
+      <ContactNextSteps />
       {faqs.length > 0 && <TopicFaq faqs={faqs} large />}
     </>
   );

@@ -3,7 +3,9 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Eyebrow, SectionHeader } from "@/components/ui/marketing-primitives";
 import { CtaBand } from "@/components/sections/marketing/CtaBand";
 import { getRelatedTopics, type TopicContent } from "@/content/topics";
+import { TopicArt } from "@/components/illustrations";
 import { TopicExample, TopicFaq, TopicRelated, TopicSteps, TopicTerms } from "../TopicSections";
+import { topicIconMap } from "../topic-icons";
 
 /** Career page: an editorial, story-led layout. Large serif headline, a numbered outcome roadmap, and deliverables as a bento grid. */
 export function CareerLayout({ topic }: { topic: TopicContent }) {
@@ -25,6 +27,7 @@ export function CareerLayout({ topic }: { topic: TopicContent }) {
               </div>
             ))}
           </dl>
+          <TopicArt scene="growth" seed={topic.slug} icon={topicIconMap[topic.concepts[0].icon]} className="mx-auto mt-14 max-w-2xl" />
         </div>
       </header>
 
