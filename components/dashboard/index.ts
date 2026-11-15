@@ -2,6 +2,8 @@ export * from "./ActivityFeed";
 export * from "./ChartCard";
 export * from "./EmptyDashboard";
 export * from "./JourneyBoard";
+export * from "./KpiTile";
 export * from "./ProgressOverview";
+export * from "./ReviewQueue";
 export * from "./StatCard";
 export * from "./WhatsNewCard";
