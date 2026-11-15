@@ -5,6 +5,9 @@ import { AccentTitle, DarkBackdrop, Eyebrow } from "@/components/ui/marketing-pr
 import { Motion } from "@/components/ui/motion/Motion";
 import { TopicArt } from "@/components/illustrations";
 import type { TopicContent } from "@/content/topics";
+import { cn } from "@/lib/cn";
+import { topicLook } from "./look";
+import { TopicPattern } from "./TopicPattern";
 import { topicIconMap } from "./topic-icons";
 
 const categoryLabel: Record<TopicContent["category"], string> = {
@@ -16,9 +19,11 @@ const categoryLabel: Record<TopicContent["category"], string> = {
 
 /** The banner for every topic page: the same dark, glowing look as the home page. The right side shows either the outcomes card or this page's own artwork. */
 export function TopicHero({ topic, visual = "outcomes" }: { topic: TopicContent; visual?: "outcomes" | "art" }) {
+  const look = topicLook(topic.slug);
   return (
     <section className="relative overflow-hidden bg-ink-950 pb-16 pt-32 text-white md:pb-24 md:pt-40">
-      <DarkBackdrop />
+      <DarkBackdrop grid={false} />
+      <TopicPattern variant={look.pattern} tone="dark" className="[mask-image:radial-gradient(ellipse_80%_70%_at_50%_35%,#000_30%,transparent_100%)]" />
       <div className="container relative">
         <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-1.5 text-sm text-ink-400">
           <Link href="/" className="ui-link-inverse">
@@ -30,8 +35,8 @@ export function TopicHero({ topic, visual = "outcomes" }: { topic: TopicContent;
           <span className="text-ink-200">{topic.title}</span>
         </nav>
 
-        <div className="grid items-end gap-12 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
-          <div>
+        <div className={cn("grid items-end gap-12 lg:gap-16", look.flip ? "lg:grid-cols-[1fr_1.25fr]" : "lg:grid-cols-[1.25fr_1fr]")}>
+          <div className={cn(look.flip && "lg:order-2")}>
             <Motion animation="blur-in">
               <Eyebrow tone="dark">{topic.eyebrow}</Eyebrow>
               <h1 className="mt-6 text-5xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-6xl lg:text-7xl">
@@ -53,7 +58,7 @@ export function TopicHero({ topic, visual = "outcomes" }: { topic: TopicContent;
             </Motion>
           </div>
 
-          <Motion animation="slide-up" delay={300}>
+          <Motion animation="slide-up" delay={300} className={cn(look.flip && "lg:order-1")}>
             {visual === "art" ? (
               <TopicArt seed={topic.slug} tone="dark" icon={topicIconMap[topic.concepts[0].icon]} />
             ) : (

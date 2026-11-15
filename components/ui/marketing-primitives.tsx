@@ -167,10 +167,10 @@ export function ProgressMeter({ label, percent, className }: { label: string; pe
 }
 
 /** Ambient glow + grid backdrop for dark sections. Place inside a `relative overflow-hidden` parent. */
-export function DarkBackdrop({ className }: { className?: string }) {
+export function DarkBackdrop({ className, grid = true }: { className?: string; /** Set false where the page draws its own pattern instead of the plain grid. */ grid?: boolean }) {
   return (
     <div aria-hidden className={cn("pointer-events-none absolute inset-0", className)}>
-      <div className="absolute inset-0 bg-grid-dark mask-radial" />
+      {grid && <div className="absolute inset-0 bg-grid-dark mask-radial" />}
       <div className="absolute -top-40 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-md bg-primary-600/30 blur-[120px]" />
       <div className="absolute -bottom-40 right-0 h-[400px] w-[500px] rounded-md bg-accent-500/10 blur-[120px]" />
       <div className="absolute inset-0 bg-noise opacity-[0.15] mix-blend-overlay" />

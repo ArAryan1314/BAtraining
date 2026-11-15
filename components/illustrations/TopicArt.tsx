@@ -1,11 +1,12 @@
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { topicSlugs } from "@/content/topics";
 
-export type ArtScene = "path" | "growth" | "documents" | "dashboard";
+export type ArtScene = "path" | "growth" | "documents" | "dashboard" | "kanban" | "network" | "flow" | "table" | "skyline" | "target" | "chat" | "layers";
 
 const VIEW_W = 480;
 const VIEW_H = 360;
-const SCENES: readonly ArtScene[] = ["path", "growth", "documents", "dashboard"];
+const SCENES: readonly ArtScene[] = ["path", "growth", "documents", "dashboard", "kanban", "network", "flow", "table", "skyline", "target", "chat", "layers"];
 
 /**
  * Colour sets. Every class is written out in full so Tailwind can see it. Each set has a main colour, softer
@@ -16,6 +17,8 @@ const PALETTES = [
   { main: "fill-emerald-500", stroke: "stroke-emerald-500", soft: "fill-emerald-100", softStroke: "stroke-emerald-200", softDark: "fill-emerald-500/25", mid: "fill-emerald-300", midStroke: "stroke-emerald-300", accent: "fill-amber-400", accentStroke: "stroke-amber-500", accentSoft: "fill-amber-200", accentSoftDark: "fill-amber-400/25", badge: "bg-emerald-600" },
   { main: "fill-amber-500", stroke: "stroke-amber-500", soft: "fill-amber-100", softStroke: "stroke-amber-200", softDark: "fill-amber-500/25", mid: "fill-amber-300", midStroke: "stroke-amber-300", accent: "fill-primary-500", accentStroke: "stroke-primary-500", accentSoft: "fill-primary-100", accentSoftDark: "fill-primary-500/25", badge: "bg-amber-600" },
   { main: "fill-rose-500", stroke: "stroke-rose-500", soft: "fill-rose-100", softStroke: "stroke-rose-200", softDark: "fill-rose-500/25", mid: "fill-rose-300", midStroke: "stroke-rose-300", accent: "fill-violet-500", accentStroke: "stroke-violet-500", accentSoft: "fill-violet-200", accentSoftDark: "fill-violet-400/25", badge: "bg-rose-600" },
+  { main: "fill-violet-500", stroke: "stroke-violet-500", soft: "fill-violet-100", softStroke: "stroke-violet-200", softDark: "fill-violet-500/25", mid: "fill-violet-300", midStroke: "stroke-violet-300", accent: "fill-rose-400", accentStroke: "stroke-rose-500", accentSoft: "fill-rose-200", accentSoftDark: "fill-rose-400/25", badge: "bg-violet-600" },
+  { main: "fill-sky-500", stroke: "stroke-sky-500", soft: "fill-sky-100", softStroke: "stroke-sky-200", softDark: "fill-sky-500/25", mid: "fill-sky-300", midStroke: "stroke-sky-300", accent: "fill-amber-400", accentStroke: "stroke-amber-500", accentSoft: "fill-amber-200", accentSoftDark: "fill-amber-400/25", badge: "bg-sky-600" },
 ] as const;
 
 type Palette = (typeof PALETTES)[number];
@@ -37,10 +40,22 @@ function seeded(seed: string) {
   };
 }
 
-/** Which scene and colour set a page gets. Derived from the seed alone, so it never changes and differs between pages. */
+/**
+ * Which scene and colour set a page gets. A topic page takes its place in the list of pages: the scenes step through
+ * in order and the colour set shifts by one each time they start over, so no two pages share both. Any other seed
+ * (the sign-in screen, say) falls back to a hash. Never changes for a given seed.
+ */
 export function artSpec(seed: string): { scene: ArtScene; palette: number } {
+  const index = topicSlugs.indexOf(seed);
+  if (index >= 0) return { scene: SCENES[index % SCENES.length], palette: (index + Math.floor(index / SCENES.length)) % PALETTES.length };
   const hash = hashSeed(`spec:${seed}`);
   return { scene: SCENES[hash % SCENES.length], palette: (hash >>> 8) % PALETTES.length };
+}
+
+/** The scene for the `step`-th picture further down a page (1, 2, 3 ...). Steps are three apart, so a page never repeats a scene. */
+export function artSceneFor(seed: string, step: number): ArtScene {
+  const first = SCENES.indexOf(artSpec(seed).scene);
+  return SCENES[(first + step * 3) % SCENES.length];
 }
 
 const between = (random: () => number, min: number, max: number) => min + random() * (max - min);
@@ -193,8 +208,227 @@ function DashboardScene({ seed, dark, p }: SceneProps) {
   );
 }
 
+/** A board: three columns of cards, one of them picked out. */
+function KanbanScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
+  const cols = [0, 1, 2].map((c) => ({ x: 36 + c * 142, cards: Array.from({ length: 2 + Math.floor(random() * 3) }, () => ({ h: between(random, 38, 58), w: between(random, 0.5, 0.9) })) }));
+  const pickCol = Math.floor(random() * 3);
+  return (
+    <>
+      {cols.map((col, c) => {
+        let y = 100;
+        return (
+          <g key={c} transform={`translate(${col.x} 0)`}>
+            <rect y="62" width="128" height="262" rx="6" className={dark ? "fill-white/[0.05]" : "fill-ink-50"} />
+            <rect x="12" y="74" width="54" height="8" rx="4" className={c === 2 ? p.accent : p.main} />
+            {col.cards.map((card, i) => {
+              const top = y;
+              y += card.h + 10;
+              const picked = pickCol === c && i === 0;
+              return (
+                <g key={i}>
+                  <rect x="10" y={top} width="108" height={card.h} rx="5" className={picked ? p.main : dark ? "fill-ink-900 stroke-white/15" : "fill-white stroke-ink-200"} strokeWidth="1.5" />
+                  <rect x="20" y={top + 11} width={88 * card.w} height="6" rx="3" className={picked ? "fill-white" : dark ? "fill-white/30" : "fill-ink-300"} />
+                  <rect x="20" y={top + 24} width="30" height="6" rx="3" className={picked ? "fill-white/60" : p.mid} />
+                </g>
+              );
+            })}
+          </g>
+        );
+      })}
+    </>
+  );
+}
+
+/** Stakeholders: one hub joined to a ring of nodes. */
+function NetworkScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
+  const count = 6 + Math.floor(random() * 3);
+  const offset = random() * Math.PI;
+  const hub = { x: 240, y: 200 };
+  const nodes = Array.from({ length: count }, (_, i) => {
+    const angle = offset + (i / count) * Math.PI * 2;
+    const radius = between(random, 100, 135);
+    return { x: hub.x + Math.cos(angle) * radius * 1.45, y: hub.y + Math.sin(angle) * radius * 0.95, r: between(random, 13, 21) };
+  });
+  const lit = Math.floor(random() * count);
+  return (
+    <>
+      {nodes.map((node, i) => (
+        <line key={i} x1={hub.x} y1={hub.y} x2={node.x} y2={node.y} strokeWidth="2.5" strokeDasharray={i === lit ? undefined : "5 7"} className={i === lit ? p.accentStroke : dark ? "stroke-white/25" : p.softStroke} />
+      ))}
+      {nodes.map((node, i) => (
+        <circle key={i} cx={node.x} cy={node.y} r={node.r} strokeWidth="2.5" className={i === lit ? cn(p.accent, "stroke-transparent") : dark ? "fill-ink-900 stroke-white/30" : cn("fill-white", p.midStroke)} />
+      ))}
+      <circle cx={hub.x} cy={hub.y} r="36" className={dark ? p.softDark : p.soft} />
+      <circle cx={hub.x} cy={hub.y} r="24" className={p.main} />
+      <rect x={hub.x - 10} y={hub.y - 3} width="20" height="6" rx="3" className="fill-white" />
+    </>
+  );
+}
+
+/** A process: start, a decision, two branches that meet again. */
+function FlowScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
+  const lit = random() > 0.5 ? 0 : 1;
+  const box = dark ? "fill-ink-900 stroke-white/25" : "fill-white stroke-ink-300";
+  const link = dark ? "stroke-white/30" : "stroke-ink-300";
+  return (
+    <>
+      <path d="M96 150 H152 M214 150 H252 M318 150 H346 M285 188 V232 H142 V270 M388 190 V232 H285" fill="none" strokeWidth="2.5" className={link} />
+      <rect x="32" y="128" width="64" height="44" rx="22" className={p.main} />
+      <rect x="152" y="130" width="62" height="40" rx="6" strokeWidth="2" className={box} />
+      <rect x="164" y="146" width="38" height="7" rx="3.5" className={dark ? "fill-white/30" : "fill-ink-300"} />
+      <path d="M285 112 L318 150 L285 188 L252 150 Z" strokeWidth="2" className={cn(box, lit === 0 && (dark ? p.softDark : p.soft))} />
+      <rect x="270" y="146" width="30" height="7" rx="3.5" className={dark ? "fill-white/40" : "fill-ink-300"} />
+      <rect x="346" y="130" width="84" height="60" rx="6" strokeWidth="2" className={box} />
+      <rect x="358" y="146" width="50" height="8" rx="4" className={p.accent} />
+      <rect x="358" y="162" width="60" height="7" rx="3.5" className={dark ? "fill-white/25" : "fill-ink-200"} />
+      <rect x="110" y="270" width="64" height="40" rx="6" strokeWidth="2" className={cn(box, lit === 1 && (dark ? p.softDark : p.soft))} />
+      <rect x="122" y="286" width="40" height="7" rx="3.5" className={dark ? "fill-white/30" : "fill-ink-300"} />
+      <rect x="222" y="262" width="150" height="48" rx="6" className={dark ? p.softDark : p.soft} />
+      <rect x="238" y="278" width="70" height="8" rx="4" className={p.main} />
+      <rect x="238" y="294" width="108" height="6" rx="3" className={dark ? "fill-white/25" : p.mid} />
+    </>
+  );
+}
+
+/** A data table: a query bar above a grid with one row and one cell picked out. */
+function TableScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
+  const rows = 6;
+  const widths = [96, 120, 80, 100];
+  const xs = widths.map((_, i) => 36 + widths.slice(0, i).reduce((sum, w) => sum + w + 4, 0));
+  const hotRow = 1 + Math.floor(random() * (rows - 1));
+  const hotCol = Math.floor(random() * 4);
+  const fills = Array.from({ length: rows * 4 }, () => between(random, 0.35, 0.85));
+  return (
+    <>
+      <rect x="36" y="62" width="408" height="30" rx="6" className={dark ? "fill-white/[0.06]" : "fill-ink-50"} />
+      <rect x="48" y="73" width="22" height="8" rx="4" className={p.main} />
+      <rect x="78" y="73" width="140" height="8" rx="4" className={dark ? "fill-white/30" : "fill-ink-300"} />
+      <rect x="400" y="68" width="34" height="18" rx="5" className={p.accent} />
+      {xs.map((x, c) => (
+        <rect key={c} x={x} y="108" width={widths[c]} height="22" rx="4" className={c === hotCol ? p.main : dark ? "fill-white/15" : p.soft} />
+      ))}
+      {Array.from({ length: rows }, (_, r) => (
+        <g key={r}>
+          {r === hotRow && <rect x="32" y={138 + r * 30 - 4} width="416" height="26" rx="5" className={dark ? p.accentSoftDark : p.accentSoft} />}
+          {xs.map((x, c) => (
+            <rect key={c} x={x + 6} y={138 + r * 30 + 5} width={(widths[c] - 20) * fills[r * 4 + c]} height="8" rx="4" className={r === hotRow && c === hotCol ? p.main : dark ? "fill-white/25" : "fill-ink-200"} />
+          ))}
+        </g>
+      ))}
+    </>
+  );
+}
+
+/** A sector: a skyline of towers with lit windows. */
+function SkylineScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
+  const count = 6;
+  const width = 400 / count;
+  const towers = Array.from({ length: count }, (_, i) => {
+    const h = between(random, 110, 230);
+    const cols = 2 + Math.floor(random() * 2);
+    const lit = Array.from({ length: Math.floor(h / 26) * cols }, () => random() > 0.55);
+    return { x: 40 + i * width, h, cols, lit };
+  });
+  const tall = towers.reduce((best, t, i, all) => (t.h > all[best].h ? i : best), 0);
+  const sun = { x: between(random, 90, 390), y: between(random, 90, 120) };
+  return (
+    <>
+      <circle cx={sun.x} cy={sun.y} r="26" className={dark ? p.softDark : p.accentSoft} />
+      {towers.map((tower, i) => (
+        <g key={i}>
+          <rect x={tower.x} y={318 - tower.h} width={width - 8} height={tower.h} rx="4" className={i === tall ? p.main : dark ? "fill-white/15" : p.soft} />
+          {Array.from({ length: Math.floor(tower.h / 26) - 1 }, (_, row) =>
+            Array.from({ length: tower.cols }, (_, col) => (
+              <rect key={`${row}-${col}`} x={tower.x + 10 + col * 17} y={318 - tower.h + 14 + row * 26} width="9" height="11" rx="2" className={i === tall ? "fill-white/70" : tower.lit[row * tower.cols + col] ? p.accent : dark ? "fill-white/20" : p.mid} />
+            ))
+          )}
+        </g>
+      ))}
+      <line x1="30" y1="318" x2="450" y2="318" strokeWidth="3" strokeLinecap="round" className={dark ? "stroke-white/25" : "stroke-ink-300"} />
+    </>
+  );
+}
+
+/** A goal: rings with an arrow in the middle, and a few figures beside them. */
+function TargetScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
+  const flip = random() > 0.5;
+  const cx = flip ? 320 : 170;
+  const hit = { x: cx + between(random, -14, 14), y: 206 + between(random, -14, 14) };
+  const sideX = flip ? 40 : 330;
+  const bars = [0, 1, 2].map(() => between(random, 0.4, 1));
+  return (
+    <>
+      {[104, 76, 50, 26].map((r, i) => (
+        <circle key={r} cx={cx} cy="206" r={r} strokeWidth="2" className={cn(i % 2 ? (dark ? p.softDark : p.soft) : dark ? "fill-white/[0.05]" : "fill-ink-50", dark ? "stroke-white/25" : p.softStroke)} />
+      ))}
+      <circle cx={cx} cy="206" r="10" className={p.main} />
+      <path d={`M${hit.x} ${hit.y} L${hit.x + 74} ${hit.y - 74} M${hit.x + 74} ${hit.y - 74} l-4 18 M${hit.x + 74} ${hit.y - 74} l-18 4`} fill="none" strokeWidth="4" strokeLinecap="round" className={p.accentStroke} />
+      {bars.map((w, i) => (
+        <g key={i}>
+          <rect x={sideX} y={96 + i * 70} width="110" height="46" rx="6" className={i === 0 ? p.main : dark ? "fill-white/[0.06] stroke-white/15" : "fill-ink-50 stroke-ink-200"} strokeWidth="1.5" />
+          <rect x={sideX + 12} y={108 + i * 70} width={86 * w} height="8" rx="4" className={i === 0 ? "fill-white" : dark ? "fill-white/30" : "fill-ink-300"} />
+          <rect x={sideX + 12} y={124 + i * 70} width="40" height="6" rx="3" className={i === 0 ? "fill-white/60" : p.mid} />
+        </g>
+      ))}
+    </>
+  );
+}
+
+/** A conversation: speech bubbles that alternate sides. */
+function ChatScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
+  const left = random() > 0.5;
+  const sized = [0, 1, 2, 3].map((i) => ({ w: between(random, 150, 250), lines: 1 + Math.floor(random() * 3), mine: (i % 2 === 0) === left }));
+  const bubbles = sized.map((bubble, i) => ({ ...bubble, h: 22 + bubble.lines * 16, top: 64 + sized.slice(0, i).reduce((sum, b) => sum + 22 + b.lines * 16 + 16, 0) }));
+  return (
+    <>
+      {bubbles.map((bubble, i) => {
+        const x = bubble.mine ? 444 - bubble.w : 36;
+        return (
+          <g key={i}>
+            <rect x={x} y={bubble.top} width={bubble.w} height={bubble.h} rx="10" className={bubble.mine ? p.main : dark ? "fill-white/[0.08]" : "fill-ink-100"} />
+            {Array.from({ length: bubble.lines }, (_, line) => (
+              <rect key={line} x={x + 14} y={bubble.top + 12 + line * 16} width={(bubble.w - 28) * (line === bubble.lines - 1 && bubble.lines > 1 ? 0.55 : 1)} height="7" rx="3.5" className={bubble.mine ? "fill-white/80" : dark ? "fill-white/30" : "fill-ink-300"} />
+            ))}
+            {i === 1 && <circle cx={bubble.mine ? x - 14 : x + bubble.w + 14} cy={bubble.top + bubble.h / 2} r="6" className={p.accent} />}
+          </g>
+        );
+      })}
+    </>
+  );
+}
+
+/** A knowledge model: slabs stacked in layers, one of them lifted. */
+function LayersScene({ seed, dark, p }: SceneProps) {
+  const random = seeded(seed);
+  const lift = Math.floor(random() * 4);
+  const layers = [0, 1, 2, 3].map((i) => {
+    const cy = 286 - i * 52 - (i === lift ? 16 : 0);
+    return { cy, top: `M240 ${cy - 40} L370 ${cy} L240 ${cy + 40} L110 ${cy} Z` };
+  });
+  return (
+    <>
+      {layers.map((layer, i) => (
+        <g key={i}>
+          <path d={layer.top} strokeWidth="2" strokeLinejoin="round" className={cn(i === lift ? p.main : dark ? "fill-white/10" : i % 2 ? p.soft : "fill-white", dark ? "stroke-white/30" : i === lift ? "stroke-transparent" : p.midStroke)} />
+          <rect x="206" y={layer.cy - 3} width="68" height="7" rx="3.5" className={i === lift ? "fill-white/80" : dark ? "fill-white/30" : p.mid} />
+        </g>
+      ))}
+      <path d="M404 100 V200" strokeWidth="3" strokeDasharray="4 7" strokeLinecap="round" className={p.accentStroke} />
+      <circle cx="404" cy="92" r="8" className={p.accent} />
+    </>
+  );
+}
+
 /** The scene components, exported so tests can render them directly. */
-export const artScenes = { path: PathScene, growth: GrowthScene, documents: DocumentsScene, dashboard: DashboardScene } as const;
+export const artScenes = { path: PathScene, growth: GrowthScene, documents: DocumentsScene, dashboard: DashboardScene, kanban: KanbanScene, network: NetworkScene, flow: FlowScene, table: TableScene, skyline: SkylineScene, target: TargetScene, chat: ChatScene, layers: LayersScene } as const;
+export const artSceneNames = SCENES;
 const scenes = artScenes;
 export const artPalettes = PALETTES;
 
