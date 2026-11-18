@@ -70,3 +70,14 @@ The single prioritised backlog. It replaces the earlier [PENDING-INTEGRATIONS.md
 1. Work top to bottom within a priority.
 2. Each task becomes a branch named by type, for example `feature/contact-enquiries` for T-12 (see [BRANCHING.md](BRANCHING.md)).
 3. When a task ships, move it to "Done recently", update its status in the BRD, and add a changelog entry.
+
+## Added from the codebase review
+
+| ID | Task | Owner | Spec |
+|---|---|---|---|
+| T-35 | Visible "too many attempts" message and audit entry on throttled sign-in | Dev | S-07 |
+| T-36 | Retry once on `CourseVersion` unique violation in `getOrCreateDraft` | Dev | S-08 |
+| T-37 | AI study assistant (trainer-approved drafts) | Both | S-23 |
+| T-38 | SMS or WhatsApp reminders | Both | S-28 |
+
+Every task has a full specification in [SPECS.md](SPECS.md).

@@ -201,3 +201,16 @@ The business owner should set a target for each. None are tracked yet, because a
 5. Is a public catalogue with self sign-up wanted, or is admission always through an advisor?
 6. What data-retention period applies to learner records and the audit log?
 7. Are the audience descriptions and the "what happens next" steps on the public pages accurate for the real admissions process?
+
+## 12. Added requirements (spec-driven roadmap)
+
+Detail and acceptance criteria are in [SPECS.md](SPECS.md).
+
+| ID | Requirement | Status | Spec |
+|---|---|---|---|
+| FR-208 | Throttled sign-in shows a distinct "too many attempts" message and is audited | ⬜ | S-07 |
+| FR-504a | Concurrent first edits of a course draft both succeed | ⬜ | S-08 |
+| FR-408 | Discussion threads per course or cohort | ⬜ | S-21 |
+| FR-707 | AI study assistant with trainer-approved drafts | ⬜ | S-23 |
+| FR-708 | SMS or WhatsApp reminders | ⬜ | S-28 |
+| FR-709 | Contact enquiries stored with an admin inbox (completes FR-104) | ⬜ | S-03 |

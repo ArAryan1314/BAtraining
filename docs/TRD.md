@@ -205,3 +205,19 @@ See [BRANCHING.md](BRANCHING.md). Pull requests run branch-name rules, `pnpm che
 ## 15. Known technical gaps
 
 Listed with owners and priority in [TODO.md](TODO.md). The main ones: enquiry storage, email, password reset, file storage, payments, shared rate limit, monitoring, pagination, service-level and end-to-end tests, CSP nonces, accessibility audit, and retention policy.
+
+## 16. Spec-driven delivery and new components
+
+Every planned feature is specified in [SPECS.md](SPECS.md). New components it introduces:
+
+| Component | Location | Purpose |
+|---|---|---|
+| Email adapter | `services/email` | Provider-agnostic sending, called from `notify()` |
+| Auth tokens | model `AuthToken`, `services/auth` | Single-use, hashed, expiring reset and invite tokens |
+| Enquiries | model `ContactEnquiry`, `services/enquiries` | Stored contact messages and admin inbox |
+| Monitoring | `instrumentation.ts`, `lib/actions/result.ts` | Sentry capture with data scrubbing |
+| Redis limiter | `lib/security/rate-limit.ts` | Shared throttling behind the existing interface |
+| Payment webhook | `app/api/webhooks/payments/route.ts` | Signed, idempotent gateway events |
+| Storage adapter | `services/storage` | Signed uploads and downloads |
+
+Rules: one migration per model change; secrets only in environment variables; each adapter is a no-op when its keys are unset and shows as "not configured" on the integrations page.
