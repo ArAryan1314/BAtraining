@@ -57,3 +57,7 @@ Three role dashboards (admin, trainer, learner) plus the trainer learner report.
 | `components/trainer/TrainerReports.tsx` | Summary tiles, then one row per learner with status badge and progress bar, those who need help first. |
 
 Tests: `tests/analytics-series.test.ts` (helpers), `tests/dashboard-render.test.ts` (charts with empty data, admin and trainer dashboards render every section).
+
+## Planned work (specs only, no code yet)
+
+See [SPECS.md](SPECS.md). Each feature gets its own section here when it ships, naming the files it adds and the spec ID it satisfies.

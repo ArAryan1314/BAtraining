@@ -5,6 +5,7 @@
 | [BRD.md](BRD.md) | What the business needs, what exists today, risks, and the go-live acceptance criteria |
 | [TRD.md](TRD.md) | How it is built: stack, architecture, data model, security, testing, release |
 | [TODO.md](TODO.md) | **What still needs doing**, in priority order, with who does it |
+| [SPECS.md](SPECS.md) | Feature specifications: acceptance criteria, required integrations, environment checklist |
 | [MODULES.md](MODULES.md) | Where each route, service, library and component lives, and the commands |
 | [GO-LIVE.md](GO-LIVE.md) | Getting `batraining.vercel.app` working: settings, first admin, credentials |
 | [VERCEL-DATABASE.md](VERCEL-DATABASE.md) | Connecting the Vercel database and applying migrations |
